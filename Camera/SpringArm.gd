@@ -1,0 +1,75 @@
+extends SpringArm3D
+
+@export var mouse_sensitivity := 0.15
+
+# zoom
+@export_group("Camera Zoom")
+## Default distance to set the camera from the player.
+@export var camera_default_distance := 2.0
+## Maximum distance the camera can zoom out to.
+@export var camera_distance_max := 20.0
+## Mininum distance the camera can zoom in to.
+@export var camera_distance_min := 1.0
+## How far the camera will move per zoom input.
+@export var camera_zoom_step := 0.6
+## How quickly the camera zoom interpolates.
+@export var camera_lerp_speed := 5.0
+# zoom
+
+var mouse_locked = false
+
+# zoom
+# Variable for handling smooth zooming.
+var _spring_arm_target_length := camera_default_distance
+
+## The camera [SpringArm3D], which prevents the camera passing through objects.
+@onready var spring_arm := $"." as SpringArm3D
+## The main player [Camera3D].
+@onready var cam := $Camera3D as Camera3D
+# zoom
+
+func _ready() -> void:
+	set_as_top_level(true)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+	
+	# zoom
+	spring_arm.spring_length = camera_default_distance
+	# zoom
+	
+func _unhandled_input(event: InputEvent) -> void:
+	if event is InputEventMouseMotion and mouse_locked == true:
+		rotation_degrees.x -= event.relative.y * mouse_sensitivity
+		rotation_degrees.x = clamp(rotation_degrees.x, -60.0, 60.0)
+		
+		rotation_degrees.y -= event.relative.x * mouse_sensitivity
+		rotation_degrees.y = wrapf(rotation_degrees.y, 0.0, 360.0)
+		
+	# Handle camera zoom.
+	elif event.is_action_pressed("zoom_in"):
+		_spring_arm_target_length -= camera_zoom_step
+		_spring_arm_target_length = clamp(_spring_arm_target_length, camera_distance_min, camera_distance_max)
+	elif event.is_action_pressed("zoom_out"):
+		_spring_arm_target_length += camera_zoom_step
+		_spring_arm_target_length = clamp(_spring_arm_target_length, camera_distance_min, camera_distance_max)
+	# zoom
+	
+func _input(event):
+	if event.is_action_pressed("camera_to_cursor"):
+		mouse_locked = true
+		
+	if event.is_action_pressed("ui_cancel"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+		
+	if event.is_action_pressed("camera_confine"):
+		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
+		
+		
+func _process(delta):
+	if not Input.is_action_pressed("camera_to_cursor") and mouse_locked == true:
+		mouse_locked = false
+	
+	# zoom
+		# Handle smooth camera zooming.
+	if _spring_arm_target_length != spring_arm.spring_length:
+		spring_arm.spring_length = lerp(spring_arm.spring_length, _spring_arm_target_length, camera_lerp_speed * delta)
+	# zoom
