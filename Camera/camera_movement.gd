@@ -1,6 +1,8 @@
 extends CharacterBody3D
-	
+
+@onready var springArm = $SpringArm3D
 var SPEED = 7.5
+
 
 func _physics_process(delta: float) -> void:
 	
@@ -13,12 +15,15 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	
 func _process(_delta: float) -> void:
-	$SpringArm3D.position = position
+	springArm.position = position
 	
 	if Input.is_action_just_pressed("camera_reset"):
 		position.x = 0
 		position.y = 2
 		position.z = 0
 	
-	#print($SpringArm3D.rotation_degrees.x)
-	#print($SpringArm3D.rotation_degrees.y)
+	rotation_degrees.x = springArm.rotation_degrees.x
+	rotation_degrees.y = springArm.rotation_degrees.y
+	
+	print(springArm.rotation_degrees.x)
+	print(springArm.rotation_degrees.y)
