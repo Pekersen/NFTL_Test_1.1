@@ -17,7 +17,7 @@ config/icon="res://icon.svg"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg")
+enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg", "res://addons/godot_style/plugin.cfg")
 
 [input]
 

@@ -19,8 +19,8 @@ orbitMesh = NodePath("Orbit")
 [node name="Orbit" type="MeshInstance3D" parent="."]
 mesh = SubResource("TorusMesh_3ugw0")
 
-[node name="Core" type="Node3D" parent="Orbit"]
+[node name="Core" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
 
-[node name="True Planet" type="MeshInstance3D" parent="Orbit/Core"]
+[node name="True Planet" type="MeshInstance3D" parent="Core"]
 mesh = SubResource("SphereMesh_xsawm")

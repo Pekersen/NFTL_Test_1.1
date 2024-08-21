@@ -24,6 +24,3 @@ func _process(_delta: float) -> void:
 	
 	rotation_degrees.x = springArm.rotation_degrees.x
 	rotation_degrees.y = springArm.rotation_degrees.y
-	
-	print(springArm.rotation_degrees.x)
-	print(springArm.rotation_degrees.y)
