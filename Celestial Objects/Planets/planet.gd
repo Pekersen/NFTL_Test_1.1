@@ -1,14 +1,16 @@
 extends Planet
 
-@onready var planetMesh = $"Orbit/Core/True Planet"
-@onready var core = $Orbit/Core
+@onready var planetMesh = $"Rotation Point/Core/True Planet"
+@onready var core = $"Rotation Point/Core"
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
+func _init():
 	distance = 10
 	radius = 0.1
 	mass = 0.01
 	orbit_speed = 1
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
 	
 	orbitMesh.mesh.outer_radius = distance
 	orbitMesh.mesh.inner_radius = distance - 0.005

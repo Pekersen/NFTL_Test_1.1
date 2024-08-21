@@ -1,8 +1,17 @@
-[gd_scene load_steps=3 format=3 uid="uid://bequjodqr8tcj"]
+[gd_scene load_steps=5 format=3 uid="uid://bequjodqr8tcj"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Stars/star.gd" id="1_81nsq"]
+[ext_resource type="Shader" path="res://Shaders/highlight.gdshader" id="2_sigu1"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ob10o"]
+render_priority = 0
+shader = ExtResource("2_sigu1")
+shader_parameter/outline_color = Color(1, 1, 1, 1)
+shader_parameter/outline_width = 2.0
+shader_parameter/constant_width = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_f1oyn"]
+material = SubResource("ShaderMaterial_ob10o")
 
 [node name="Star" type="Node3D"]
 script = ExtResource("1_81nsq")
