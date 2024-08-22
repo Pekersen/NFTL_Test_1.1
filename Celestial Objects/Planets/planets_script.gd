@@ -4,6 +4,7 @@ class_name Planet extends CelestialObject
 @export var orbitMesh : Node3D
 
 var distance : float
+var distance_offset : float
 var num_moons : int
 var rings : bool
 var ring_size : float

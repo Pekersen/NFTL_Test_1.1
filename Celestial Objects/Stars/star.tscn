@@ -1,20 +1,29 @@
-[gd_scene load_steps=5 format=3 uid="uid://bequjodqr8tcj"]
+[gd_scene load_steps=6 format=3 uid="uid://bequjodqr8tcj"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Stars/star.gd" id="1_81nsq"]
-[ext_resource type="Shader" path="res://Shaders/highlight.gdshader" id="2_sigu1"]
+[ext_resource type="Shader" path="res://Shaders/star.gdshader" id="2_dithh"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ob10o"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2035w"]
 render_priority = 0
-shader = ExtResource("2_sigu1")
-shader_parameter/outline_color = Color(1, 1, 1, 1)
-shader_parameter/outline_width = 2.0
-shader_parameter/constant_width = true
+shader = ExtResource("2_dithh")
+shader_parameter/Glow_Power = 1.099
+shader_parameter/Lightness_Difference = 1.538
+shader_parameter/Sun_Color = Color(1, 0.329412, 0.309804, 1)
+shader_parameter/waveSpeed = 0.177
+shader_parameter/fresnel = 2.0
+shader_parameter/scale = 0.0
+shader_parameter/blendSharpness = 0.0
 
 [sub_resource type="SphereMesh" id="SphereMesh_f1oyn"]
-material = SubResource("ShaderMaterial_ob10o")
+material = SubResource("ShaderMaterial_2035w")
 
-[node name="Star" type="Node3D"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_4mdgf"]
+
+[node name="Star" type="StaticBody3D"]
 script = ExtResource("1_81nsq")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+[node name="StarMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_f1oyn")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_4mdgf")

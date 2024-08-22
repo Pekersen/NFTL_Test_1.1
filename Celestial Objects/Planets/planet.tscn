@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://cqtxuyes4fdju"]
+[gd_scene load_steps=5 format=3 uid="uid://cqtxuyes4fdju"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
 
@@ -12,18 +12,23 @@ ring_segments = 64
 radius = 0.1
 height = 0.2
 
+[sub_resource type="SphereShape3D" id="SphereShape3D_gfk4t"]
+
 [node name="Planet" type="Node3D" node_paths=PackedStringArray("rotationPoint", "orbitMesh")]
 script = ExtResource("1_21ytp")
-rotationPoint = NodePath("Rotation Point")
+rotationPoint = NodePath("RotationPoint")
 orbitMesh = NodePath("Orbit")
 
 [node name="Orbit" type="MeshInstance3D" parent="."]
 mesh = SubResource("TorusMesh_3ugw0")
 
-[node name="Rotation Point" type="Node3D" parent="."]
+[node name="RotationPoint" type="Node3D" parent="."]
 
-[node name="Core" type="Node3D" parent="Rotation Point"]
+[node name="Core" type="StaticBody3D" parent="RotationPoint"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
 
-[node name="True Planet" type="MeshInstance3D" parent="Rotation Point/Core"]
+[node name="TruePlanet" type="MeshInstance3D" parent="RotationPoint/Core"]
 mesh = SubResource("SphereMesh_xsawm")
+
+[node name="PlanetCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
+shape = SubResource("SphereShape3D_gfk4t")

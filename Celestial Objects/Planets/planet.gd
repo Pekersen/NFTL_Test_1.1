@@ -1,7 +1,8 @@
 extends Planet
 
-@onready var planetMesh = $"Rotation Point/Core/True Planet"
-@onready var core = $"Rotation Point/Core"
+@onready var planetMesh = $"RotationPoint/Core/TruePlanet"
+@onready var core = $"RotationPoint/Core"
+@onready var planetCollision = $"RotationPoint/Core/PlanetCollision"
 
 func _init():
 	distance = 10
@@ -11,13 +12,16 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	# Init orbit visuals
 	orbitMesh.mesh.outer_radius = distance
 	orbitMesh.mesh.inner_radius = distance - 0.005
 	core.position.x = distance
-
+	# Init planet visuals
 	planetMesh.mesh.radius = radius
 	planetMesh.mesh.height = radius * 2
+	# Init click area
+	planetCollision.shape.radius = radius + click_forgiveness
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

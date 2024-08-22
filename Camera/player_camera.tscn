@@ -7,6 +7,7 @@
 script = ExtResource("1_47gtb")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
+collision_mask = 0
 spring_length = 2.0
 margin = 0.001
 script = ExtResource("2_ohl0f")
