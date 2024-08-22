@@ -5,10 +5,14 @@ extends Planet
 @onready var planetCollision = $"RotationPoint/Core/PlanetCollision"
 
 func _init():
+	radius_variance = [0.08, 0.2]
+	orbit_speed_variance = [0.1, 3] # this is temporary. There should be other values
+									# that affect this (e.g. distance).
+	
 	distance = 10
-	radius = 0.1
+	radius = offsetValue(radius, radius_variance)
 	mass = 0.01
-	orbit_speed = 1
+	orbit_speed = offsetValue(orbit_speed, orbit_speed_variance)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

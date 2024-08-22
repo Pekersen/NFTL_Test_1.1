@@ -25,5 +25,5 @@ script = ExtResource("1_81nsq")
 [node name="StarMesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_f1oyn")
 
-[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+[node name="StarCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_4mdgf")
