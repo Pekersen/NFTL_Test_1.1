@@ -2,14 +2,16 @@
 
 [ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c4vhg"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vi71a"]
 shading_mode = 0
 
 [sub_resource type="TorusMesh" id="TorusMesh_3ugw0"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_c4vhg")
+material = SubResource("StandardMaterial3D_vi71a")
 inner_radius = 9.995
 outer_radius = 10.0
+rings = 128
+ring_segments = 64
 
 [sub_resource type="SphereMesh" id="SphereMesh_xsawm"]
 resource_local_to_scene = true
@@ -28,7 +30,7 @@ mesh = SubResource("TorusMesh_3ugw0")
 [node name="RotationPoint" type="Node3D" parent="."]
 
 [node name="Core" type="StaticBody3D" parent="RotationPoint"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.96141, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
 
 [node name="TruePlanet" type="MeshInstance3D" parent="RotationPoint/Core"]
 mesh = SubResource("SphereMesh_xsawm")

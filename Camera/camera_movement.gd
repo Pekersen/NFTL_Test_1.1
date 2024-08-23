@@ -8,6 +8,10 @@ var SPEED_INCREASE = 1.0
 var clicked_node
 var following := false
 
+var cameraRotationDifference = Vector3.ZERO
+var calculatingCamera = false
+var springArmIntitialRotation = Vector3.ZERO
+
 func _physics_process(delta: float) -> void:
 	
 	var input = Input.get_vector("left", "right", "forward", "back")
@@ -43,6 +47,14 @@ func _process(_delta: float) -> void:
 	
 	if following:
 		follow_camera()
+	if springArm.mouse_locked and clicked_node != null:
+		if !calculatingCamera:
+			springArmIntitialRotation = springArm.rotation
+		cameraRotationDifference = springArm.rotation - springArmIntitialRotation - clicked_node.global_rotation
+		print("differ: " + str(cameraRotationDifference))
+		calculatingCamera = true
+	else:
+		calculatingCamera = false
 	
 func _input(event):
 	if event.is_action_released("click"):
@@ -80,7 +92,10 @@ func shoot_ray():
 		print("clicked " + str(raycast_result.collider))
 		clicked_node = raycast_result.collider
 		
-		
 func follow_camera():
 	position = clicked_node.global_position
+	if !springArm.mouse_locked and !calculatingCamera:
+		springArm.global_rotation = springArmIntitialRotation + cameraRotationDifference + clicked_node.global_rotation
+		print("global rot of clicked node: " +  str(clicked_node.global_rotation))
+	
 
