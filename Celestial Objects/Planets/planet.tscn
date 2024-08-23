@@ -9,6 +9,8 @@ shading_mode = 0
 material = SubResource("StandardMaterial3D_c4vhg")
 inner_radius = 9.995
 outer_radius = 10.0
+rings = 128
+ring_segments = 64
 
 [sub_resource type="SphereMesh" id="SphereMesh_xsawm"]
 radius = 0.1
@@ -16,10 +18,9 @@ height = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gfk4t"]
 
-[node name="Planet" type="Node3D" node_paths=PackedStringArray("rotationPoint", "orbitMesh")]
+[node name="Planet" type="Node3D" node_paths=PackedStringArray("rotationPoint")]
 script = ExtResource("1_21ytp")
 rotationPoint = NodePath("RotationPoint")
-orbitMesh = NodePath("Orbit")
 
 [node name="Orbit" type="MeshInstance3D" parent="."]
 mesh = SubResource("TorusMesh_3ugw0")
@@ -27,7 +28,7 @@ mesh = SubResource("TorusMesh_3ugw0")
 [node name="RotationPoint" type="Node3D" parent="."]
 
 [node name="Core" type="StaticBody3D" parent="RotationPoint"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10, 0, 0)
 
 [node name="TruePlanet" type="MeshInstance3D" parent="RotationPoint/Core"]
 mesh = SubResource("SphereMesh_xsawm")

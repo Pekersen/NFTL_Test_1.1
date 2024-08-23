@@ -23,3 +23,7 @@ mesh = SubResource("SphereMesh_f1oyn")
 
 [node name="StarCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_4mdgf")
+
+[node name="StarLight" type="OmniLight3D" parent="."]
+shadow_enabled = true
+omni_range = 1000.0

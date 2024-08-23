@@ -28,6 +28,8 @@ var _spring_arm_target_length := camera_default_distance
 @onready var cam := $Camera3D as Camera3D
 # zoom
 
+var zoom_increase = 1.0
+
 func _ready() -> void:
 	set_as_top_level(true)
 	Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
@@ -46,10 +48,10 @@ func _unhandled_input(event: InputEvent) -> void:
 		
 	# Handle camera zoom.
 	elif event.is_action_pressed("zoom_in"):
-		_spring_arm_target_length -= camera_zoom_step
+		_spring_arm_target_length -= camera_zoom_step * zoom_increase
 		_spring_arm_target_length = clamp(_spring_arm_target_length, camera_distance_min, camera_distance_max)
 	elif event.is_action_pressed("zoom_out"):
-		_spring_arm_target_length += camera_zoom_step
+		_spring_arm_target_length += camera_zoom_step * zoom_increase
 		_spring_arm_target_length = clamp(_spring_arm_target_length, camera_distance_min, camera_distance_max)
 	# zoom
 	
@@ -68,6 +70,15 @@ func _process(delta):
 	if not Input.is_action_pressed("camera_to_cursor") and mouse_locked == true:
 		mouse_locked = false
 	
+	if Input.is_action_pressed("shift"):
+		zoom_increase = 3.0
+		
+	elif Input.is_action_pressed("ctrl"):
+		zoom_increase = 1.0/3
+		
+	else:
+		zoom_increase = 1.0
+		
 	# zoom
 		# Handle smooth camera zooming.
 	if _spring_arm_target_length != spring_arm.spring_length:

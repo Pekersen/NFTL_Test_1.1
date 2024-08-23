@@ -2,13 +2,16 @@ extends Star
 
 @onready var starMesh = $StarMesh
 @onready var starCollision = $StarCollision
+@onready var starLight = $StarLight
 
 func _init():
-	radius_variance = [1,3] # arbitrary values
+	radius_variance = [1,4] # arbitrary values
 	mass_variance = [10,15]
+	luminosity_variance = [0.1,5]
+	
 	radius = offsetValue(radius, radius_variance)
 	mass = offsetValue(mass, mass_variance)
-	
+	luminosity = offsetValue(luminosity, luminosity_variance)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -16,6 +19,8 @@ func _ready():
 	starMesh.mesh.height = radius * 2
 	
 	starCollision.shape.radius = radius + click_forgiveness
+	
+	starLight.light_energy = luminosity
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

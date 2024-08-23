@@ -3,20 +3,29 @@ extends CharacterBody3D
 @onready var springArm = $SpringArm3D
 @onready var camera = $SpringArm3D/Camera3D
 var SPEED = 7.5
-
+var SPEED_INCREASE = 1.0
 
 func _physics_process(delta: float) -> void:
 	
 	var input = Input.get_vector("left", "right", "forward", "back")
 	var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
 	
-	velocity.x = direction.x * SPEED
-	velocity.z = direction.z * SPEED
+	velocity.x = direction.x * SPEED * SPEED_INCREASE
+	velocity.z = direction.z * SPEED * SPEED_INCREASE
 	
 	move_and_slide()
 	
 func _process(_delta: float) -> void:
 	springArm.position = position
+	
+	if Input.is_action_pressed("shift"):
+		SPEED_INCREASE = 3.0
+		
+	elif Input.is_action_pressed("ctrl"):
+		SPEED_INCREASE = 1.0/3
+		
+	else:
+		SPEED_INCREASE = 1.0
 	
 	if Input.is_action_just_pressed("camera_reset"):
 		position.x = 0
