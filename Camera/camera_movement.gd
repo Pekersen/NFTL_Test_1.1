@@ -25,6 +25,17 @@ func _physics_process(delta: float) -> void:
 	
 	move_and_slide()
 	
+	if following:
+		follow_camera()
+	if springArm.mouse_locked and clicked_node != null:
+		if !calculatingCamera:
+			springArmIntitialRotation = springArm.rotation
+		cameraRotationDifference = springArm.rotation -\
+						springArmIntitialRotation - clicked_node.global_rotation
+		calculatingCamera = true
+	else:
+		calculatingCamera = false
+	
 func _process(_delta: float) -> void:
 	springArm.position = position
 	
@@ -44,17 +55,7 @@ func _process(_delta: float) -> void:
 	
 	rotation_degrees.x = springArm.rotation_degrees.x
 	rotation_degrees.y = springArm.rotation_degrees.y
-	
-	if following:
-		follow_camera()
-	if springArm.mouse_locked and clicked_node != null:
-		if !calculatingCamera:
-			springArmIntitialRotation = springArm.rotation
-		cameraRotationDifference = springArm.rotation - springArmIntitialRotation - clicked_node.global_rotation
-		print("differ: " + str(cameraRotationDifference))
-		calculatingCamera = true
-	else:
-		calculatingCamera = false
+
 	
 func _input(event):
 	if event.is_action_released("click"):
@@ -91,11 +92,14 @@ func shoot_ray():
 		following = true
 		print("clicked " + str(raycast_result.collider))
 		clicked_node = raycast_result.collider
+		springArmIntitialRotation = springArm.rotation
+		cameraRotationDifference = Vector3.ZERO
+		print(springArmIntitialRotation)
 		
 func follow_camera():
 	position = clicked_node.global_position
 	if !springArm.mouse_locked and !calculatingCamera:
-		springArm.global_rotation = springArmIntitialRotation + cameraRotationDifference + clicked_node.global_rotation
-		print("global rot of clicked node: " +  str(clicked_node.global_rotation))
+		springArm.global_rotation = springArmIntitialRotation +\
+			 			cameraRotationDifference + clicked_node.global_rotation
 	
 

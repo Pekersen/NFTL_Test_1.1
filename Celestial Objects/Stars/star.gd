@@ -9,9 +9,9 @@ func _init():
 	mass_variance = [10,15]
 	luminosity_variance = [0.1,5]
 	
-	radius = offsetValue(radius, radius_variance)
-	mass = offsetValue(mass, mass_variance)
-	luminosity = offsetValue(luminosity, luminosity_variance)
+	radius = offsetValue(radius_variance)
+	mass = offsetValue(mass_variance)
+	luminosity = offsetValue(luminosity_variance)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

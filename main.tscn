@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" path="res://main.gd" id="1_n3iuf"]
 [ext_resource type="PackedScene" uid="uid://7rmy8cmq7ttw" path="res://Camera/player_camera.tscn" id="1_spi54"]
-[ext_resource type="PackedScene" uid="uid://cqtxuyes4fdju" path="res://Celestial Objects/Planets/planet.tscn" id="2_07cdw"]
 [ext_resource type="PackedScene" uid="uid://bequjodqr8tcj" path="res://Celestial Objects/Stars/star.tscn" id="3_rtaok"]
+[ext_resource type="Script" path="res://Generation/System.gd" id="5_mf11v"]
 
 [sub_resource type="Environment" id="Environment_y5lqt"]
 background_mode = 1
@@ -25,6 +25,9 @@ script = ExtResource("1_n3iuf")
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_y5lqt")
 
-[node name="Planet" parent="." instance=ExtResource("2_07cdw")]
-
 [node name="Star" parent="." instance=ExtResource("3_rtaok")]
+
+[node name="System" type="Node3D" parent="."]
+script = ExtResource("5_mf11v")
+num_planets_variance = Array[int]([1, 5])
+num_astroids_variance = Array[int]([1, 3])

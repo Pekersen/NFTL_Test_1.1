@@ -17,5 +17,5 @@ var temperature_variance : Array[float]
 # though user is clicking on nothing visually
 var click_forgiveness : float = 1.0
 
-func offsetValue(value, offset : Array[float]):
-	return value + rng.randf_range(offset[0], offset[1])
+func offsetValue(offset : Array[float]):
+	return rng.randf_range(offset[0], offset[1])

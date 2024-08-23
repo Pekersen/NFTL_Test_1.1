@@ -11,9 +11,9 @@ func _init():
 									# that affect this (e.g. distance).
 	print("default")
 	distance = 10
-	radius = offsetValue(radius, radius_variance)
+	radius = offsetValue(radius_variance)
 	mass = 0.01
-	orbit_speed = offsetValue(orbit_speed, orbit_speed_variance)
+	orbit_speed = offsetValue(orbit_speed_variance)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
