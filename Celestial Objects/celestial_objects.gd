@@ -15,7 +15,7 @@ var temperature_variance : Array[float]
 
 # When clicking on an object, there will be additional space where the click will go through even
 # though user is clicking on nothing visually
-var click_forgiveness : float = 0.2
+var click_forgiveness : float = 1.0
 
 func offsetValue(value, offset : Array[float]):
 	return value + rng.randf_range(offset[0], offset[1])

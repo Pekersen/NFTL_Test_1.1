@@ -5,6 +5,9 @@ extends CharacterBody3D
 var SPEED = 7.5
 var SPEED_INCREASE = 1.0
 
+var clicked_node
+var following := false
+
 func _physics_process(delta: float) -> void:
 	
 	var input = Input.get_vector("left", "right", "forward", "back")
@@ -12,6 +15,9 @@ func _physics_process(delta: float) -> void:
 	
 	velocity.x = direction.x * SPEED * SPEED_INCREASE
 	velocity.z = direction.z * SPEED * SPEED_INCREASE
+	
+	if abs(input) > Vector2(0,0):
+		following = false
 	
 	move_and_slide()
 	
@@ -34,6 +40,9 @@ func _process(_delta: float) -> void:
 	
 	rotation_degrees.x = springArm.rotation_degrees.x
 	rotation_degrees.y = springArm.rotation_degrees.y
+	
+	if following:
+		follow_camera()
 	
 func _input(event):
 	if event.is_action_released("click"):
@@ -67,5 +76,11 @@ func shoot_ray():
 	# HERE IS WHERE YOU CAN MAKE IT DO SOMETHING (LIKE OPEN A GUI MENU)
 	# TODO:
 	if !raycast_result.is_empty():
+		following = true
 		print("clicked " + str(raycast_result.collider))
+		clicked_node = raycast_result.collider
+		
+		
+func follow_camera():
+	position = clicked_node.global_position
 
