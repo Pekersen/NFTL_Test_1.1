@@ -1,12 +1,14 @@
-[gd_scene load_steps=5 format=3 uid="uid://cqtxuyes4fdju"]
+[gd_scene load_steps=6 format=3 uid="uid://cqtxuyes4fdju"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c4vhg"]
+shading_mode = 0
+
 [sub_resource type="TorusMesh" id="TorusMesh_3ugw0"]
+material = SubResource("StandardMaterial3D_c4vhg")
 inner_radius = 9.995
 outer_radius = 10.0
-rings = 128
-ring_segments = 64
 
 [sub_resource type="SphereMesh" id="SphereMesh_xsawm"]
 radius = 0.1

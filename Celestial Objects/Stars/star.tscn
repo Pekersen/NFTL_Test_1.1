@@ -1,21 +1,17 @@
-[gd_scene load_steps=6 format=3 uid="uid://bequjodqr8tcj"]
+[gd_scene load_steps=5 format=3 uid="uid://bequjodqr8tcj"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Stars/star.gd" id="1_81nsq"]
-[ext_resource type="Shader" path="res://Shaders/star.gdshader" id="2_dithh"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_2035w"]
-render_priority = 0
-shader = ExtResource("2_dithh")
-shader_parameter/Glow_Power = 1.099
-shader_parameter/Lightness_Difference = 1.538
-shader_parameter/Sun_Color = Color(1, 0.329412, 0.309804, 1)
-shader_parameter/waveSpeed = 0.177
-shader_parameter/fresnel = 2.0
-shader_parameter/scale = 0.0
-shader_parameter/blendSharpness = 0.0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vhuoy"]
+transparency = 1
+cull_mode = 1
+albedo_color = Color(2, 1.2, 0.5, 1)
+emission_enabled = true
+emission = Color(1, 0, 0, 1)
+emission_energy_multiplier = 1.5
 
 [sub_resource type="SphereMesh" id="SphereMesh_f1oyn"]
-material = SubResource("ShaderMaterial_2035w")
+material = SubResource("StandardMaterial3D_vhuoy")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4mdgf"]
 
