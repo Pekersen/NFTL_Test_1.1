@@ -26,6 +26,5 @@ script = ExtResource("1_n3iuf")
 environment = SubResource("Environment_y5lqt")
 
 [node name="Planet" parent="." instance=ExtResource("2_07cdw")]
-visible = false
 
 [node name="Star" parent="." instance=ExtResource("3_rtaok")]
