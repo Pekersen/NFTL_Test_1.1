@@ -5,6 +5,7 @@ extends Planet
 @onready var planetCollision = $"RotationPoint/Core/PlanetCollision"
 @onready var orbitMesh = $Orbit
 
+
 func _init():
 	radius_variance = [0.08, 0.2]
 	orbit_speed_variance = [0.1, 3] # this is temporary. There should be other values
@@ -20,14 +21,17 @@ func _ready():
 	
 	print("setting radius")
 	# Init orbit visuals
-	orbitMesh.mesh.outer_radius = distance
-	orbitMesh.mesh.inner_radius = distance - 0.005
+	orbitMesh.mesh.outer_radius = distance + 0.025
+	orbitMesh.mesh.inner_radius = distance - 0.025
 	core.position.x = distance
 	# Init planet visuals
 	planetMesh.mesh.radius = radius
 	planetMesh.mesh.height = radius * 2
 	# Init click area
 	planetCollision.shape.radius = radius + click_forgiveness
+	
+	
+	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

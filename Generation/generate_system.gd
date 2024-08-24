@@ -29,20 +29,20 @@ var rng = RandomNumberGenerator.new()
 func pick_star_type():
 	var random_float = randf()
 
-	if random_float < 0.765:
-		return "M"
-	elif random_float < 0.121:
-		return "K"
-	elif random_float < 0.076:
-		return "G"
-	elif random_float < 0.03:
-		return "F"
-	elif random_float < 0.006:
-		return "A"
-	elif random_float < 0.0013:
-		return "B"
-	else:
+	if random_float < 0.01:
 		return "O"
+	elif random_float < 0.03:
+		return "B"
+	elif random_float < 0.05:
+		return "A"
+	elif random_float < 0.1:
+		return "F"
+	elif random_float < 0.15:
+		return "G"
+	elif random_float < 0.2:
+		return "K"
+	else:
+		return "M"
 
 func offsetValue(offset : Array):
 	if typeof(offset[0]) == TYPE_FLOAT:

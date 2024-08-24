@@ -7,7 +7,7 @@ extends SpringArm3D
 ## Default distance to set the camera from the player.
 @export var camera_default_distance := 2.0
 ## Maximum distance the camera can zoom out to.
-@export var camera_distance_max := 100.0
+@export var camera_distance_max := 1000.0
 ## Mininum distance the camera can zoom in to.
 @export var camera_distance_min := 1.0
 ## How far the camera will move per zoom input.
@@ -72,8 +72,12 @@ func _process(delta):
 	if not Input.is_action_pressed("camera_to_cursor") and mouse_locked == true:
 		mouse_locked = false
 	
-	if Input.is_action_pressed("shift"):
-		zoom_increase = 3.0
+		
+	if Input.is_action_pressed("shift") and Input.is_action_pressed("ctrl"):
+		zoom_increase = 10.0
+	
+	elif Input.is_action_pressed("shift"):
+		zoom_increase = 5.0
 		
 	elif Input.is_action_pressed("ctrl"):
 		zoom_increase = 1.0/3

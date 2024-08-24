@@ -39,8 +39,11 @@ func _physics_process(delta: float) -> void:
 func _process(_delta: float) -> void:
 	springArm.position = position
 	
-	if Input.is_action_pressed("shift"):
-		SPEED_INCREASE = 3.0
+	if Input.is_action_pressed("shift") and Input.is_action_pressed("ctrl"):
+		SPEED_INCREASE = 10.0
+	
+	elif Input.is_action_pressed("shift"):
+		SPEED_INCREASE = 5.0
 		
 	elif Input.is_action_pressed("ctrl"):
 		SPEED_INCREASE = 1.0/3

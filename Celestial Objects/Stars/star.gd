@@ -7,7 +7,7 @@ extends Star
 func _init():
 	radius_variance = [1,4] # arbitrary values
 	mass_variance = [10,15]
-	luminosity_variance = [0.1,5]
+	luminosity_variance = [1,10]
 	
 	radius = offsetValue(radius_variance)
 	mass = offsetValue(mass_variance)
@@ -20,6 +20,7 @@ func _ready():
 	
 	starCollision.shape.radius = radius + click_forgiveness
 	
+	print(luminosity)
 	starLight.light_energy = luminosity
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
