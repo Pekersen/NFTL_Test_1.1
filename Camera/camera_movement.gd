@@ -59,9 +59,42 @@ func _process(_delta: float) -> void:
 	
 func _input(event):
 	if event.is_action_released("click"):
-		shoot_ray()
+		shoot_ray_left()
+	if event.is_action_pressed("right click"):
+		shoot_ray_right()
 	
-func shoot_ray():
+	
+	# Making a right click function
+func shoot_ray_right():
+	# Get the position of the mouse on the screen (in 2D viewport coordinates)
+	var mouse_pos = get_viewport().get_mouse_position()
+	# Define the length of the ray to be cast (1000 units in 3D space)
+	var ray_length = 1000
+	# Calculate the origin point of the ray in 3D space using the camera's 
+	# position and the mouse position
+	var from = camera.project_ray_origin(mouse_pos)
+	# Calculate the end point of the ray in 3D space by extending the ray 
+	# from its origin along its direction (normal)
+	var to = from + camera.project_ray_normal(mouse_pos) * ray_length
+	# Get the space state from the 3D world to perform the raycasting operation
+	var space = get_world_3d().direct_space_state
+	# Create a new PhysicsRayQueryParameters3D object to define the parameters 
+	# for the raycast
+	var ray_query = PhysicsRayQueryParameters3D.new()
+	# Set the origin point of the ray
+	ray_query.from = from
+	# Set the target point of the ray (where the ray ends after traveling the 
+	# defined length)
+	ray_query.to = to
+	# Perform the raycast and store the result (if the ray hits something, the 
+	# result will contain information about the hit)
+	var raycast_result_right = space.intersect_ray(ray_query)
+	
+	if !raycast_result_right.is_empty():
+		get_tree().change_scene_to_file("res://Celestial Objects/Planets/planet_world.tscn")
+		
+	
+func shoot_ray_left():
 	# Get the position of the mouse on the screen (in 2D viewport coordinates)
 	var mouse_pos = get_viewport().get_mouse_position()
 	# Define the length of the ray to be cast (1000 units in 3D space)

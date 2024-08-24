@@ -7,7 +7,7 @@ extends SpringArm3D
 ## Default distance to set the camera from the player.
 @export var camera_default_distance := 2.0
 ## Maximum distance the camera can zoom out to.
-@export var camera_distance_max := 30.0
+@export var camera_distance_max := 100.0
 ## Mininum distance the camera can zoom in to.
 @export var camera_distance_min := 1.0
 ## How far the camera will move per zoom input.
