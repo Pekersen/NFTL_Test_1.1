@@ -11,7 +11,7 @@ var rng = RandomNumberGenerator.new()
 var radius_variance : Array[float]
 var mass_variance : Array[float]
 var temperature_variance : Array[float]
-
+#: Array[float]
 
 # When clicking on an object, there will be additional space where the click will go through even
 # though user is clicking on nothing visually

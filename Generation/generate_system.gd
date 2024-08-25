@@ -5,13 +5,15 @@ class_name SystemGeneration extends Node3D
 @export var num_astroids_variance : Array[int] = [0, 0]
 
 @onready var planet = preload("res://Celestial Objects/Planets/planet.tscn")
+@onready var star = preload("res://Celestial Objects/Stars/star.tscn")
 
 var num_planets : int
 var num_astroids : int
-#var star_types = ["M", "K", "G", "F", "A", "B", "O"]
 var star_type : String
 
 var orbit_sum := 0.0
+
+signal star_gen(star_type)
 
 func initVars():
 	print(num_planets_variance)
@@ -19,9 +21,6 @@ func initVars():
 	num_astroids = offsetValue(num_astroids_variance)
 	
 	star_type = pick_star_type()
-	
-	#star_type = star_types.pick_random()
-	print(star_type)
 
 # for randomness
 var rng = RandomNumberGenerator.new()
@@ -66,17 +65,11 @@ func initPlanetChildren():
 
 func initPlanetVars(planetInstance):
 	# TEMP VALUES
-	planetInstance.distance = offsetValue([5.0,15.0]) + orbit_sum
+	planetInstance.distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
 	planetInstance.orbit_speed = offsetValue([0.5,1.0])
 	planetInstance.radius = offsetValue([0.1,0.5])
 	
-	
-func initStarChildren():
-	pass
-	
-func initStarVars(starInstance):
-	pass
-
 func initStar():
-	initStarChildren()
-	#initStarVars(starInstance)
+	star_gen.emit(star_type)
+	
+	
