@@ -59,6 +59,8 @@ func initPlanetChildren():
 		
 		orbit_sum += planetInstance.distance
 		
+		print("Here: " + str(planetInstance.distance))
+		
 		add_child(planetInstance)
 		
 func initStarChildren():

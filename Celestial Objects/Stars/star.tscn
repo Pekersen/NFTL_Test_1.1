@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bequjodqr8tcj"]
+[gd_scene load_steps=9 format=3 uid="uid://bequjodqr8tcj"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Stars/star.gd" id="1_81nsq"]
 
@@ -6,7 +6,7 @@
 code = "// NOTE: Shader automatically converted from Godot Engine 4.2.1.stable's StandardMaterial3D.
 
 shader_type spatial;
-render_mode blend_mix,depth_draw_opaque,cull_front,diffuse_burley,specular_schlick_ggx;
+render_mode blend_mix,depth_draw_opaque,diffuse_burley,specular_schlick_ggx, shadows_disabled;
 uniform vec4 albedo : source_color;
 uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
 uniform float point_size : hint_range(0,128);
@@ -84,51 +84,54 @@ void fragment() {
 
 "
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0l6lw"]
+[sub_resource type="Gradient" id="Gradient_fi8c6"]
+offsets = PackedFloat32Array(0, 0.513889, 1)
+colors = PackedColorArray(0, 0, 0, 1, 0.873298, 0.873298, 0.873298, 1, 1, 1, 1, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_lx5pe"]
-
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_3du0t"]
-noise = SubResource("FastNoiseLite_lx5pe")
-
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_eoehy"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_pa5cp"]
 noise_type = 4
-seed = 7
-offset = Vector3(341.02, 0, 0)
+frequency = 0.0719
 fractal_type = 3
-fractal_octaves = 3
-fractal_lacunarity = 1.2
-fractal_gain = 1.5
-fractal_weighted_strength = 0.18
+fractal_ping_pong_strength = 3.2
+domain_warp_enabled = true
+domain_warp_type = 1
+domain_warp_amplitude = 10.0
+domain_warp_frequency = 1.0
+domain_warp_fractal_octaves = 8
+domain_warp_fractal_gain = 1.2
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_igu6y"]
-noise = SubResource("FastNoiseLite_eoehy")
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ndpt"]
+seamless = true
+seamless_blend_skirt = 1.0
+as_normal_map = true
+bump_strength = 25.1
+color_ramp = SubResource("Gradient_fi8c6")
+noise = SubResource("FastNoiseLite_pa5cp")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfuav"]
 render_priority = 0
 shader = SubResource("Shader_5nekp")
-shader_parameter/albedo = Color(1, 0, 0, 1)
-shader_parameter/point_size = 1.0
-shader_parameter/roughness = 1.0
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
 shader_parameter/metallic_texture_channel = null
-shader_parameter/specular = 0.5
+shader_parameter/specular = 0.0
 shader_parameter/metallic = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
 shader_parameter/uv1_offset = Vector3(0, 0, 0)
 shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
-shader_parameter/Glow_Power = 3.66
-shader_parameter/Lightness_Difference = 2.56
-shader_parameter/Sun_Color = Color(1, 0, 0, 1)
-shader_parameter/waveSpeed = 0.1
-shader_parameter/fresnel = 0.795
-shader_parameter/scale = 0.01
-shader_parameter/blendSharpness = 0.0
-shader_parameter/texture_albedo = SubResource("NoiseTexture2D_3du0t")
-shader_parameter/texture_roughness = SubResource("NoiseTexture2D_igu6y")
-shader_parameter/emission_noise = SubResource("NoiseTexture2D_0l6lw")
+shader_parameter/Glow_Power = 0.879
+shader_parameter/Lightness_Difference = 0.925
+shader_parameter/Sun_Color = Color(1, 1, 1, 1)
+shader_parameter/waveSpeed = 0.047
+shader_parameter/fresnel = 1.031
+shader_parameter/scale = 0.25
+shader_parameter/blendSharpness = 0.156
+shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
 
 [sub_resource type="SphereMesh" id="SphereMesh_f1oyn"]
+lightmap_size_hint = Vector2i(5, 0)
 material = SubResource("ShaderMaterial_kfuav")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4mdgf"]
@@ -137,6 +140,8 @@ material = SubResource("ShaderMaterial_kfuav")
 script = ExtResource("1_81nsq")
 
 [node name="StarMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0425976, 0)
+cast_shadow = 0
 mesh = SubResource("SphereMesh_f1oyn")
 
 [node name="StarCollision" type="CollisionShape3D" parent="."]
