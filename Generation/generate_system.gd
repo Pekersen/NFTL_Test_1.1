@@ -12,6 +12,7 @@ var num_astroids : int
 var star_type : String
 
 var orbit_sum := 0.0
+var planetInstance_distance
 
 signal star_gen(star_type)
 
@@ -30,15 +31,15 @@ func pick_star_type():
 
 	if random_float < 0.01:
 		return "O"
-	elif random_float < 0.03:
+	elif random_float < 0.04:
 		return "B"
-	elif random_float < 0.05:
+	elif random_float < 0.115:
 		return "A"
-	elif random_float < 0.1:
+	elif random_float < 0.215:
 		return "F"
-	elif random_float < 0.15:
+	elif random_float < 0.365:
 		return "G"
-	elif random_float < 0.2:
+	elif random_float < 0.565:
 		return "K"
 	else:
 		return "M"
@@ -65,9 +66,10 @@ func initPlanetChildren():
 
 func initPlanetVars(planetInstance):
 	# TEMP VALUES
-	planetInstance.distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
+	planetInstance_distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
+	planetInstance.distance = planetInstance_distance
 	planetInstance.orbit_speed = offsetValue([0.5,1.0])
-	planetInstance.radius = offsetValue([0.1,0.5])
+	planetInstance.radius = offsetValue([0.1,0.8])
 	
 func initStar():
 	star_gen.emit(star_type)

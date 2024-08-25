@@ -69,8 +69,8 @@ func _on_system_star_gen(star_type):
 	
 	starCollision.shape.radius = radius + click_forgiveness
 	
-	print(luminosity)
 	starLight.light_energy = luminosity
+	
 	
 func _init():
 	pass
