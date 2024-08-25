@@ -77,11 +77,22 @@ func _on_system_star_gen(star_type):
 		color_variance_r = [1,1]
 		color_variance_g = [0.25,0.35]
 		color_variance_b = [0.2,0.3]
+	
+	rotation_speed_variance = [0,0]
+	
+	var random_float = randf()
+	if random_float < 0.6:
+		rotation_speed_variance = [0.2,0.2]
+	elif random_float > 0.99:
+		rotation_speed_variance = [100,100]
+	else:
+		rotation_speed_variance = [0.1,10]
 		
 	radius = offsetValue(radius_variance)
 	mass = offsetValue(mass_variance)
 	luminosity = offsetValue(luminosity_variance)
 	temperature = offsetValue(temperature_variance)
+	rotation_speed = offsetValue(rotation_speed_variance)
 	
 	color_r = offsetValue(color_variance_r)
 	color_g = offsetValue(color_variance_g)
@@ -92,6 +103,7 @@ func _on_system_star_gen(star_type):
 	print("Luminosity: " + str(luminosity))
 	print("Temperature: " + str(temperature))
 	print("Color: R-" + str(color_r) + ", G-" + str(color_g) + ", B-" + str(color_b) + ", ")
+	print("Rotation Speed: " + str(rotation_speed))
 	
 	starMesh.mesh.radius = radius
 	starMesh.mesh.height = radius * 2
@@ -116,5 +128,5 @@ func _ready():
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	pass
+	star_rotate(delta)
 

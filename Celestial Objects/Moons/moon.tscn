@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqtxuyes4fdju"]
+[gd_scene load_steps=6 format=3 uid="uid://c1cm6ln654raf"]
 
-[ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
+[ext_resource type="Script" path="res://Celestial Objects/Moons/moon.gd" id="1_qvuol"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbg0y"]
 shading_mode = 0
@@ -20,9 +20,8 @@ height = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gfk4t"]
 
-[node name="Planet" type="Node3D" node_paths=PackedStringArray("rotationPoint")]
-script = ExtResource("1_21ytp")
-rotationPoint = NodePath("RotationPoint")
+[node name="Moon" type="Node3D"]
+script = ExtResource("1_qvuol")
 
 [node name="Orbit" type="MeshInstance3D" parent="."]
 cast_shadow = 0
@@ -33,8 +32,8 @@ mesh = SubResource("TorusMesh_3ugw0")
 [node name="Core" type="StaticBody3D" parent="RotationPoint"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
 
-[node name="TruePlanet" type="MeshInstance3D" parent="RotationPoint/Core"]
+[node name="TrueMoon" type="MeshInstance3D" parent="RotationPoint/Core"]
 mesh = SubResource("SphereMesh_xsawm")
 
-[node name="PlanetCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
+[node name="MoonCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
 shape = SubResource("SphereShape3D_gfk4t")

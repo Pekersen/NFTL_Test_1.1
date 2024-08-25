@@ -6,13 +6,16 @@ class_name SystemGeneration extends Node3D
 
 @onready var planet = preload("res://Celestial Objects/Planets/planet.tscn")
 @onready var star = preload("res://Celestial Objects/Stars/star.tscn")
+@onready var moon = preload("res://Celestial Objects/Moons/moon.tscn")
 
 var num_planets : int
 var num_astroids : int
 var star_type : String
+var num_moons : int
 
 var orbit_sum := 0.0
 var planetInstance_distance
+var moonInstance_distance
 
 signal star_gen(star_type)
 
@@ -60,7 +63,7 @@ func initPlanetChildren():
 		orbit_sum += planetInstance.distance
 		
 		print("Here: " + str(planetInstance.distance))
-		
+		initMoon()
 		add_child(planetInstance)
 		
 
@@ -70,6 +73,26 @@ func initPlanetVars(planetInstance):
 	planetInstance.distance = planetInstance_distance
 	planetInstance.orbit_speed = offsetValue([0.5,1.0])
 	planetInstance.radius = offsetValue([0.1,0.8])
+	num_moons = offsetValue([1,4])
+	print("Moons: " + str(num_moons))
+
+func initMoon():
+	print(num_moons)
+	for i in range(num_moons):
+		print("making moon...")
+		var moonInstance = moon.instantiate()
+		initMoonVars(moonInstance)
+		
+		print("Here: " + str(moonInstance.distance))
+		
+		add_child(moonInstance)
+		
+func initMoonVars(moonInstance):
+	# TEMP VALUES
+	moonInstance_distance = offsetValue([11.0,20.0])
+	moonInstance.distance = moonInstance_distance
+	moonInstance.orbit_speed = offsetValue([0.5,1.0])
+	moonInstance.radius = offsetValue([0.1,0.8])
 	
 func initStar():
 	star_gen.emit(star_type)
