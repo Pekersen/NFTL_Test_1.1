@@ -63,9 +63,6 @@ func initPlanetChildren():
 		
 		add_child(planetInstance)
 		
-func initStarChildren():
-	pass
-	#starInstance.radius = offsetValue([])
 
 func initPlanetVars(planetInstance):
 	# TEMP VALUES
@@ -73,5 +70,13 @@ func initPlanetVars(planetInstance):
 	planetInstance.orbit_speed = offsetValue([0.5,1.0])
 	planetInstance.radius = offsetValue([0.1,0.5])
 	
+	
+func initStarChildren():
+	pass
+	
 func initStarVars(starInstance):
 	pass
+
+func initStar():
+	initStarChildren()
+	#initStarVars(starInstance)
