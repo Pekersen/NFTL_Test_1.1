@@ -148,5 +148,6 @@ mesh = SubResource("SphereMesh_f1oyn")
 shape = SubResource("SphereShape3D_4mdgf")
 
 [node name="StarLight" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.852399, 0.825386, 1)
 shadow_enabled = true
 omni_range = 1000.0
