@@ -17,6 +17,9 @@ var orbit_sum := 0.0
 var planetInstance_distance
 var moonInstance_distance
 
+var orbit_speed_variance : Array[float] = [0.3,5.0]
+var moon_orbit_speed_variance : Array[float] = [0.5,1.0]
+
 signal star_gen(star_type)
 
 func initVars():
@@ -63,7 +66,9 @@ func initPlanetChildren():
 		orbit_sum += planetInstance.distance
 		
 		print("Here: " + str(planetInstance.distance))
-		initMoon()
+		
+		var moonInstance = initMoon()
+		planetInstance.add_child(moonInstance)
 		add_child(planetInstance)
 		
 
@@ -71,28 +76,30 @@ func initPlanetVars(planetInstance):
 	# TEMP VALUES
 	planetInstance_distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
 	planetInstance.distance = planetInstance_distance
-	planetInstance.orbit_speed = offsetValue([0.5,1.0])
+	planetInstance.orbit_speed = offsetValue(orbit_speed_variance)
 	planetInstance.radius = offsetValue([0.1,0.8])
 	num_moons = offsetValue([1,4])
+	print("Generate System script radius: " + str(planetInstance.radius))
+	print("Generate System script orbit_speed: " + str(planetInstance.orbit_speed))
 	print("Moons: " + str(num_moons))
 
 func initMoon():
-	print(num_moons)
 	for i in range(num_moons):
-		print("making moon...")
+		#print("making moon...")
 		var moonInstance = moon.instantiate()
 		initMoonVars(moonInstance)
 		
-		print("Here: " + str(moonInstance.distance))
+		#print("Here: " + str(moonInstance.distance))
 		
 		add_child(moonInstance)
 		
 func initMoonVars(moonInstance):
 	# TEMP VALUES
-	moonInstance_distance = offsetValue([11.0,20.0])
+	moonInstance_distance = offsetValue([1.0,3.0])
 	moonInstance.distance = moonInstance_distance
-	moonInstance.orbit_speed = offsetValue([0.5,1.0])
-	moonInstance.radius = offsetValue([0.1,0.8])
+	#moonInstance.position = planetInstance.position
+	moonInstance.moon_orbit_speed = offsetValue([0.5,1.0])
+	moonInstance.radius = offsetValue([0.02,0.2])
 	
 func initStar():
 	star_gen.emit(star_type)

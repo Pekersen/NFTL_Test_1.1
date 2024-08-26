@@ -6,20 +6,32 @@ extends Moon
 @onready var orbitMesh = $Orbit
 
 
+#var parent_planet_pos_x = get_parent($RotationPoint/Core.position.x)
+#var parent_planet_pos_y = get_parent($RotationPoint/Core.position.y)
+#var parent_planet_pos_z = get_parent($RotationPoint/Core.position.z)
+
 func _init():
+	
+	mass = 0.001
+	'''
+	var parent_planet = get_parent()
+	rotationPoint.position.x = parent_planet.position.x
+	rotationPoint.position.y = parent_planet.position.y
+	rotationPoint.position.z = parent_planet.position.z
+	
+
 	radius_variance = [0.01, 0.05]
-	#orbit_speed_variance = [0.1, 3] # this is temporary. There should be other values
+	moon_orbit_speed_variance = [0.1, 3] # this is temporary. There should be other values
 									# that affect this (e.g. distance).
-	print("default")
 	distance = 10
 	radius = offsetValue(radius_variance)
-	mass = 0.01
-	#orbit_speed = offsetValue(orbit_speed_variance)
-
+	
+	moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
+	'''
+	
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	print("setting radius")
 	# Init orbit visuals
 	orbitMesh.mesh.outer_radius = distance + 0.025
 	orbitMesh.mesh.inner_radius = distance - 0.025
@@ -35,5 +47,5 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	#orbit(delta)
-	pass
+	orbit(delta)
+
