@@ -13,21 +13,6 @@ extends Moon
 func _init():
 	
 	mass = 0.001
-	'''
-	var parent_planet = get_parent()
-	rotationPoint.position.x = parent_planet.position.x
-	rotationPoint.position.y = parent_planet.position.y
-	rotationPoint.position.z = parent_planet.position.z
-	
-
-	radius_variance = [0.01, 0.05]
-	moon_orbit_speed_variance = [0.1, 3] # this is temporary. There should be other values
-									# that affect this (e.g. distance).
-	distance = 10
-	radius = offsetValue(radius_variance)
-	
-	moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
-	'''
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():

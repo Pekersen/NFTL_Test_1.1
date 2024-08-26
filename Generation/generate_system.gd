@@ -89,7 +89,7 @@ func initMoon():
 		var moonInstance = moon.instantiate()
 		initMoonVars(moonInstance)
 		
-		#print("Here: " + str(moonInstance.distance))
+		print("Here: " + str(moonInstance.distance))
 		
 		add_child(moonInstance)
 		
