@@ -7,6 +7,7 @@ var SPEED_INCREASE = 1.0
 
 var clicked_node
 var following := false
+var rotation_lock := true
 
 var cameraRotationDifference = Vector3.ZERO
 var calculatingCamera = false
@@ -27,7 +28,7 @@ func _physics_process(delta: float) -> void:
 	
 	if following:
 		follow_camera()
-	if springArm.mouse_locked and clicked_node != null:
+	if rotation_lock and springArm.mouse_locked and clicked_node != null:
 		if !calculatingCamera:
 			springArmIntitialRotation = springArm.rotation
 		cameraRotationDifference = springArm.rotation -\
@@ -134,8 +135,11 @@ func shoot_ray_left():
 		
 func follow_camera():
 	position = clicked_node.global_position
-	if !springArm.mouse_locked and !calculatingCamera:
+	if !springArm.mouse_locked and !calculatingCamera and rotation_lock:
 		springArm.global_rotation = springArmIntitialRotation +\
 			 			cameraRotationDifference + clicked_node.global_rotation
 	
-
+func locked_camera_rotation(value : bool):
+	rotation_lock = value
+	# when console does command:
+	return "Locked camera rotation was set to " + str(value)

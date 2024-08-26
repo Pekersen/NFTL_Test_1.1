@@ -1,0 +1,60 @@
+{
+	"help": {
+		"target": "",
+		"type": 1,
+		"minPermission": 0,
+		"cheats": false,
+		"method": "show_command_list",
+		"argumentList": [
+			{
+				"name": "command",
+				"type": 4,
+				"optional": true
+			}
+		]
+	},
+	"clear": {
+		"target": "",
+		"type": 1,
+		"minPermission": 0,
+		"cheats": false,
+		"method": "clear_console",
+		"argumentList": []
+	},
+	"cheats": {
+		"target": "",
+		"type": 1,
+		"minPermission": 0,
+		"cheats": false,
+		"method": "toggle_cheats",
+		"argumentList": [
+			{
+				"name": "enabled",
+				"type": 1,
+				"optional": true
+			}
+		]
+	},
+	"get_star_info": {
+		"target": "Star",
+		"type": 1,
+		"minPermission": 0,
+		"cheats": false,
+		"method": "get_star_info",
+		"argumentList": []
+	},
+	"locked_camera_rotation": {
+		"target": "PlayerCamera",
+		"type": 1,
+		"minPermission": 0,
+		"cheats": false,
+		"method": "locked_camera_rotation",
+		"argumentList": [
+			{
+				"name": "value",
+				"type": 1,
+				"optional": false
+			}
+		]
+	}
+}

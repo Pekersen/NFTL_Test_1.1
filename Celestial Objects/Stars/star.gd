@@ -98,13 +98,6 @@ func _on_system_star_gen(star_type):
 	color_g = offsetValue(color_variance_g)
 	color_b = offsetValue(color_variance_b)
 	
-	print("Radius: " + str(radius))
-	print("Mass: " + str(mass))
-	print("Luminosity: " + str(luminosity))
-	print("Temperature: " + str(temperature))
-	print("Color: R-" + str(color_r) + ", G-" + str(color_g) + ", B-" + str(color_b) + ", ")
-	print("Rotation Speed: " + str(rotation_speed))
-	
 	starMesh.mesh.radius = radius
 	starMesh.mesh.height = radius * 2
 	
@@ -130,3 +123,9 @@ func _ready():
 func _process(delta):
 	star_rotate(delta)
 
+func get_star_info() -> String:
+	# Command currently based on Star node being in Main. Will have to change eventually.
+	return "Radius: " + str(radius) + "\nMass: " + str(mass) +\
+		"\nLuminosity: " + str(luminosity) + "\nTemperature: " + str(temperature) +\
+		"\nColor: R-" + str(color_r) + ", G-" + str(color_g) + ", B-" + str(color_b) +\
+		"\nRotation Speed: " + str(rotation_speed)
