@@ -1,10 +1,11 @@
-[gd_scene load_steps=7 format=3 uid="uid://dffhqmxhub7ir"]
+[gd_scene load_steps=8 format=3 uid="uid://dffhqmxhub7ir"]
 
 [ext_resource type="Script" path="res://Main/main.gd" id="1_lojkp"]
 [ext_resource type="PackedScene" uid="uid://7rmy8cmq7ttw" path="res://Camera/player_camera.tscn" id="2_pt41k"]
 [ext_resource type="PackedScene" uid="uid://bequjodqr8tcj" path="res://Celestial Objects/Stars/star.tscn" id="3_n5qgy"]
 [ext_resource type="Script" path="res://Generation/System.gd" id="4_synmx"]
 [ext_resource type="PackedScene" uid="uid://cmrfdlp25wcby" path="res://addons/simply-console/scenes/console-window/console_window.tscn" id="5_6vh2j"]
+[ext_resource type="PackedScene" uid="uid://d2sfk2lwhos4t" path="res://GUI/gui.tscn" id="6_m6524"]
 
 [sub_resource type="Environment" id="Environment_y5lqt"]
 background_mode = 1
@@ -34,5 +35,9 @@ num_astroids_variance = Array[int]([1, 3])
 
 [node name="ConsoleWindow" parent="." instance=ExtResource("5_6vh2j")]
 visible = false
+
+[node name="GUI" type="CanvasLayer" parent="."]
+
+[node name="Gui" parent="GUI" instance=ExtResource("6_m6524")]
 
 [connection signal="star_gen" from="System" to="Star" method="_on_system_star_gen"]

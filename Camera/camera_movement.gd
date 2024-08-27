@@ -7,7 +7,7 @@ var SPEED_INCREASE = 1.0
 
 var clicked_node
 var following := false
-var rotation_lock := true
+@export var rotation_lock := false
 
 var cameraRotationDifference = Vector3.ZERO
 var calculatingCamera = false

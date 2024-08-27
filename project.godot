@@ -18,6 +18,7 @@ config/icon="res://icon.svg"
 [autoload]
 
 ConsoleDataManager="*res://addons/simply-console/singletons/console_data_manager.gd"
+Global="*res://Globals/global.gd"
 
 [editor_plugins]
 

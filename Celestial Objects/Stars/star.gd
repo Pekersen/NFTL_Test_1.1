@@ -3,10 +3,10 @@ extends Star
 @onready var starMesh = $StarMesh
 @onready var starCollision = $StarCollision
 @onready var starLight = $StarLight
+var star_type : String
 
-
-func _on_system_star_gen(star_type):
-	print("Star Type: " + star_type)
+func _init_star_vars(star_type):
+	self.star_type = star_type
 	
 	if star_type == "O":
 		radius_variance = [13.2,20]
@@ -123,9 +123,15 @@ func _ready():
 func _process(delta):
 	star_rotate(delta)
 
+
+# For console
 func get_star_info() -> String:
 	# Command currently based on Star node being in Main. Will have to change eventually.
-	return "Radius: " + str(radius) + "\nMass: " + str(mass) +\
-		"\nLuminosity: " + str(luminosity) + "\nTemperature: " + str(temperature) +\
-		"\nColor: R-" + str(color_r) + ", G-" + str(color_g) + ", B-" + str(color_b) +\
-		"\nRotation Speed: " + str(rotation_speed)
+	return "Star type: " + str(star_type) + "\nRadius: " + str(radius) + "\nMass: " +\
+	 	str(mass) + "\nLuminosity: " + str(luminosity) + "\nTemperature: " +\
+		str(temperature) + "\nColor: R-" + str(color_r) + ", G-" + str(color_g) +\
+		", B-" + str(color_b) + "\nRotation Speed: " + str(rotation_speed)
+
+func set_star_type(newStarType : String):
+	_init_star_vars(newStarType)
+	return "Set star type to " + str(newStarType)

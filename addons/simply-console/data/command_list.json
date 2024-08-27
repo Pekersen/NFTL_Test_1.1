@@ -56,5 +56,33 @@
 				"optional": false
 			}
 		]
+	},
+	"set_star_type": {
+		"target": "Star",
+		"type": 1,
+		"minPermission": 0,
+		"cheats": false,
+		"method": "set_star_type",
+		"argumentList": [
+			{
+				"name": "starType",
+				"type": 4,
+				"optional": false
+			}
+		]
+	},
+	"set_time_speed": {
+		"target": "global",
+		"type": 0,
+		"minPermission": 0,
+		"cheats": false,
+		"method": "set_time_speed",
+		"argumentList": [
+			{
+				"name": "time",
+				"type": 3,
+				"optional": false
+			}
+		]
 	}
 }
