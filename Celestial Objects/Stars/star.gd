@@ -5,7 +5,7 @@ extends Star
 @onready var starLight = $StarLight
 var star_type : String
 
-func _init_star_vars(star_type):
+func  _on_system_star_gen(star_type):
 	self.star_type = star_type
 	
 	if star_type == "O":
@@ -82,11 +82,11 @@ func _init_star_vars(star_type):
 	
 	var random_float = randf()
 	if random_float < 0.6:
-		rotation_speed_variance = [0.2,0.2]
+		rotation_speed_variance = [0.02,0.03]
 	elif random_float > 0.99:
-		rotation_speed_variance = [100,100]
+		rotation_speed_variance = [11,12.5]
 	else:
-		rotation_speed_variance = [0.1,10]
+		rotation_speed_variance = [0.01,1.25]
 		
 	radius = offsetValue(radius_variance)
 	mass = offsetValue(mass_variance)
@@ -112,13 +112,6 @@ func _init_star_vars(star_type):
 	starMesh.mesh.material.set_shader_parameter("Sun_Color", Color(color_r, color_g, color_b))
 	starLight.light_color = Color(light_color_r, light_color_g, light_color_b)
 	
-func _init():
-	pass
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	star_rotate(delta)
@@ -133,5 +126,5 @@ func get_star_info() -> String:
 		", B-" + str(color_b) + "\nRotation Speed: " + str(rotation_speed)
 
 func set_star_type(newStarType : String):
-	_init_star_vars(newStarType)
+	_on_system_star_gen(newStarType)
 	return "Set star type to " + str(newStarType)

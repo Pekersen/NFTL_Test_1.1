@@ -16,4 +16,4 @@ var color_variance_g : Array[float]
 var color_variance_b : Array[float]
 
 func star_rotate(delta):
-	rotate_y(rotation_speed * delta)
+	rotate_y(rotation_speed * delta * Global.ticks_per_second)

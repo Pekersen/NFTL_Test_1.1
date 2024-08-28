@@ -20,6 +20,10 @@ config/icon="res://icon.svg"
 ConsoleDataManager="*res://addons/simply-console/singletons/console_data_manager.gd"
 Global="*res://Globals/global.gd"
 
+[display]
+
+window/vsync/vsync_mode=0
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg", "res://addons/godot_style/plugin.cfg", "res://addons/simply-console/plugin.cfg")

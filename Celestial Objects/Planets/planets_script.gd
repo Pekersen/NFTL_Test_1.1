@@ -15,7 +15,8 @@ var atmospheric_composition : Array[float]
 const ORBIT_SPEED_YEAR := PI/6
 var orbit_speed : float
 func orbit(delta):
-	rotationPoint.rotate_y(ORBIT_SPEED_YEAR * orbit_speed * delta)
+	rotationPoint.rotate_y(ORBIT_SPEED_YEAR * orbit_speed * delta *
+				 Global.ticks_per_second / distance)
 
 # Offset values
 var distance_variance : Array[float]

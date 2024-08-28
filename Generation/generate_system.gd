@@ -17,8 +17,8 @@ var orbit_sum := 0.0
 var planetInstance_distance
 var moonInstance_distance
 
-var orbit_speed_variance : Array[float] = [0.3,5.0]
-var moon_orbit_speed_variance : Array[float] = [0.5,1.0]
+var orbit_speed_variance : Array[float] = [0.5,5.5]
+var moon_orbit_speed_variance : Array[float] = [0.1,0.2]
 
 signal star_gen(star_type)
 
@@ -98,7 +98,7 @@ func initMoonVars(moonInstance):
 	moonInstance_distance = offsetValue([1.0,3.0])
 	moonInstance.distance = moonInstance_distance
 	#moonInstance.position = planetInstance.position
-	moonInstance.moon_orbit_speed = offsetValue([0.5,1.0])
+	moonInstance.moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
 	moonInstance.radius = offsetValue([0.02,0.2])
 	
 func initStar():
