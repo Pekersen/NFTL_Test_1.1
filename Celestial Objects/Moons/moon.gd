@@ -6,9 +6,7 @@ extends Moon
 @onready var orbitMesh = $Orbit
 
 
-#var parent_planet_pos_x = get_parent($RotationPoint/Core.position.x)
-#var parent_planet_pos_y = get_parent($RotationPoint/Core.position.y)
-#var parent_planet_pos_z = get_parent($RotationPoint/Core.position.z)
+
 
 func _init():
 	
@@ -16,10 +14,12 @@ func _init():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var parent = get_parent()
+	position.x = parent.position.x + 30
 	
 	# Init orbit visuals
-	orbitMesh.mesh.outer_radius = distance + 0.025
-	orbitMesh.mesh.inner_radius = distance - 0.025
+	orbitMesh.mesh.outer_radius = distance + 0.01
+	orbitMesh.mesh.inner_radius = distance - 0.01
 	core.position.x = distance
 	# Init planet visuals
 	moonMesh.mesh.radius = radius

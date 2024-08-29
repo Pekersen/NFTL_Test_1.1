@@ -8,24 +8,13 @@ extends Planet
 
 func _init():
 	mass = 0.01
-	'''
-	radius_variance = [0.08, 0.2]
-	orbit_speed_variance = [0.1, 3] # this is temporary. There should be other values
-									# that affect this (e.g. distance).
-	distance = 10
-	radius = offsetValue(radius_variance)
-	
-	orbit_speed = offsetValue(orbit_speed_variance)
-	print("planet script radius: " + str(radius))
-	print("planet script orbit_speed: " + str(orbit_speed))
-	'''
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
 	# Init orbit visuals
-	orbitMesh.mesh.outer_radius = distance + 0.025
-	orbitMesh.mesh.inner_radius = distance - 0.025
+	orbitMesh.mesh.outer_radius = distance + 0.01
+	orbitMesh.mesh.inner_radius = distance - 0.01
 	core.position.x = distance
 	# Init planet visuals
 	planetMesh.mesh.radius = radius
