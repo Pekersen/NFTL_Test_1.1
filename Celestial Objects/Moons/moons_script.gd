@@ -13,5 +13,6 @@ var orbit_angle : float # may have to be a vector to account for x and z rotatio
 
 const ORBIT_SPEED_YEAR := PI/6
 func orbit(delta):
-	rotationPoint.rotate_y(ORBIT_SPEED_YEAR * moon_orbit_speed * delta)
+	rotationPoint.rotate_y(ORBIT_SPEED_YEAR * moon_orbit_speed * delta *
+		Global.ticks_per_second / distance)
 	

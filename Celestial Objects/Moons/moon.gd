@@ -15,7 +15,7 @@ func _init():
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	var parent = get_parent()
-	position.x = parent.position.x + 30
+	global_position.x = parent.global_position.x
 	
 	# Init orbit visuals
 	orbitMesh.mesh.outer_radius = distance + 0.01
