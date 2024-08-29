@@ -13,18 +13,21 @@ var cameraRotationDifference = Vector3.ZERO
 var calculatingCamera = false
 var springArmIntitialRotation = Vector3.ZERO
 
+var movement_enabled := true
+
 func _physics_process(delta: float) -> void:
+	if movement_enabled:
+		var input = Input.get_vector("left", "right", "forward", "back")
+		var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
+		
+		velocity.x = direction.x * SPEED * SPEED_INCREASE
+		velocity.z = direction.z * SPEED * SPEED_INCREASE
+		
+		if abs(input) > Vector2(0,0):
+			following = false
+
+		move_and_slide()
 	
-	var input = Input.get_vector("left", "right", "forward", "back")
-	var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
-	
-	velocity.x = direction.x * SPEED * SPEED_INCREASE
-	velocity.z = direction.z * SPEED * SPEED_INCREASE
-	
-	if abs(input) > Vector2(0,0):
-		following = false
-	
-	move_and_slide()
 	
 	if following:
 		follow_camera()

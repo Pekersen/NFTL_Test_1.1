@@ -71,15 +71,15 @@
 			}
 		]
 	},
-	"set_time_scale": {
+	"set_ticks_per_second": {
 		"target": "Main",
 		"type": 1,
 		"minPermission": 0,
 		"cheats": false,
-		"method": "set_time_scale",
+		"method": "set_ticks_per_second",
 		"argumentList": [
 			{
-				"name": "scale",
+				"name": "ticks",
 				"type": 3,
 				"optional": false
 			}

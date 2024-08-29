@@ -126,5 +126,28 @@ func get_star_info() -> String:
 		", B-" + str(color_b) + "\nRotation Speed: " + str(rotation_speed)
 
 func set_star_type(newStarType : String):
-	_on_system_star_gen(newStarType)
-	return "Set star type to " + str(newStarType)
+	if newStarType == "random":
+		newStarType = pick_star_type()
+		_on_system_star_gen(newStarType)
+	else:
+		_on_system_star_gen(newStarType)
+	return "Set star type to " + (str(newStarType))
+
+# temp
+func pick_star_type():
+	var random_float = randf()
+
+	if random_float < 0.01:
+		return "O"
+	elif random_float < 0.04:
+		return "B"
+	elif random_float < 0.115:
+		return "A"
+	elif random_float < 0.215:
+		return "F"
+	elif random_float < 0.365:
+		return "G"
+	elif random_float < 0.565:
+		return "K"
+	else:
+		return "M"

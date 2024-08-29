@@ -1,5 +1,7 @@
 extends Window
 
+signal hid_console
+
 ## Permissions for executing commands.
 @export var permissionLevel: ConsoleDataManager.PermissionLevel = 0
 ## Whether the user has access to cheats.
@@ -35,11 +37,11 @@ func _ready() -> void:
 
 func on_close_requested() -> void:
 	hide()
-
+	hid_console.emit()
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("console_switch"):
-		visible = !visible
+		on_close_requested()
 	
 	if (
 		SuggestionsRef.is_visible_in_tree()
