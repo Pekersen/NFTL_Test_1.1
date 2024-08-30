@@ -15,6 +15,15 @@ var springArmIntitialRotation = Vector3.ZERO
 
 var movement_enabled := true
 
+signal cam_move_to_spring_arm(radius1)
+
+
+func _on_star_star_rad_for_cam(radius):
+	var radius1 = radius
+	cam_move_to_spring_arm.emit(radius1)
+
+	
+
 func _physics_process(delta: float) -> void:
 	if movement_enabled:
 		var input = Input.get_vector("left", "right", "forward", "back")
@@ -146,3 +155,6 @@ func locked_camera_rotation(value : bool):
 	rotation_lock = value
 	# when console does command:
 	return "Locked camera rotation was set to " + str(value)
+
+
+

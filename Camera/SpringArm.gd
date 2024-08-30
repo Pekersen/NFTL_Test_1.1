@@ -2,6 +2,10 @@ extends SpringArm3D
 
 @export var mouse_sensitivity := 0.15
 
+var camera_min : float
+var star_radius : float = 0.0
+var star_rad_run : bool = false
+
 # zoom
 @export_group("Camera Zoom")
 ## Default distance to set the camera from the player.
@@ -39,6 +43,8 @@ func _ready() -> void:
 	spring_arm.spring_length = camera_default_distance
 	# zoom
 	
+	
+	
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion and mouse_locked == true:
 		rotation_degrees.x -= event.relative.y * mouse_sensitivity
@@ -64,11 +70,13 @@ func _input(event):
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
 		
+		
 	if event.is_action_pressed("camera_confine"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CONFINED)
 		
 		
 func _process(delta):
+	
 	if not Input.is_action_pressed("camera_to_cursor") and mouse_locked == true:
 		mouse_locked = false
 	
@@ -90,3 +98,20 @@ func _process(delta):
 	if _spring_arm_target_length != spring_arm.spring_length:
 		spring_arm.spring_length = lerp(spring_arm.spring_length, _spring_arm_target_length, camera_lerp_speed * delta)
 	# zoom
+	if star_rad_run == true:
+		print("ACTUAL SPRING LENGTH 1: " + str(spring_arm.spring_length))
+		_spring_arm_target_length = camera_min
+		spring_arm.spring_length = camera_min
+		print("ACTUAL SPRING LENGTH 2: " + str(spring_arm.spring_length))
+		star_rad_run = false
+	
+func _on_base_point_cam_move_to_spring_arm(radius1):
+	star_radius = radius1
+	print("CAMERA STAR RADIUS: " + str(star_radius))
+	camera_min = star_radius + 0.5
+	print("CAMERA_MIN: " + str(camera_min))
+	
+	camera_distance_min = camera_min
+	
+	star_rad_run = true
+

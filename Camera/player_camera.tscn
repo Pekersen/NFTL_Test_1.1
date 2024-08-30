@@ -13,3 +13,5 @@ margin = 0.001
 script = ExtResource("2_ohl0f")
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
+
+[connection signal="cam_move_to_spring_arm" from="." to="SpringArm3D" method="_on_base_point_cam_move_to_spring_arm"]

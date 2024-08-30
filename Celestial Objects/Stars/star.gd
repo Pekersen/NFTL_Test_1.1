@@ -5,6 +5,8 @@ extends Star
 @onready var starLight = $StarLight
 var star_type : String
 
+signal star_rad_for_cam(radius)
+
 func  _on_system_star_gen(star_type):
 	self.star_type = star_type
 	
@@ -111,6 +113,9 @@ func  _on_system_star_gen(star_type):
 	
 	starMesh.mesh.material.set_shader_parameter("Sun_Color", Color(color_r, color_g, color_b))
 	starLight.light_color = Color(light_color_r, light_color_g, light_color_b)
+	
+	star_rad_for_cam.emit(radius)
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
