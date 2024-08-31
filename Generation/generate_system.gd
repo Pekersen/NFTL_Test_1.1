@@ -113,7 +113,7 @@ func initPlanetVars(planetInstance):
 		num_moons_variance = [4,10]
 	elif planet_type == "Terrestrial_Planet":
 		planet_radius_variance = [0.2,0.4]
-		num_moons_variance = [1,2]
+		num_moons_variance = [0,2]
 		
 	planetInstance.radius = offsetValue(planet_radius_variance)
 	num_moons = offsetValue(num_moons_variance)
