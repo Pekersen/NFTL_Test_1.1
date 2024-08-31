@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @onready var springArm = $SpringArm3D
 @onready var camera = $SpringArm3D/Camera3D
-var SPEED = 7.5
+var SPEED = 10
 var SPEED_INCREASE = 1.0
 
 var clicked_node

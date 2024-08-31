@@ -12,6 +12,10 @@ var num_planets : int
 var num_astroids : int
 var star_type : String
 var num_moons : int
+var planet_type : String
+
+var planet_radius_variance : Array[float]
+var num_moons_variance : Array[float]
 
 var orbit_sum := 0.0
 var planetInstance_distance
@@ -94,11 +98,25 @@ func initPlanetChildren():
 
 func initPlanetVars(planetInstance):
 	# TEMP VALUES
+	var random_float = randf()
+	if random_float < 0.5:
+		planet_type = "Gas_Giant"
+	else:
+		planet_type = "Terrestrial_Planet"
+	
 	planetInstance_distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
 	planetInstance.distance = planetInstance_distance + star_rad
 	planetInstance.orbit_speed = offsetValue(orbit_speed_variance)
-	planetInstance.radius = offsetValue([0.1,0.8])
-	num_moons = offsetValue([1,4])
+	
+	if planet_type == "Gas_Giant":
+		planet_radius_variance = [0.4,0.7] 
+		num_moons_variance = [4,10]
+	elif planet_type == "Terrestrial_Planet":
+		planet_radius_variance = [0.2,0.4]
+		num_moons_variance = [1,2]
+		
+	planetInstance.radius = offsetValue(planet_radius_variance)
+	num_moons = offsetValue(num_moons_variance)
 	print("Generate System script radius: " + str(planetInstance.radius))
 	print("Generate System script orbit_speed: " + str(planetInstance.orbit_speed))
 	print("Moons: " + str(num_moons))
@@ -113,7 +131,7 @@ func initMoonVars(moonInstance):
 	moonInstance_distance = offsetValue([1.0,3.0])
 	moonInstance.distance = moonInstance_distance
 	moonInstance.moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
-	moonInstance.radius = offsetValue([0.02,0.2])
+	moonInstance.radius = offsetValue([0.02,0.1])
 	
 func initStar():
 	star_gen.emit(star_type)

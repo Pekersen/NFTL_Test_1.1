@@ -5,6 +5,7 @@ extends Planet
 @onready var planetCollision = $"RotationPoint/Core/PlanetCollision"
 @onready var orbitMesh = $Orbit
 
+var initRotPos : float
 
 func _init():
 	mass = 0.01
@@ -13,8 +14,8 @@ func _init():
 func _ready():
 	
 	# Init orbit visuals
-	orbitMesh.mesh.outer_radius = distance + 0.01
-	orbitMesh.mesh.inner_radius = distance - 0.01
+	orbitMesh.mesh.outer_radius = distance + 0.05
+	orbitMesh.mesh.inner_radius = distance - 0.05
 	core.position.x = distance
 	# Init planet visuals
 	planetMesh.mesh.radius = radius
@@ -24,6 +25,9 @@ func _ready():
 	
 	
 	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
+	
+	initRotPos = offsetValue([0,2 * PI])
+	rotationPoint.rotate_y(initRotPos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:

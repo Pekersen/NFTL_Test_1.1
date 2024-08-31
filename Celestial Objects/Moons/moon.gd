@@ -16,10 +16,12 @@ func _init():
 func _ready():
 	var parent = get_parent()
 	global_position.x = parent.global_position.x
+	global_rotation.x = offsetValue([-0.3,0.3])
+	global_rotation.z = offsetValue([-0.3,0.3])
 	
 	# Init orbit visuals
-	orbitMesh.mesh.outer_radius = distance + 0.01
-	orbitMesh.mesh.inner_radius = distance - 0.01
+	orbitMesh.mesh.outer_radius = distance + 0.0025
+	orbitMesh.mesh.inner_radius = distance - 0.0025
 	core.position.x = distance
 	# Init planet visuals
 	moonMesh.mesh.radius = radius

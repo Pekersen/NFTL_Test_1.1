@@ -4,7 +4,7 @@ extends SpringArm3D
 
 var camera_min : float
 var star_radius : float = 0.0
-var star_rad_run : bool = false
+
 
 # zoom
 @export_group("Camera Zoom")
@@ -98,12 +98,6 @@ func _process(delta):
 	if _spring_arm_target_length != spring_arm.spring_length:
 		spring_arm.spring_length = lerp(spring_arm.spring_length, _spring_arm_target_length, camera_lerp_speed * delta)
 	# zoom
-	if star_rad_run == true:
-		print("ACTUAL SPRING LENGTH 1: " + str(spring_arm.spring_length))
-		_spring_arm_target_length = camera_min
-		spring_arm.spring_length = camera_min
-		print("ACTUAL SPRING LENGTH 2: " + str(spring_arm.spring_length))
-		star_rad_run = false
 	
 func _on_base_point_cam_move_to_spring_arm(radius1):
 	star_radius = radius1
@@ -112,6 +106,6 @@ func _on_base_point_cam_move_to_spring_arm(radius1):
 	print("CAMERA_MIN: " + str(camera_min))
 	
 	camera_distance_min = camera_min
-	
-	star_rad_run = true
+	_spring_arm_target_length = camera_min
+	spring_arm.spring_length = camera_min
 
