@@ -101,11 +101,9 @@ func _process(delta):
 	
 func _on_base_point_cam_move_to_spring_arm(radius1):
 	star_radius = radius1
-	print("CAMERA STAR RADIUS: " + str(star_radius))
-	camera_min = star_radius + 0.5
-	print("CAMERA_MIN: " + str(camera_min))
+	camera_min = 2 * star_radius
 	
-	camera_distance_min = camera_min
+	#camera_distance_min = camera_min
 	_spring_arm_target_length = camera_min
 	spring_arm.spring_length = camera_min
 

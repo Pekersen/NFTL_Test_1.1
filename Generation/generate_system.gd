@@ -131,7 +131,7 @@ func initMoonVars(moonInstance):
 	moonInstance_distance = offsetValue([1.0,3.0])
 	moonInstance.distance = moonInstance_distance
 	moonInstance.moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
-	moonInstance.radius = offsetValue([0.02,0.1])
+	moonInstance.radius = offsetValue([0.01,0.05])
 	
 func initStar():
 	star_gen.emit(star_type)
