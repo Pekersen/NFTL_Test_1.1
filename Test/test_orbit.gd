@@ -1,14 +1,14 @@
 extends Node3D
 
 # Orbital parameters
-var a = 5.0  # semi-major axis
-var e = 0.7  # eccentricity
-var T = a**(3.0/2) # orbital period (in seconds)
+var semi_major_axis = 5.0
+var eccentricity = 0.7
+var orbital_period = semi_major_axis **(3.0/2) # in seconds
 var time_passed = 0.0  # track elapsed time
 
 # Function to calculate the mean anomaly
 func get_mean_anomaly(time_passed: float, period: float) -> float:
-	return ((2 * PI) / T) * time_passed
+	return ((2 * PI) / orbital_period) * time_passed
 
 # Function to solve Kepler's equation for eccentric anomaly using Newton's method
 func solve_kepler(M: float, ecc: float, tolerance: float = 1e-6) -> float:
@@ -29,10 +29,10 @@ func get_radius(true_anomaly: float, semi_major_axis: float, ecc: float) -> floa
 
 # Function to calculate the position in Cartesian coordinates
 func calculate_orbit_position(time_passed: float) -> Vector3:
-	var M = get_mean_anomaly(time_passed, T)
-	var E = solve_kepler(M, e)
-	var theta = get_true_anomaly(E, e)
-	var r = get_radius(theta, a, e)
+	var M = get_mean_anomaly(time_passed, orbital_period)
+	var E = solve_kepler(M, eccentricity)
+	var theta = get_true_anomaly(E, eccentricity)
+	var r = get_radius(theta, semi_major_axis , eccentricity)
 	
 	# Convert polar coordinates (r, theta) to Cartesian coordinates (x, y)
 	var x = r * cos(theta)
