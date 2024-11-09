@@ -34,7 +34,9 @@ func initVars():
 	star_rad = star_type_to_rad()
 	num_planets = offsetValue(num_planets_variance)
 	num_astroids = offsetValue(num_astroids_variance)
+	print(star_type)
 	
+
 
 # for randomness
 var rng = RandomNumberGenerator.new()
@@ -56,7 +58,6 @@ func pick_star_type():
 		return "K"
 	else:
 		return "M"
-		
 		
 func star_type_to_rad():
 	if star_type == "O":
@@ -99,24 +100,33 @@ func initPlanetChildren():
 func initPlanetVars(planetInstance):
 	# TEMP VALUES
 	var random_float = randf()
-	if random_float < 0.5:
+	if random_float < 0.4:
 		planet_type = "Gas_Giant"
+	elif random_float < 0.6:
+		planet_type = "Ice_Giant"
 	else:
 		planet_type = "Terrestrial_Planet"
+		
+	print(planet_type)
 	
 	planetInstance_distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
 	planetInstance.distance = planetInstance_distance + star_rad
+	#planetInstance.orbit_speed = 1 / ((planetInstance_distance ** 3) ** 0.5)
 	planetInstance.orbit_speed = offsetValue(orbit_speed_variance)
 	
 	if planet_type == "Gas_Giant":
-		planet_radius_variance = [0.4,0.7] 
+		planet_radius_variance = [0.5,0.7] 
 		num_moons_variance = [4,10]
 	elif planet_type == "Terrestrial_Planet":
-		planet_radius_variance = [0.2,0.4]
+		planet_radius_variance = [0.15,0.35]
 		num_moons_variance = [0,2]
+	elif planet_type == "Ice_Giant":
+		planet_radius_variance = [0.35,0.5]
+		num_moons_variance = [2,4]
 		
 	planetInstance.radius = offsetValue(planet_radius_variance)
 	num_moons = offsetValue(num_moons_variance)
+	
 	print("Generate System script radius: " + str(planetInstance.radius))
 	print("Generate System script orbit_speed: " + str(planetInstance.orbit_speed))
 	print("Moons: " + str(num_moons))
@@ -128,7 +138,7 @@ func initMoon():
 		
 func initMoonVars(moonInstance):
 	# TEMP VALUES
-	moonInstance_distance = offsetValue([1.0,3.0])
+	moonInstance_distance = offsetValue([1.5,3.0])
 	moonInstance.distance = moonInstance_distance
 	moonInstance.moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
 	moonInstance.radius = offsetValue([0.01,0.05])

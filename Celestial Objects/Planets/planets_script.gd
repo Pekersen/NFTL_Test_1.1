@@ -26,3 +26,17 @@ var rotation_speed_variance : Array[float]
 var tilt_variance : Array[float]
 var atomospheric_composition_variance : Array[float]
 var orbit_speed_variance : Array[float]
+
+# For Brown Dwarves
+"""
+var luminosity : float
+var luminosity_variance : Array[float]
+
+var color_r : float
+var color_g : float
+var color_b : float
+
+var color_variance_r : Array[float]
+var color_variance_g : Array[float]
+var color_variance_b : Array[float]
+"""
