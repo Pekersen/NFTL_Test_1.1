@@ -6,6 +6,7 @@ extends Planet
 @onready var orbitMesh = $Orbit
 
 var initRotPos : float
+var orbit_path_visible = true
 
 func _init():
 	mass = 0.01
@@ -32,3 +33,11 @@ func _ready():
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	orbit(delta)
+	
+func _input(event):
+	if event.is_action_pressed("lines") and orbit_path_visible == true:
+		orbitMesh.visible = false
+		orbit_path_visible = false
+	elif event.is_action_pressed("lines") and orbit_path_visible == false:
+		orbitMesh.visible = true
+		orbit_path_visible = true

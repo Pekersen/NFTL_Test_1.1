@@ -6,7 +6,7 @@ extends Moon
 @onready var orbitMesh = $Orbit
 
 
-
+var orbit_path_visible = true
 
 func _init():
 	
@@ -36,3 +36,11 @@ func _ready():
 func _process(delta: float) -> void:
 	orbit(delta)
 
+
+func _input(event):
+	if event.is_action_pressed("lines") and orbit_path_visible == true:
+		orbitMesh.visible = false
+		orbit_path_visible = false
+	elif event.is_action_pressed("lines") and orbit_path_visible == false:
+		orbitMesh.visible = true
+		orbit_path_visible = true
