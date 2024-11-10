@@ -30,7 +30,7 @@ environment = SubResource("Environment_y5lqt")
 
 [node name="System" type="Node3D" parent="."]
 script = ExtResource("4_synmx")
-num_planets_variance = Array[int]([1, 5])
+num_planets_variance = Array[int]([3, 6])
 num_astroids_variance = Array[int]([1, 3])
 
 [node name="ConsoleWindow" parent="." instance=ExtResource("5_6vh2j")]

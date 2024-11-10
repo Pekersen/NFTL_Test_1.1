@@ -111,14 +111,14 @@ func initPlanetVars(planetInstance):
 	
 	planetInstance_distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
 	planetInstance.distance = planetInstance_distance + star_rad
-	#planetInstance.orbit_speed = 1 / ((planetInstance_distance ** 3) ** 0.5)
-	planetInstance.orbit_speed = offsetValue(orbit_speed_variance)
+	planetInstance.orbit_speed = 100 / ((planetInstance_distance ** 3) ** 0.5)
+	#planetInstance.orbit_speed = offsetValue(orbit_speed_variance)
 	
 	if planet_type == "Gas_Giant":
 		planet_radius_variance = [0.5,0.7] 
 		num_moons_variance = [4,10]
 	elif planet_type == "Terrestrial_Planet":
-		planet_radius_variance = [0.15,0.35]
+		planet_radius_variance = [0.2,0.35]
 		num_moons_variance = [0,2]
 	elif planet_type == "Ice_Giant":
 		planet_radius_variance = [0.35,0.5]
@@ -140,7 +140,8 @@ func initMoonVars(moonInstance):
 	# TEMP VALUES
 	moonInstance_distance = offsetValue([1.5,3.0])
 	moonInstance.distance = moonInstance_distance
-	moonInstance.moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
+	moonInstance.moon_orbit_speed = 1 / ((moonInstance_distance ** 3) ** 0.5)
+	#moonInstance.moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
 	moonInstance.radius = offsetValue([0.01,0.05])
 	
 func initStar():
