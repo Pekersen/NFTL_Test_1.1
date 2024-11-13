@@ -15,9 +15,9 @@ func _init():
 func _ready():
 	
 	# Init orbit visuals
-	orbitMesh.mesh.outer_radius = distance + 0.05
-	orbitMesh.mesh.inner_radius = distance - 0.05
-	core.position.x = distance
+	orbitMesh.mesh.outer_radius = semi_major_axis + 0.05
+	orbitMesh.mesh.inner_radius = semi_major_axis - 0.05
+	core.position.x = semi_major_axis
 	# Init planet visuals
 	planetMesh.mesh.radius = radius
 	planetMesh.mesh.height = radius * 2
@@ -32,7 +32,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	orbit(delta)
+	orbit(delta, core)
 	
 func _input(event):
 	if event.is_action_pressed("lines") and orbit_path_visible == true:

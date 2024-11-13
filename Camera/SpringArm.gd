@@ -13,7 +13,7 @@ var star_radius : float = 0.0
 ## Maximum distance the camera can zoom out to.
 @export var camera_distance_max := 1000.0
 ## Mininum distance the camera can zoom in to.
-@export var camera_distance_min := 1.0
+@export var camera_distance_min := 1.0 # TODO: Make it variable to celestial obj size
 ## How far the camera will move per zoom input.
 @export var camera_zoom_step := 0.6
 ## How quickly the camera zoom interpolates.

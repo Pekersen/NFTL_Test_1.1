@@ -12,8 +12,9 @@ layout_mode = 0
 offset_left = 1004.0
 offset_right = 1151.0
 offset_bottom = 22.0
-max_value = 16.0
+max_value = 128.0
 value = 8.0
+exp_edit = true
 
 [node name="FpsCounter" type="Label" parent="."]
 layout_mode = 0

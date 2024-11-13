@@ -90,7 +90,7 @@ func initPlanetChildren():
 		
 		orbit_sum += planetInstance_distance
 		
-		print("Here: " + str(planetInstance.distance))
+		print("Planet distannce: ", str(planetInstance.semi_major_axis))
 		add_child(planetInstance)
 		for j in range(num_moons):
 			var moonInstance = initMoon()
@@ -110,8 +110,9 @@ func initPlanetVars(planetInstance):
 	print(planet_type)
 	
 	planetInstance_distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
-	planetInstance.distance = planetInstance_distance + star_rad
-	planetInstance.orbit_speed = 100 / ((planetInstance_distance ** 3) ** 0.5)
+	planetInstance.semi_major_axis = planetInstance_distance + star_rad
+	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
+	planetInstance.eccentricity = rng.randf_range(0, 0.1) #TODO: Make acurrate eccentricity values
 	#planetInstance.orbit_speed = offsetValue(orbit_speed_variance)
 	
 	if planet_type == "Gas_Giant":
@@ -128,7 +129,7 @@ func initPlanetVars(planetInstance):
 	num_moons = offsetValue(num_moons_variance)
 	
 	print("Generate System script radius: " + str(planetInstance.radius))
-	print("Generate System script orbit_speed: " + str(planetInstance.orbit_speed))
+	print("Generate System script orbital_period: " + str(planetInstance.orbital_period))
 	print("Moons: " + str(num_moons))
 
 func initMoon():
