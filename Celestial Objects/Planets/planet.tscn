@@ -20,10 +20,9 @@ height = 0.2
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gfk4t"]
 
-[node name="Planet" type="Node3D" node_paths=PackedStringArray("rotationPoint", "core")]
+[node name="Planet" type="Node3D" node_paths=PackedStringArray("rotationPoint")]
 script = ExtResource("1_21ytp")
 rotationPoint = NodePath("RotationPoint")
-core = NodePath("RotationPoint/Core")
 
 [node name="Orbit" type="MeshInstance3D" parent="."]
 cast_shadow = 0

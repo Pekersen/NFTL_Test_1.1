@@ -18,11 +18,12 @@ func _ready():
 	global_position.x = parent.global_position.x
 	global_rotation.x = offsetValue([-0.3,0.3])
 	global_rotation.z = offsetValue([-0.3,0.3])
+	global_rotation.y = parent.global_rotation.y
 	
 	# Init orbit visuals
-	orbitMesh.mesh.outer_radius = distance + 0.0025
-	orbitMesh.mesh.inner_radius = distance - 0.0025
-	core.position.x = distance
+	orbitMesh.mesh.outer_radius = semi_major_axis + 0.0025
+	orbitMesh.mesh.inner_radius = semi_major_axis - 0.0025
+	core.position.x = semi_major_axis
 	# Init planet visuals
 	moonMesh.mesh.radius = radius
 	moonMesh.mesh.height = radius * 2
@@ -34,7 +35,7 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
-	orbit(delta)
+	orbit(delta, core)
 
 
 func _input(event):

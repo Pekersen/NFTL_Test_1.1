@@ -7,7 +7,7 @@ var rings : bool
 var ring_size : float
 var tidally_locked : bool
 var rotation_speed : float
-var tilt : float
+var tilt : float # may have to be a vector to account for x and z rotation
 
 var atmospheric_composition : Array[float]
 
@@ -21,7 +21,7 @@ func orbit(delta, core):
 	time_passed += delta * Global.ticks_per_second / ORBIT_SPEED_CONST
 	
 	# Calculate the current position in the elliptical orbit
-	core.global_position = calculate_orbit_position(time_passed)
+	core.position = calculate_orbit_position(time_passed)
 
 # Function to calculate the mean anomaly
 func get_mean_anomaly(time_passed: float, period: float) -> float:

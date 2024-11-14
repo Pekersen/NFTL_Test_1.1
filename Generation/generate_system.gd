@@ -140,8 +140,9 @@ func initMoon():
 func initMoonVars(moonInstance):
 	# TEMP VALUES
 	moonInstance_distance = offsetValue([1.5,3.0])
-	moonInstance.distance = moonInstance_distance
-	moonInstance.moon_orbit_speed = 1 / ((moonInstance_distance ** 3) ** 0.5)
+	moonInstance.semi_major_axis = moonInstance_distance
+	moonInstance.orbital_period = moonInstance.semi_major_axis **(3.0/2)
+	moonInstance.eccentricity = rng.randf_range(0, 0.1) #TODO: Make acurrate eccentricity values
 	#moonInstance.moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
 	moonInstance.radius = offsetValue([0.01,0.05])
 	
