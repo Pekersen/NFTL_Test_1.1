@@ -22,6 +22,7 @@ glow_blend_mode = 0
 script = ExtResource("1_lojkp")
 
 [node name="PlayerCamera" parent="." instance=ExtResource("2_pt41k")]
+motion_mode = 1
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_y5lqt")

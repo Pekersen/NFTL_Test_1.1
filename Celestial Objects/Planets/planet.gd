@@ -30,7 +30,7 @@ func _ready():
 	rotationPoint.rotate_y(initRotPos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	orbit(delta, core)
 	
 func _input(event):

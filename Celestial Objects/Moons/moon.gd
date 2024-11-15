@@ -31,7 +31,7 @@ func _ready():
 	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
+func _physics_process(delta: float) -> void:
 	orbit(delta, core)
 
 

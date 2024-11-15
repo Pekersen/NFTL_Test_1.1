@@ -13,7 +13,10 @@ var cameraRotationDifference = Vector3.ZERO
 var calculatingCamera = false
 var springArmIntitialRotation = Vector3.ZERO
 
-var movement_enabled := true
+var free_movement_enabled := true
+var locked_movement_enabled := false
+
+var locked_camera_offset := Vector3.ZERO
 
 signal cam_move_to_spring_arm(radius1)
 
@@ -25,7 +28,7 @@ func _on_star_star_rad_for_cam(radius):
 	
 
 func _physics_process(delta: float) -> void:
-	if movement_enabled:
+	if free_movement_enabled:
 		var input = Input.get_vector("left", "right", "forward", "back")
 		var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
 		
@@ -34,8 +37,28 @@ func _physics_process(delta: float) -> void:
 		
 		if abs(input) > Vector2(0,0):
 			following = false
-
+		
+		if (Input.is_action_pressed("upward")):
+			velocity.y = SPEED * SPEED_INCREASE
+		elif (Input.is_action_pressed("downward")):
+			velocity.y = -SPEED * SPEED_INCREASE
+		else:
+			velocity.y = 0
+		
 		move_and_slide()
+	elif locked_movement_enabled:
+		var input = Input.get_vector("left", "right", "forward", "back")
+		var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
+		
+		if direction.x != 0:
+			locked_camera_offset.x += direction.x * SPEED * SPEED_INCREASE / 1000
+		if direction.z != 0:
+			locked_camera_offset.z += direction.z * SPEED * SPEED_INCREASE / 1000
+		
+		if (Input.is_action_pressed("upward")):
+			locked_camera_offset.y += SPEED * SPEED_INCREASE / 1000
+		elif (Input.is_action_pressed("downward")):
+			locked_camera_offset.y += -SPEED * SPEED_INCREASE / 1000
 	
 	
 	if following:
@@ -44,7 +67,7 @@ func _physics_process(delta: float) -> void:
 		if !calculatingCamera:
 			springArmIntitialRotation = springArm.rotation
 		cameraRotationDifference = springArm.rotation -\
-						springArmIntitialRotation - clicked_node.global_rotation
+						springArmIntitialRotation - clicked_node.rotation
 		calculatingCamera = true
 	else:
 		calculatingCamera = false
@@ -78,6 +101,11 @@ func _input(event):
 		shoot_ray_left()
 	if event.is_action_pressed("right click"):
 		shoot_ray_right()
+	if event.is_action_pressed("locked_camera_movement_switch"):
+		locked_movement_enabled = !locked_movement_enabled
+		free_movement_enabled = !locked_movement_enabled
+		if !locked_camera_offset:
+			locked_camera_offset = Vector3.ZERO
 	
 	
 	# Making a right click function
@@ -146,7 +174,8 @@ func shoot_ray_left():
 		print(springArmIntitialRotation)
 		
 func follow_camera():
-	position = clicked_node.global_position
+	position = clicked_node.global_position + locked_camera_offset
+	print("pos: ", locked_camera_offset)
 	if !springArm.mouse_locked and !calculatingCamera and rotation_lock:
 		springArm.global_rotation = springArmIntitialRotation +\
 			 			cameraRotationDifference + clicked_node.global_rotation

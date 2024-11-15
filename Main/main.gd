@@ -18,7 +18,7 @@ func _input(event):
 		on_console_visibility_change()
 		
 func on_console_visibility_change():
-	camera.movement_enabled = !console.visible
+	camera.free_movement_enabled = !console.visible
 		
 func set_ticks_per_second(value: float):
 	if value < 0:
