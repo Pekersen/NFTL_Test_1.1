@@ -1,7 +1,6 @@
 extends Moon
 
 @onready var moonMesh = $RotationPoint/Core/TrueMoon
-@onready var core = $"RotationPoint/Core"
 @onready var moonCollision = $"RotationPoint/Core/MoonCollision"
 @onready var orbitMesh = $Orbit
 
@@ -16,8 +15,6 @@ func _init():
 func _ready():
 	var parent = get_parent()
 	global_position.x = parent.global_position.x
-	global_rotation.x = offsetValue([-0.3,0.3])
-	global_rotation.z = offsetValue([-0.3,0.3])
 	global_rotation.y = parent.global_rotation.y
 	
 	# Init orbit visuals

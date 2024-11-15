@@ -113,7 +113,12 @@ func initPlanetVars(planetInstance):
 	planetInstance.semi_major_axis = planetInstance_distance + star_rad
 	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
 	planetInstance.eccentricity = rng.randf_range(0, 0.1) #TODO: Make acurrate eccentricity values
-	#planetInstance.orbit_speed = offsetValue(orbit_speed_variance)
+	# Axial tilt
+	planetInstance.core.rotation.x = offsetValue([-0.3,0.3])
+	planetInstance.core.rotation.z = offsetValue([-0.3,0.3])
+	# Orbital tilt
+	planetInstance.rotation.x = offsetValue([-0.01,0.01])
+	planetInstance.rotation.z = offsetValue([-0.01,0.01])
 	
 	if planet_type == "Gas_Giant":
 		planet_radius_variance = [0.5,0.7] 
@@ -143,8 +148,9 @@ func initMoonVars(moonInstance):
 	moonInstance.semi_major_axis = moonInstance_distance
 	moonInstance.orbital_period = moonInstance.semi_major_axis **(3.0/2)
 	moonInstance.eccentricity = rng.randf_range(0, 0.1) #TODO: Make acurrate eccentricity values
-	#moonInstance.moon_orbit_speed = offsetValue(moon_orbit_speed_variance)
 	moonInstance.radius = offsetValue([0.01,0.05])
+	moonInstance.rotation.x = offsetValue([-0.05,0.05])
+	moonInstance.rotation.z = offsetValue([-0.05,0.05])
 	
 func initStar():
 	star_gen.emit(star_type)

@@ -1,13 +1,13 @@
 class_name Planet extends CelestialObject
 
 @export var rotationPoint : Node3D
+@export var core : Node3D
 
 var num_moons : int
 var rings : bool
 var ring_size : float
 var tidally_locked : bool
 var rotation_speed : float
-var tilt : float # may have to be a vector to account for x and z rotation
 
 var atmospheric_composition : Array[float]
 

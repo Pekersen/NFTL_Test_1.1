@@ -1,7 +1,6 @@
 extends Planet
 
 @onready var planetMesh = $"RotationPoint/Core/TruePlanet"
-@onready var core = $"RotationPoint/Core"
 @onready var planetCollision = $"RotationPoint/Core/PlanetCollision"
 @onready var orbitMesh = $Orbit
 
