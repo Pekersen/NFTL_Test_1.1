@@ -1,6 +1,6 @@
 extends Planet
 
-@onready var ring_mesh = $Torus
+@onready var ring_mesh = $Orbit
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

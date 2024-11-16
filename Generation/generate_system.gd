@@ -29,7 +29,7 @@ var moon_sum := 0.0
 
 var orbit_speed_variance : Array[float] = [0.1,1]
 var moon_orbit_speed_variance : Array[float] = [0.1,1]
-var ring_size := 0.0
+var ring_size
 
 var star_rad : float
 
