@@ -7,33 +7,24 @@ class_name SystemGeneration extends Node3D
 @onready var planet = preload("res://Celestial Objects/Planets/planet.tscn")
 @onready var star = preload("res://Celestial Objects/Stars/star.tscn")
 @onready var moon = preload("res://Celestial Objects/Moons/moon.tscn")
-@onready var ring = preload("res://Celestial Objects/Rings/ring.tscn")
 
 var num_planets : int
 var num_astroids : int
 var star_type : String
 var num_moons : int
-var num_rings : int
 var planet_type : String
 
 var planet_radius_variance : Array[float]
 var num_moons_variance : Array[float]
-var num_rings_variance : Array[float]
-var ring_size_variance : Array[float]
 
 var orbit_sum := 0.0
 var planetInstance_distance
 var moonInstance_distance
 
-var moon_sum := 0.0
-
 var orbit_speed_variance : Array[float] = [0.1,1]
 var moon_orbit_speed_variance : Array[float] = [0.1,1]
-var ring_size := 0.0
 
 var star_rad : float
-
-var radius : float
 
 signal star_gen(star_type)
 
@@ -105,9 +96,6 @@ func initPlanetChildren():
 			var moonInstance = initMoon()
 			planetInstance.get_node("RotationPoint/Core").add_child(moonInstance)
 		
-		for j in range(num_rings):
-			var ringInstance = initRing()
-			planetInstance.get_node("RotationPoint/Core").add_child(ringInstance)
 
 func initPlanetVars(planetInstance):
 	# TEMP VALUES
@@ -135,22 +123,15 @@ func initPlanetVars(planetInstance):
 	if planet_type == "Gas_Giant":
 		planet_radius_variance = [0.5,0.7] 
 		num_moons_variance = [4,10]
-		num_rings_variance = [5, 20]
 	elif planet_type == "Terrestrial_Planet":
 		planet_radius_variance = [0.2,0.35]
 		num_moons_variance = [0,2]
-		num_rings_variance = [0,0]
 	elif planet_type == "Ice_Giant":
 		planet_radius_variance = [0.35,0.5]
 		num_moons_variance = [2,4]
-		num_rings_variance = [3,10]
 		
-	radius = offsetValue(planet_radius_variance)
-	planetInstance.radius = radius
+	planetInstance.radius = offsetValue(planet_radius_variance)
 	num_moons = offsetValue(num_moons_variance)
-	
-	num_rings = offsetValue(num_rings_variance)
-	ring_size_variance = [radius + 0.1, radius + 0.4]
 	
 	print("Generate System script radius: " + str(planetInstance.radius))
 	print("Generate System script orbital_period: " + str(planetInstance.orbital_period))
@@ -159,30 +140,19 @@ func initPlanetVars(planetInstance):
 func initMoon():
 	var moonInstance = moon.instantiate()
 	initMoonVars(moonInstance)
-	moon_sum += moonInstance_distance
 	return moonInstance
 		
 func initMoonVars(moonInstance):
 	# TEMP VALUES
-	moonInstance_distance = offsetValue([0.1, 0.3])
-	moonInstance.semi_major_axis = moonInstance_distance + radius + 1.0
+	moonInstance_distance = offsetValue([1.5,3.0])
+	moonInstance.semi_major_axis = moonInstance_distance
 	moonInstance.orbital_period = moonInstance.semi_major_axis **(3.0/2)
 	moonInstance.eccentricity = rng.randf_range(0, 0.1) #TODO: Make acurrate eccentricity values
 	moonInstance.radius = offsetValue([0.01,0.05])
-	moonInstance.rotation.x = offsetValue([-0.3,0.3])
-	moonInstance.rotation.z = offsetValue([-0.3,0.3])
+	moonInstance.rotation.x = offsetValue([-0.05,0.05])
+	moonInstance.rotation.z = offsetValue([-0.05,0.05])
 	
 func initStar():
 	star_gen.emit(star_type)
-	
-func initRing():
-	var ringInstance = ring.instantiate()
-	initRingVars(ringInstance)
-	return ringInstance
-	
-func initRingVars(ringInstance):
-	ring_size = offsetValue(ring_size_variance)
-	ring.inner_radius = ring_size - 0.05
-	ring.outer_radius = ring_size + 0.05
 	
 	
