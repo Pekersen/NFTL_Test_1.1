@@ -105,10 +105,9 @@ func initPlanetChildren():
 			var moonInstance = initMoon()
 			planetInstance.get_node("RotationPoint/Core").add_child(moonInstance)
 		
-		for k in range(num_rings):
+		for j in range(num_rings):
 			var ringInstance = initRing()
 			planetInstance.get_node("RotationPoint/Core").add_child(ringInstance)
-			print("Ring Size 2: " + str(ring_size))
 
 func initPlanetVars(planetInstance):
 	# TEMP VALUES
@@ -151,8 +150,7 @@ func initPlanetVars(planetInstance):
 	num_moons = offsetValue(num_moons_variance)
 	
 	num_rings = offsetValue(num_rings_variance)
-	ring_size_variance = [0.1, 0.3]
-	print("Number of rings: " + str(num_rings))
+	ring_size_variance = [radius + 0.1, radius + 0.4]
 	
 	print("Generate System script radius: " + str(planetInstance.radius))
 	print("Generate System script orbital_period: " + str(planetInstance.orbital_period))
@@ -184,5 +182,7 @@ func initRing():
 	
 func initRingVars(ringInstance):
 	ring_size = offsetValue(ring_size_variance)
-	ringInstance.semi_major_axis = ring_size + radius
-	print("Ring Size: " + str(ring_size))
+	ring.inner_radius = ring_size - 0.05
+	ring.outer_radius = ring_size + 0.05
+	
+	
