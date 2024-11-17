@@ -17,6 +17,10 @@ var eccentricity: float
 var orbital_period: float # in seconds
 var time_passed = 0.0 # track elapsed time
 
+var color_r : float
+var color_g : float
+var color_b : float
+
 func orbit(delta, core):
 	time_passed += delta * Global.ticks_per_second / ORBIT_SPEED_CONST
 	

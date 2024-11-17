@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://Celestial Objects/Rings/ring.gd" id="1_305fm"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbg0y"]
-shading_mode = 0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_td666"]
+roughness = 0.0
 
 [sub_resource type="TorusMesh" id="TorusMesh_bifch"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_nbg0y")
+material = SubResource("StandardMaterial3D_td666")
 inner_radius = 9.995
 outer_radius = 10.0
 rings = 128

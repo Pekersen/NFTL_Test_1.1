@@ -7,6 +7,7 @@ extends Planet
 var initRotPos : float
 var orbit_path_visible = true
 
+
 func _init():
 	mass = 0.01
 
@@ -23,6 +24,9 @@ func _ready():
 	# Init click area
 	planetCollision.shape.radius = radius + click_forgiveness
 	
+	print("R: " + str(color_r) + ", G: " + str(color_g) + ", B: " + str(color_b))
+	
+	planetMesh.mesh.material.albedo_color = Color(color_r, color_g, color_b)
 	
 	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
 	

@@ -113,7 +113,7 @@ func  _on_system_star_gen(star_type):
 	var light_color_b = clamp(color_b + 0.3, 0.5, 1)
 	
 	starMesh.mesh.material.set_shader_parameter("Sun_Color", Color(color_r, color_g, color_b))
-	starLight.light_color = Color(light_color_r, light_color_g, light_color_b)
+	#starLight.light_color = Color(light_color_r, light_color_g, light_color_b)
 	
 	star_rad_for_cam.emit(radius)
 	
