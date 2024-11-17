@@ -13,6 +13,7 @@ var atmospheric_composition : Array[float]
 
 const ORBIT_SPEED_CONST := 20
 var semi_major_axis: float
+var semi_minor_axis: float
 var eccentricity: float
 var orbital_period: float # in seconds
 var time_passed = 0.0 # track elapsed time

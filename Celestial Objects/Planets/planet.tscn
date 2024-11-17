@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://cqtxuyes4fdju"]
+[gd_scene load_steps=7 format=3 uid="uid://cqtxuyes4fdju"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
 
@@ -13,10 +13,12 @@ outer_radius = 10.0
 rings = 128
 ring_segments = 64
 
-[sub_resource type="SphereMesh" id="SphereMesh_xsawm"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_st6bb"]
 resource_local_to_scene = true
-radius = 0.1
-height = 0.2
+
+[sub_resource type="SphereMesh" id="SphereMesh_65kqi"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_st6bb")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gfk4t"]
 
@@ -35,7 +37,7 @@ mesh = SubResource("TorusMesh_3ugw0")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 20, 0, 0)
 
 [node name="TruePlanet" type="MeshInstance3D" parent="RotationPoint/Core"]
-mesh = SubResource("SphereMesh_xsawm")
+mesh = SubResource("SphereMesh_65kqi")
 
 [node name="PlanetCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
 shape = SubResource("SphereShape3D_gfk4t")

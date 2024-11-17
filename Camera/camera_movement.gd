@@ -175,7 +175,7 @@ func shoot_ray_left():
 		
 func follow_camera():
 	position = clicked_node.global_position + locked_camera_offset
-	print("pos: ", locked_camera_offset)
+	#print("pos: ", locked_camera_offset)
 	if !springArm.mouse_locked and !calculatingCamera and rotation_lock:
 		springArm.global_rotation = springArmIntitialRotation +\
 			 			cameraRotationDifference + clicked_node.global_rotation

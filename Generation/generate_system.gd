@@ -43,6 +43,7 @@ var color_b : float
 var color_variance_r : Array[float]
 var color_variance_g : Array[float]
 var color_variance_b : Array[float]
+var all_colors : Array[float]
 
 signal star_gen(star_type)
 
@@ -121,16 +122,6 @@ func initPlanetChildren():
 
 func initPlanetVars(planetInstance):
 	# TEMP VALUES
-	var random_float = randf()
-	if random_float < 0.4:
-		planet_type = "Gas_Giant"
-	elif random_float < 0.6:
-		planet_type = "Ice_Giant"
-	else:
-		planet_type = "Terrestrial_Planet"
-		
-	print(planet_type)
-	
 	planetInstance_distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
 	planetInstance.semi_major_axis = planetInstance_distance + star_rad
 	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
@@ -142,22 +133,37 @@ func initPlanetVars(planetInstance):
 	planetInstance.rotation.x = offsetValue([-0.01,0.01])
 	planetInstance.rotation.z = offsetValue([-0.01,0.01])
 	
+	var random_float = randf()
+	if random_float < 0.6:
+		planet_type = "Gas_Giant"
+	else:
+		planet_type = "Terrestrial_Planet"
+		
+	if (planetInstance.semi_major_axis > 250.0) and (planet_type == "Gas_Giant"):
+		planet_type = "Ice_Giant"
+		
+	print(planet_type)
+	
 	if planet_type == "Gas_Giant":
 		planet_radius_variance = [0.5,0.7] 
 		num_moons_variance = [4,10]
 		random_float = randf()
-		if random_float < 0.7:
+		if random_float < 0.03:
+			num_rings_variance = [50,100]
+			ring_size_variance = [0.3,3.0]
+			ring_max = 3.0
+		elif random_float < 0.7:
 			num_rings_variance = [2,15]
 			ring_size_variance = [0.1,0.3]
 			ring_max = 0.3
 		else:
-			num_rings_variance = [20,50]
 			ring_size_variance = [0.2,1.2]
+			num_rings_variance = [30,50]
 			ring_max = 1.2
 			
 		color_variance_r = [1,1]
 		color_variance_g = [1,1]
-		color_variance_b = [0.0,0.0]
+		color_variance_b = [0.6,1]
 			
 	elif planet_type == "Terrestrial_Planet":
 		planet_radius_variance = [0.2,0.35]
@@ -166,15 +172,22 @@ func initPlanetVars(planetInstance):
 		if random_float < 0.95:
 			num_rings_variance = [0,0]
 			ring_size_variance = [0,0]
-			ring_max = 0.0
+			ring_max = 1.0
 		else:
 			num_rings_variance = [1,5]
 			ring_size_variance = [0.1,0.2]
 			ring_max = 0.2
-			
-		color_variance_r = [1,1]
-		color_variance_g = [0.0,0.0]
-		color_variance_b = [1,1]
+		
+		random_float = randf()
+		if random_float < 0.5:
+			var colors = offsetValue([0.2,0.8])
+			color_variance_r = [colors, colors]
+			color_variance_g = [colors, colors]
+			color_variance_b = [colors, colors]
+		else:
+			color_variance_r = [1,1]
+			color_variance_g = [0.5,0.8]
+			color_variance_b = [0.3,0.5]
 		
 	elif planet_type == "Ice_Giant":
 		planet_radius_variance = [0.35,0.5]
@@ -187,9 +200,9 @@ func initPlanetVars(planetInstance):
 		else:
 			num_rings_variance = [10,30]
 			ring_size_variance = [0.2,0.8]
-			0.8
+			ring_max = 0.8
 		
-		color_variance_r = [0.0,0.0]
+		color_variance_r = [0.6,0.9]
 		color_variance_g = [1,1]
 		color_variance_b = [1,1]
 		
@@ -224,6 +237,15 @@ func initMoonVars(moonInstance):
 	moonInstance.rotation.x = offsetValue([-0.3,0.3])
 	moonInstance.rotation.z = offsetValue([-0.3,0.3])
 	
+	var colors = offsetValue([0.3,0.6])
+	color_variance_r = [colors, colors]
+	color_variance_g = [colors, colors]
+	color_variance_b = [colors, colors]
+	
+	moonInstance.color_r = offsetValue(color_variance_r)
+	moonInstance.color_g = offsetValue(color_variance_g)
+	moonInstance.color_b = offsetValue(color_variance_b)
+	
 func initStar():
 	star_gen.emit(star_type)
 	
@@ -235,4 +257,12 @@ func initRing():
 func initRingVars(ringInstance):
 	ring_size = offsetValue(ring_size_variance)
 	ringInstance.semi_major_axis = ring_size + radius
-	#print("Ring Size: " + str(ring_size))
+	
+	var colors = offsetValue([0.0,1.0])
+	color_variance_r = [colors,colors]
+	color_variance_g = [colors,colors]
+	color_variance_b = [colors,colors]
+	
+	ringInstance.color_r = offsetValue(color_variance_r)
+	ringInstance.color_g = offsetValue(color_variance_g)
+	ringInstance.color_b = offsetValue(color_variance_b)

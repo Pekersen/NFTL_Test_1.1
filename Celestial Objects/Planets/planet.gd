@@ -24,13 +24,16 @@ func _ready():
 	# Init click area
 	planetCollision.shape.radius = radius + click_forgiveness
 	
+	semi_minor_axis = ((semi_major_axis**2)*(1-(eccentricity**2)))**0.5
+	print("Eccentricity: " + str(eccentricity) + ", Major: " + str(semi_major_axis) + ", Minor: " + str(semi_minor_axis))
+	
 	print("R: " + str(color_r) + ", G: " + str(color_g) + ", B: " + str(color_b))
 	
 	planetMesh.mesh.material.albedo_color = Color(color_r, color_g, color_b)
 	
 	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
 	
-	initRotPos = offsetValue([0,2 * PI])
+	initRotPos = offsetValue([0, (2 * PI)])
 	rotationPoint.rotate_y(initRotPos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

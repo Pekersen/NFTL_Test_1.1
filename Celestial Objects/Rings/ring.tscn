@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Celestial Objects/Rings/ring.gd" id="1_305fm"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_td666"]
+resource_local_to_scene = true
 roughness = 0.0
 
 [sub_resource type="TorusMesh" id="TorusMesh_bifch"]

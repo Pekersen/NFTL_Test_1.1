@@ -3,7 +3,7 @@ extends Moon
 @onready var moonMesh = $RotationPoint/Core/TrueMoon
 @onready var moonCollision = $"RotationPoint/Core/MoonCollision"
 @onready var orbitMesh = $Orbit
-
+var initRotPos : float
 
 var orbit_path_visible = true
 
@@ -27,8 +27,12 @@ func _ready():
 	# Init click area
 	moonCollision.shape.radius = radius + click_forgiveness
 	
+	moonMesh.mesh.material.albedo_color = Color(color_r, color_g, color_b)
 	
 	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
+
+	initRotPos = offsetValue([0, (2 * PI)])
+	rotationPoint.rotate_y(initRotPos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:

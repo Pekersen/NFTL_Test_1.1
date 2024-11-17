@@ -8,6 +8,8 @@ func _ready():
 	ring_mesh.mesh.outer_radius = semi_major_axis + 0.0025
 	ring_mesh.mesh.inner_radius = semi_major_axis - 0.0025
 	
+	ring_mesh.mesh.material.albedo_color = Color(color_r, color_g, color_b)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
