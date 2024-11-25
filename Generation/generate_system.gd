@@ -24,7 +24,11 @@ var ring_size_variance : Array[float]
 
 var orbit_sum := 0.0
 var planetInstance_distance
+var planetInstance_individual_distance
 var moonInstance_distance
+var planet_post_distance = 0.0
+
+var planetInstance_distance_variance : Array[float]
 
 var moon_sum := 0.0
 
@@ -107,7 +111,7 @@ func initPlanetChildren():
 		var planetInstance = planet.instantiate()
 		initPlanetVars(planetInstance)
 		
-		orbit_sum += planetInstance_distance
+		orbit_sum += planetInstance_individual_distance
 		
 		print("Planet distannce: ", str(planetInstance.semi_major_axis))
 		add_child(planetInstance)
@@ -122,10 +126,6 @@ func initPlanetChildren():
 
 func initPlanetVars(planetInstance):
 	# TEMP VALUES
-	planetInstance_distance = offsetValue([11.0,20.0]) + orbit_sum #LOOK AT LATER
-	planetInstance.semi_major_axis = planetInstance_distance + star_rad
-	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
-	planetInstance.eccentricity = rng.randf_range(0, 0.1) #TODO: Make acurrate eccentricity values
 	# Axial tilt
 	planetInstance.core.rotation.x = offsetValue([-0.3,0.3])
 	planetInstance.core.rotation.z = offsetValue([-0.3,0.3])
@@ -147,6 +147,7 @@ func initPlanetVars(planetInstance):
 	if planet_type == "Gas_Giant":
 		planet_radius_variance = [0.5,0.7] 
 		num_moons_variance = [4,10]
+		planetInstance_distance_variance = [11.0,20.0]
 		random_float = randf()
 		if random_float < 0.03:
 			num_rings_variance = [50,100]
@@ -168,6 +169,7 @@ func initPlanetVars(planetInstance):
 	elif planet_type == "Terrestrial_Planet":
 		planet_radius_variance = [0.2,0.35]
 		num_moons_variance = [0,2]
+		planetInstance_distance_variance = [5.0,11.0]
 		random_float = randf()
 		if random_float < 0.95:
 			num_rings_variance = [0,0]
@@ -192,6 +194,7 @@ func initPlanetVars(planetInstance):
 	elif planet_type == "Ice_Giant":
 		planet_radius_variance = [0.35,0.5]
 		num_moons_variance = [2,4]
+		planetInstance_distance_variance = [15.0,30.0]
 		random_float = randf()
 		if random_float < 0.8:
 			num_rings_variance = [1,10]
@@ -205,7 +208,14 @@ func initPlanetVars(planetInstance):
 		color_variance_r = [0.6,0.9]
 		color_variance_g = [1,1]
 		color_variance_b = [1,1]
-		
+	
+	planetInstance_individual_distance = offsetValue(planetInstance_distance_variance)
+	planetInstance_distance = planetInstance_individual_distance + orbit_sum + planet_post_distance#LOOK AT LATER
+	planet_post_distance = planetInstance_individual_distance
+	planetInstance.semi_major_axis = planetInstance_distance + star_rad
+	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
+	planetInstance.eccentricity = rng.randf_range(0, 0.1) #TODO: Make acurrate eccentricity values
+	
 	radius = offsetValue(planet_radius_variance)
 	planetInstance.radius = radius
 	num_moons = offsetValue(num_moons_variance)
