@@ -6,13 +6,18 @@ var system_age : int
 var star_count : int
 var star_type : String
 
+var mass = [0.0, 0.0, 0.0]
+var star_order = [0, 0, 0]
+var stars = [null, null, null]
+
+var temporary_star
+
 signal star_gen(star_type)
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
-
-
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass
@@ -34,57 +39,37 @@ func system_generate():
 		
 	print("Star Count: " + str(star_count))
 	
-	'''
-	if star_count == 1:
-		star_type = pick_star_type()
-		var starInstance = star.instantiate()
-		initStar1()
-		add_child(starInstance)
-	elif star_count == 2:
-		star_type = pick_star_type()	
-		var starInstance = star.instantiate()
-		initStar1()
-		add_child(starInstance)
-		
-		star_type = pick_star_type()	
-		starInstance = star.instantiate()
-		initStar2()
-		add_child(starInstance)
-	
-	'''
 	for i in range(star_count):
-		#star_type = pick_star_type()
 		var starInstance = star.instantiate()
 		add_child(starInstance)
-		starInstance.position.x = 10 * i
-
-'''
-func pick_star_type():
-	var random_float = randf()
-
-	if random_float < 0.01:
-		return "O"
-	elif random_float < 0.04:
-		return "B"
-	elif random_float < 0.115:
-		return "A"
-	elif random_float < 0.215:
-		return "F"
-	elif random_float < 0.365:
-		return "G"
-	elif random_float < 0.565:
-		return "K"
-	else:
-		return "M"
 		
+		stars[i] = starInstance
+		starInstance.position.x = starInstance.mass * 10
+		
+		''' HR Diagram Code (Change number of stars to 400)
+		if starInstance.temperature > 10000:
+			starInstance.position.x = (-(starInstance.temperature) / 100 ) - 350
+			starInstance.position.y = starInstance.luminosity * 2
+		else:
+			starInstance.position.x = -(starInstance.temperature) / 20
+			starInstance.position.y = (starInstance.luminosity * 4) - 50
+		'''
 	
-		
-func initStar1():
-	print("Star Type: " + star_type)
-	star_gen.emit(star_type)
-
-func initStar2():
-	print("Star Type: " + star_type)
-	star_gen.emit(star_type)
-
-'''
+	for i in range(star_count):
+		print(stars[i].mass)
+		mass[i] = stars[i].mass
+	
+	mass.sort()
+	print("Sorting")
+	
+	for i in range(star_count):
+		print(stars[i].mass)
+		print(mass[i])
+	
+	print("Second Sorting")
+	
+	for i in range(star_count):
+		for j in range(star_count):
+			if stars[i].mass == mass[j]:
+				pass
+	
