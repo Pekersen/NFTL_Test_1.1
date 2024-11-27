@@ -84,11 +84,11 @@ void fragment() {
 
 "
 
-[sub_resource type="Gradient" id="Gradient_fi8c6"]
+[sub_resource type="Gradient" id="Gradient_qqrl3"]
 offsets = PackedFloat32Array(0, 0.513889, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0.873298, 0.873298, 0.873298, 1, 1, 1, 1, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_pa5cp"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_mortk"]
 noise_type = 4
 frequency = 0.0719
 fractal_type = 3
@@ -105,10 +105,11 @@ seamless = true
 seamless_blend_skirt = 1.0
 as_normal_map = true
 bump_strength = 25.1
-color_ramp = SubResource("Gradient_fi8c6")
-noise = SubResource("FastNoiseLite_pa5cp")
+color_ramp = SubResource("Gradient_qqrl3")
+noise = SubResource("FastNoiseLite_mortk")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_kfuav"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8o0t4"]
+resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5nekp")
 shader_parameter/albedo = Color(0, 0, 0, 1)
@@ -130,9 +131,10 @@ shader_parameter/scale = 0.25
 shader_parameter/blendSharpness = 0.156
 shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
 
-[sub_resource type="SphereMesh" id="SphereMesh_f1oyn"]
+[sub_resource type="SphereMesh" id="SphereMesh_c8gkq"]
+resource_local_to_scene = true
 lightmap_size_hint = Vector2i(5, 0)
-material = SubResource("ShaderMaterial_kfuav")
+material = SubResource("ShaderMaterial_8o0t4")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4mdgf"]
 
@@ -142,7 +144,7 @@ script = ExtResource("1_81nsq")
 [node name="StarMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.0425976, 0)
 cast_shadow = 0
-mesh = SubResource("SphereMesh_f1oyn")
+mesh = SubResource("SphereMesh_c8gkq")
 
 [node name="StarCollision" type="CollisionShape3D" parent="."]
 shape = SubResource("SphereShape3D_4mdgf")

@@ -1,4 +1,4 @@
-class_name SystemGeneration extends Node3D
+class_name GenerateSystem extends GenerateCluster
 
 @export_subgroup("Variance")
 @export var num_planets_variance : Array[int] = [0, 0] # so size = 2
@@ -58,11 +58,6 @@ func initVars():
 	num_planets = offsetValue(num_planets_variance)
 	num_astroids = offsetValue(num_astroids_variance)
 	print(star_type)
-	
-
-
-# for randomness
-var rng = RandomNumberGenerator.new()
 
 func pick_star_type():
 	var random_float = randf()

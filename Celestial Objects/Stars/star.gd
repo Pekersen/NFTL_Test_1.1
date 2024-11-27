@@ -7,6 +7,10 @@ var star_type : String
 
 signal star_rad_for_cam(radius)
 
+func _ready():
+	star_type = pick_star_type()
+	print("Star Type: " + star_type)
+	_on_system_star_gen(star_type)
 
 func  _on_system_star_gen(star_type):
 	self.star_type = star_type
