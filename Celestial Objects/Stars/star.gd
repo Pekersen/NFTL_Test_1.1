@@ -133,6 +133,8 @@ func  _on_system_star_gen(star_type):
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	star_rotate(delta)
+	if can_orbit:
+		orbit(delta, self)
 
 
 # For console
