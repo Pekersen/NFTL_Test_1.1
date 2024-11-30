@@ -6,21 +6,10 @@ var system_age : int
 var star_count : int
 var star_type : String
 
-var mass = [0.0, 0.0, 0.0]
-var star_order = [0, 0, 0]
+var orbit_style : String
+
 var stars = [null, null, null]
 
-var temporary_star
-
-signal star_gen(star_type)
-
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 
 func system_generate():
 	cluster_variables()
@@ -42,8 +31,9 @@ func system_generate():
 	for i in range(star_count):
 		var starInstance = star.instantiate()
 		add_child(starInstance)
-		
 		stars[i] = starInstance
+		
+		stars[i].age = system_age
 		starInstance.position.x = starInstance.mass * 10
 		
 		''' HR Diagram Code (Change number of stars to 400)
@@ -56,20 +46,23 @@ func system_generate():
 		'''
 	
 	for i in range(star_count):
-		print(stars[i].mass)
-		mass[i] = stars[i].mass
+		print(stars[i].star_name + ": " + str(stars[i].mass))
 	
-	mass.sort()
 	print("Sorting")
 	
 	for i in range(star_count):
-		print(stars[i].mass)
-		print(mass[i])
-	
-	print("Second Sorting")
+		var currentMin = stars[i].mass
+		var currentMinIndex = i
+		var j = i + 1
+		while j < star_count:
+			if currentMin > stars[j].mass:
+				currentMin = stars[j].mass
+				currentMinIndex = j
+			j = j + 1
+				
+		if currentMinIndex != i:
+			stars[currentMinIndex].mass = stars[i].mass
+			stars[i].mass = currentMin
 	
 	for i in range(star_count):
-		for j in range(star_count):
-			if stars[i].mass == mass[j]:
-				pass
-	
+		print(stars[i].star_name + ": " + str(stars[i].mass))

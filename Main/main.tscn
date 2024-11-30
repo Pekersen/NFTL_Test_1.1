@@ -41,4 +41,3 @@ visible = false
 [node name="Gui" parent="GUI" instance=ExtResource("6_m6524")]
 
 [connection signal="star_rad_for_cam" from="Star" to="PlayerCamera" method="_on_star_star_rad_for_cam"]
-[connection signal="star_gen" from="System" to="Star" method="_on_system_star_gen"]

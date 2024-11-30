@@ -3,7 +3,11 @@ extends Star
 @onready var starMesh = $StarMesh
 @onready var starCollision = $StarCollision
 @onready var starLight = $StarLight
+
 var star_type : String
+var star_names = ["Centauri", "Sol", "Bernard's Star", "Vega", "Proxima", "Polaris", "Betelgeuse", "Deneb", "Sirius"]
+@export var star_name : String
+@export var age : int
 
 signal star_rad_for_cam(radius)
 
@@ -120,6 +124,8 @@ func  _on_system_star_gen(star_type):
 	starMesh.mesh.material.set_shader_parameter("Sun_Color", Color(color_r, color_g, color_b))
 	starLight.light_color = Color(1.0, 1.0, 1.0)
 	
+	var name_index = offsetValue([0, star_names.size()])
+	star_name = star_names[name_index]
 	
 	star_rad_for_cam.emit(radius)
 	
