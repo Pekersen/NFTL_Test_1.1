@@ -9,6 +9,8 @@ var star_names = ["Centauri", "Sol", "Bernard's Star", "Vega", "Proxima", "Polar
 @export var star_name : String
 @export var age : int
 
+var is_flipped := false
+
 signal star_rad_for_cam(radius)
 
 
@@ -135,6 +137,8 @@ func _process(delta):
 	star_rotate(delta)
 	if can_orbit:
 		orbit(delta, self)
+		if is_flipped:
+			position *= -1
 
 
 # For console

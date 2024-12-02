@@ -56,7 +56,6 @@ func _init_stars():
 		stars[i] = star_instance
 		
 		stars[i].age = system_age
-		star_instance.position.x = star_instance.mass * 40 # TEMP CODE
 		
 		''' HR Diagram Code (Change number of stars to 400)
 		if starInstance.temperature > 10000:
@@ -97,16 +96,17 @@ func _init_star_orbit():
 				# just add the vector transformation so no need to change local coords
 				# this should be done after calculating orbit :D
 			# calculate orbit!
-			var center_mass := _calc_center_of_mass(stars)
 			
-			stars[0].semi_major_axis = 10
-			stars[0].eccentricity = 0
+			stars[1].semi_major_axis = stars[1].mass * 5 + 10
+			
+			stars[0].semi_major_axis = stars[1].semi_major_axis *\
+										(stars[1].mass/stars[0].mass)
+
+			stars[0].eccentricity = 0.5
 			stars[0].orbital_period = 50
-			stars[0].time_passed = stars[0].orbital_period/2
+			stars[0].is_flipped = true
 			stars[0].can_orbit = true
 			
-			stars[1].semi_major_axis = stars[0].semi_major_axis *\
-										(stars[1].mass/stars[0].mass)
 			stars[1].eccentricity = stars[0].eccentricity
 			stars[1].orbital_period = stars[0].orbital_period
 			stars[1].can_orbit = true
