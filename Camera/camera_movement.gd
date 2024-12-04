@@ -168,6 +168,7 @@ func shoot_ray_left():
 	if !raycast_result.is_empty():
 		following = true
 		print("clicked " + str(raycast_result.collider))
+		print("mass of clicked: ", raycast_result.collider.mass)
 		clicked_node = raycast_result.collider
 		springArmIntitialRotation = springArm.rotation
 		cameraRotationDifference = Vector3.ZERO
