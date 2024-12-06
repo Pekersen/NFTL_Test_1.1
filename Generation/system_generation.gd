@@ -17,6 +17,8 @@ var orbit_style : String
 
 var stars : Array
 
+signal star_count_to_star
+
 func system_generate():
 	cluster_variables()
 	
@@ -37,8 +39,8 @@ func system_generate():
 		
 		
 		print("here")
-		if !_set_orbit_style():
-			continue
+		#if !_set_orbit_style():
+			#continue
 		
 		
 		_init_stars()
@@ -53,9 +55,9 @@ func system_generate():
 # sets star_count to 1 to max, inclusive
 func _set_star_count():
 	var random_float = randf()
-	if random_float < 0.33:
+	if random_float < 0.00:
 		star_count = 1
-	elif random_float < 0.66:
+	elif random_float < 1.0:
 		star_count = 2
 	elif random_float < 1.0:
 		star_count = 3
@@ -63,11 +65,14 @@ func _set_star_count():
 	# cleans stars array
 	for i in range(stars.size() - star_count):
 		stars.erase(null)
+		
+	
 
 # initializes stars for each star_count	
 func _init_star_vars():
 	for i in range(star_count):
 		var star_instance = star.instantiate()
+		star_instance.star_count = star_count
 		stars[i] = star_instance
 		
 		stars[i].age = system_age

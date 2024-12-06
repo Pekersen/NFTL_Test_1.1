@@ -9,15 +9,29 @@ var star_names = ["Centauri", "Sol", "Bernard's Star", "Vega", "Proxima", "Polar
 @export var star_name : String
 @export var age : int
 
+var small_star_probability : float
+
+var star_count : int
+
 var is_flipped := false
 
 signal star_rad_for_cam(radius)
 
 
 func _ready():
+	# TEMP Values
+	if star_count == 1:
+		small_star_probability = 0.0
+	elif star_count == 2:
+		small_star_probability = 0.3
+	elif star_count == 3:
+		small_star_probability = 0.4
+	
 	star_type = pick_star_type()
 	print("Star Type: " + star_type)
 	_on_system_star_gen(star_type)
+		
+	
 
 func  _on_system_star_gen(star_type):
 	self.star_type = star_type
@@ -83,14 +97,45 @@ func  _on_system_star_gen(star_type):
 		color_variance_b = [0.4,0.6]
 		
 	elif star_type == "M":
-		radius_variance = [1,1.4]
+		radius_variance = [1.2,1.4]
 		mass_variance = [0.08,0.45]
-		luminosity_variance = [0.5,1]
+		luminosity_variance = [0.6,1]
 		temperature_variance = [2300, 3900]
 		
 		color_variance_r = [1,1]
 		color_variance_g = [0.25,0.35]
 		color_variance_b = [0.2,0.3]
+		
+	elif star_type == "L":
+		radius_variance = [1.0,1.2]
+		mass_variance = [0.05,0.08]
+		luminosity_variance = [0.4,0.6]
+		temperature_variance = [1300, 2000]
+		
+		color_variance_r = [1,1]
+		color_variance_g = [0.6,0.8]
+		color_variance_b = [1,1]
+	
+	elif star_type == "T":
+		radius_variance = [0.8,1.0]
+		mass_variance = [0.03,0.05]
+		luminosity_variance = [0.2,0.4]
+		temperature_variance = [700, 1300]
+		
+		color_variance_r = [0.6,0.8]
+		color_variance_g = [0.05,0.15]
+		color_variance_b = [0.05,0.1]
+		
+	elif star_type == "Y":
+		radius_variance = [0.6,0.8]
+		mass_variance = [0.01,0.03]
+		luminosity_variance = [0.0,0.2]
+		temperature_variance = [100, 700]
+		
+		color_variance_r = [0.4,0.6]
+		color_variance_g = [0.0,0.05]
+		color_variance_b = [0.0,0.05]
+		
 	
 	rotation_speed_variance = [0,0]
 	
@@ -112,6 +157,9 @@ func  _on_system_star_gen(star_type):
 	color_g = offsetValue(color_variance_g)
 	color_b = offsetValue(color_variance_b)
 	
+	#TEMP
+	print("Color R: " + str(color_r) + ", Color G: " + str(color_g) + ", Color B: " + str(color_b))
+	
 	starMesh.mesh.radius = radius
 	starMesh.mesh.height = radius * 2
 	
@@ -119,9 +167,6 @@ func  _on_system_star_gen(star_type):
 	
 	starLight.light_energy = luminosity
 	
-	var light_color_r = clamp(color_r + 0.3, 0.5, 1)
-	var light_color_g = clamp(color_g + 0.3, 0.5, 1)
-	var light_color_b = clamp(color_b + 0.3, 0.5, 1)
 	
 	starMesh.mesh.material.set_shader_parameter("Sun_Color", Color(color_r, color_g, color_b))
 	starLight.light_color = Color(1.0, 1.0, 1.0)
@@ -173,5 +218,11 @@ func pick_star_type():
 		return "G"
 	elif random_float < 0.565:
 		return "K"
+	elif random_float < 0.565 + (small_star_probability * 0.1):
+		return "L"
+	elif random_float < 0.565 + (small_star_probability * 0.2):
+		return "T"
+	elif random_float < 0.565 + (small_star_probability * 0.3):
+		return "Y"
 	else:
 		return "M"
