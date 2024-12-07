@@ -112,9 +112,9 @@ func  _on_system_star_gen(star_type):
 		luminosity_variance = [0.4,0.6]
 		temperature_variance = [1300, 2000]
 		
-		color_variance_r = [1,1]
-		color_variance_g = [0.6,0.8]
-		color_variance_b = [1,1]
+		color_variance_r = [0.6,0.7]
+		color_variance_g = [0.2,0.25]
+		color_variance_b = [0.1,0.2]
 	
 	elif star_type == "T":
 		radius_variance = [0.8,1.0]
@@ -122,9 +122,9 @@ func  _on_system_star_gen(star_type):
 		luminosity_variance = [0.2,0.4]
 		temperature_variance = [700, 1300]
 		
-		color_variance_r = [0.6,0.8]
-		color_variance_g = [0.05,0.15]
-		color_variance_b = [0.05,0.1]
+		color_variance_r = [0.5,0.6]
+		color_variance_g = [0.2,0.25]
+		color_variance_b = [0.2,0.3]
 		
 	elif star_type == "Y":
 		radius_variance = [0.6,0.8]
@@ -132,9 +132,9 @@ func  _on_system_star_gen(star_type):
 		luminosity_variance = [0.0,0.2]
 		temperature_variance = [100, 700]
 		
-		color_variance_r = [0.4,0.6]
-		color_variance_g = [0.0,0.05]
-		color_variance_b = [0.0,0.05]
+		color_variance_r = [0.3,0.5]
+		color_variance_g = [0.25,0.3]
+		color_variance_b = [0.3,0.4]
 		
 	
 	rotation_speed_variance = [0,0]
@@ -205,6 +205,7 @@ func set_star_type(newStarType : String):
 # temp
 func pick_star_type():
 	var random_float = randf()
+	
 
 	if random_float < 0.01:
 		return "O"
@@ -218,7 +219,7 @@ func pick_star_type():
 		return "G"
 	elif random_float < 0.565:
 		return "K"
-	elif random_float < 0.565 + (small_star_probability * 0.1):
+	if random_float < 0.565 + (small_star_probability * 0.1):
 		return "L"
 	elif random_float < 0.565 + (small_star_probability * 0.2):
 		return "T"
@@ -226,3 +227,4 @@ func pick_star_type():
 		return "Y"
 	else:
 		return "M"
+
