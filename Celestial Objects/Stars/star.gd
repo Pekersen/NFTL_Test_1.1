@@ -1,8 +1,9 @@
 extends Star
 
-@onready var starMesh = $StarMesh
-@onready var starCollision = $StarCollision
-@onready var starLight = $StarLight
+@onready var starMesh := $RotationPoint/Core/StarMesh
+@onready var starCollision := $RotationPoint/Core/StarCollision
+@onready var starLight := $RotationPoint/Core/StarLight
+@onready var orbitMesh := $Orbit
 
 var star_type : String
 var star_names = ["Centauri", "Sol", "Bernard's Star", "Vega", "Proxima", "Polaris", "Betelgeuse", "Deneb", "Sirius"]
@@ -18,7 +19,7 @@ var is_flipped := false
 signal star_rad_for_cam(radius)
 
 
-func _ready():
+func _ready():		
 	# TEMP Values
 	if star_count == 1:
 		small_star_probability = 0.0

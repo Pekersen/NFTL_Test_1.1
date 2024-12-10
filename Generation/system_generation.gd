@@ -42,13 +42,14 @@ func system_generate():
 		#if !_set_orbit_style():
 			#continue
 		
-		
 		_init_stars()
 		stars.sort_custom(_compare_mass)
-		for star in stars:
-			print(star.star_name, ": mass - ", star.mass)
 		
 		_init_star_orbit()
+		
+		
+		for star in stars:
+			print(star.star_name, ": mass - ", star.mass)
 		
 		break
 
@@ -61,7 +62,8 @@ func _set_star_count():
 		star_count = 2
 	elif random_float < 1.0:
 		star_count = 3
-	#star_count = 1 # TEMP
+	star_count = 2 # TEMP
+	
 	# cleans stars array
 	for i in range(stars.size() - star_count):
 		stars.erase(null)
@@ -125,10 +127,12 @@ func _init_star_orbit():
 			stars[0].orbital_period = 50
 			stars[0].is_flipped = true
 			stars[0].can_orbit = true
+			stars[0].orbitMesh.visible = true
 			
 			stars[1].eccentricity = stars[0].eccentricity
 			stars[1].orbital_period = stars[0].orbital_period
 			stars[1].can_orbit = true
+			stars[1].orbitMesh.visible = true
 		3:
 			pass
 		_: 

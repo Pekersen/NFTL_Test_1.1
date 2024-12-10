@@ -2,23 +2,23 @@
 
 [ext_resource type="Script" path="res://Celestial Objects/Moons/moon.gd" id="1_qvuol"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbg0y"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_65sbq"]
 shading_mode = 0
 
 [sub_resource type="TorusMesh" id="TorusMesh_3ugw0"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_nbg0y")
+material = SubResource("StandardMaterial3D_65sbq")
 inner_radius = 9.995
 outer_radius = 10.0
 rings = 128
 ring_segments = 64
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pujps"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nngem"]
 resource_local_to_scene = true
 
 [sub_resource type="SphereMesh" id="SphereMesh_t0jrq"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_pujps")
+material = SubResource("StandardMaterial3D_nngem")
 radius = 0.1
 height = 0.2
 
