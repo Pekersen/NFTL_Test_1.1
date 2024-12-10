@@ -1,5 +1,7 @@
 class_name CelestialObject extends Node3D
 
+@export var core : Node3D
+
 var radius : float
 var mass : float
 var temperature : float # THIS IS THE AVERAGE TEMPERATURE, NOT THE CURRENT TEMP

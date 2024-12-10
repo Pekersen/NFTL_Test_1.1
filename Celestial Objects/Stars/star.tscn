@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://Celestial Objects/Stars/star.gd" id="1_81nsq"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbg0y"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2lie"]
 shading_mode = 0
 
-[sub_resource type="TorusMesh" id="TorusMesh_wrnag"]
+[sub_resource type="TorusMesh" id="TorusMesh_t85fv"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_nbg0y")
+material = SubResource("StandardMaterial3D_i2lie")
 inner_radius = 9.995
 outer_radius = 10.0
 rings = 128
@@ -149,31 +149,27 @@ resource_local_to_scene = true
 lightmap_size_hint = Vector2i(5, 0)
 material = SubResource("ShaderMaterial_8o0t4")
 
-[node name="Star" type="Node3D"]
+[node name="Star" type="Node3D" node_paths=PackedStringArray("core")]
 script = ExtResource("1_81nsq")
+core = NodePath("RotationPoint/Core")
 
 [node name="Orbit" type="MeshInstance3D" parent="."]
-visible = false
 cast_shadow = 0
-mesh = SubResource("TorusMesh_wrnag")
+mesh = SubResource("TorusMesh_t85fv")
 
 [node name="RotationPoint" type="Node3D" parent="."]
 
 [node name="Core" type="StaticBody3D" parent="RotationPoint"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.95736, 0, 0)
 
 [node name="StarCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.95736, 0, 0)
 shape = SubResource("SphereShape3D_4mdgf")
 
 [node name="StarMesh" type="MeshInstance3D" parent="RotationPoint/Core"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.95736, -0.0425976, 0)
 cast_shadow = 0
 mesh = SubResource("SphereMesh_c8gkq")
 skeleton = NodePath("../../..")
 
 [node name="StarLight" type="OmniLight3D" parent="RotationPoint/Core"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -9.95736, 0, 0)
 light_color = Color(1, 0.852399, 0.825386, 1)
 shadow_enabled = true
 omni_range = 1000.0

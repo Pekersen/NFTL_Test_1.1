@@ -32,7 +32,13 @@ func _ready():
 	print("Star Type: " + star_type)
 	_on_system_star_gen(star_type)
 		
-	
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	#star_rotate(delta)
+	if can_orbit:
+		orbit(delta, core)
+		if is_flipped:
+			core.position *= -1
 
 func  _on_system_star_gen(star_type):
 	self.star_type = star_type
@@ -177,15 +183,15 @@ func  _on_system_star_gen(star_type):
 	
 	star_rad_for_cam.emit(radius)
 	
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	star_rotate(delta)
-	if can_orbit:
-		orbit(delta, self)
-		if is_flipped:
-			position *= -1
 
+func init_orbit_mesh():
+	orbitMesh.mesh.outer_radius = semi_major_axis + 0.1
+	orbitMesh.mesh.inner_radius = semi_major_axis - 0.1
+	orbitMesh.scale.z = semi_minor_axis/semi_major_axis
+	orbitMesh.position.x = -sqrt(pow(semi_major_axis,2) - pow(semi_minor_axis,2))
+	print("mesh pos: ", orbitMesh.position.x)
+	if is_flipped:
+		orbitMesh.position.x *= -1
 
 # For console
 func get_star_info() -> String:

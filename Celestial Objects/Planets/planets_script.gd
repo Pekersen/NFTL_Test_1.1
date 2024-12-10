@@ -1,7 +1,6 @@
 class_name Planet extends CelestialObject
 
 @export var rotationPoint : Node3D
-@export var core : Node3D
 
 var num_moons : int
 var rings : bool
