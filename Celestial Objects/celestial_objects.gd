@@ -31,7 +31,7 @@ func offsetValue(offset : Array[float]):
 
 # moves 'core' in an orbit
 func orbit(delta, core):
-	if can_orbit:
+	if !can_orbit:
 		time_passed += delta * Global.ticks_per_second / ORBIT_SPEED_CONST
 		
 		# Calculate the current position in the elliptical orbit

@@ -2,6 +2,7 @@ extends CharacterBody3D
 
 @onready var springArm = $SpringArm3D
 @onready var camera = $SpringArm3D/Camera3D
+
 var SPEED = 10
 var SPEED_INCREASE = 1.0
 
@@ -18,13 +19,29 @@ var locked_movement_enabled := false
 
 var locked_camera_offset := Vector3.ZERO
 
+# Light Detection Shenanigans
+@onready var sub_viewport = $SpringArm3D/Camera3D/SubViewport
+@onready var light_detection = $SpringArm3D/Camera3D/SubViewport/LightDetection
+@onready var texture_rect := $TextureRect
+@onready var color_rect := $ColorRect
+@onready var light_plane = $SpringArm3D/Camera3D/SubViewport/LightDetection/LightLevelCam/LightLevelPlane
+
+var light_level : float
+var timer = 0
+var absolute_timer = 0
+var lighttime = false
+var radius1 = 5.0
+
 signal cam_move_to_spring_arm(radius1)
 
+func _ready():
+	sub_viewport.debug_draw = 2
 
 func _on_star_star_rad_for_cam(radius):
-	var radius1 = radius
+	radius1 = radius
 	cam_move_to_spring_arm.emit(radius1)
-
+	light_plane.mesh.size = Vector2(radius1, radius1)
+	light_plane.position.z = -radius1
 	
 
 func _physics_process(delta: float) -> void:
@@ -87,13 +104,41 @@ func _process(_delta: float) -> void:
 	else:
 		SPEED_INCREASE = 1.0
 	
+	''' COMMENT OUT IS TEMPORARY
 	if Input.is_action_just_pressed("camera_reset"):
 		position.x = 0
 		position.y = 2
 		position.z = 0
+	'''
 	
 	rotation_degrees.x = springArm.rotation_degrees.x
 	rotation_degrees.y = springArm.rotation_degrees.y
+
+	# Light Detection
+	light_detection.global_position = camera.global_position
+	light_detection.global_rotation = camera.global_rotation
+	var texture = sub_viewport.get_texture()
+	texture_rect.texture = texture
+	var color = get_average_color(texture)
+	color_rect.color = color
+	light_level = color.get_luminance()
+	timer += 1
+	absolute_timer += 1
+	
+	if Input.is_action_just_pressed("camera_reset"):
+		global_position = Vector3(0,0,0)
+		springArm.global_rotation.x = 0
+		
+	if Input.is_action_just_pressed("get_light"):
+		lighttime = !lighttime
+		absolute_timer = 0
+		print("Getting Light")
+	
+	if timer % 100 == 0 and lighttime == true:
+		print(str(snappedf(light_level, 0.001)))
+		timer = 0
+	#light_level.tint_progress.a = color.get_luminance()
+	
 
 	
 func _input(event):
@@ -185,6 +230,10 @@ func locked_camera_rotation(value : bool):
 	rotation_lock = value
 	# when console does command:
 	return "Locked camera rotation was set to " + str(value)
-
+	
+func get_average_color(texture: ViewportTexture) -> Color:
+	var image = texture.get_image()
+	image.resize(1, 1, Image.INTERPOLATE_LANCZOS)
+	return image.get_pixel(0, 0)
 
 

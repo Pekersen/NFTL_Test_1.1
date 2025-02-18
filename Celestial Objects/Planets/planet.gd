@@ -13,7 +13,6 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
 	# Init orbit visuals
 	orbitMesh.mesh.outer_radius = semi_major_axis + 0.05
 	orbitMesh.mesh.inner_radius = semi_major_axis - 0.05
