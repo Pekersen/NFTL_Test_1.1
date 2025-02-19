@@ -123,8 +123,15 @@ func _init_star_orbit():
 			
 			stars[0].semi_major_axis = stars[1].semi_major_axis *\
 										(stars[1].mass/stars[0].mass)
-
-			stars[0].eccentricity = 0.7
+			
+			var eccentricity_val = offsetValue([0.0,1.0])
+			if eccentricity_val < 0.5:
+				stars[0].eccentricity = offsetValue([0.0,0.1])
+			elif eccentricity_val < 0.8:
+				stars[0].eccentricity = offsetValue([0.1,0.2])
+			else:
+				stars[0].eccentricity = offsetValue([0.2,1.0])
+			print("Eccentricity: ", stars[0].eccentricity)
 			stars[0].orbital_period = 50
 			stars[0].is_flipped = true
 			stars[0].can_orbit = true

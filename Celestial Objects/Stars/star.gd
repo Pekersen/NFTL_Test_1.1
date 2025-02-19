@@ -18,6 +18,7 @@ var is_flipped := false
 
 signal star_rad_for_cam(radius)
 
+var orbit_path_visible = true
 
 func _ready():		
 	# TEMP Values
@@ -234,4 +235,12 @@ func pick_star_type():
 		return "Y"
 	else:
 		return "M"
+		
+func _input(event):
+	if event.is_action_pressed("lines") and orbit_path_visible == true:
+		orbitMesh.visible = false
+		orbit_path_visible = false
+	elif event.is_action_pressed("lines") and orbit_path_visible == false:
+		orbitMesh.visible = true
+		orbit_path_visible = true
 
