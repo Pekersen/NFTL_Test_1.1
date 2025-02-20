@@ -17,16 +17,16 @@ func cluster_variables():
 	
 	if random_float < 0.33:
 		cluster_age_variance = [1000000000, 10000000000]
-		print("Old Cluster")
+		print("Old System")
 	elif random_float < 0.66:
 		cluster_age_variance = [100000000, 999999999]
-		print("Middle-Aged Cluster")
+		print("Middle-Aged System")
 	elif random_float < 1.0:
-		print("Young Cluster")
+		print("Young System")
 		cluster_age_variance = [0, 99999999]
 	else:
 		cluster_age_variance = [10000000000, 14000000000]
-		print("Very Old Cluster")
+		print("Very Old System")
 		
 	cluster_age = offsetValue(cluster_age_variance)
 	

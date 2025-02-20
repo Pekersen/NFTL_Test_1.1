@@ -1,10 +1,10 @@
-class_name System extends SystemGeneration
-var i
+extends SystemGeneration
+
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	
-	system_generate(i)
-	print("I 2: ", i)
+	system_generate()
 	#initVars()
 	#initStar()
 	#initPlanetChildren()

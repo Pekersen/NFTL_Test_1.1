@@ -16,8 +16,6 @@ func _input(event):
 	if event.is_action_pressed("console_switch"):
 		console.visible = !console.visible
 		on_console_visibility_change()
-	if event.is_action_released("change_scene"):
-		get_tree().change_scene_to_file("res://start.tscn")
 		
 func on_console_visibility_change():
 	camera.free_movement_enabled = !console.visible
