@@ -19,8 +19,9 @@ var stars : Array
 
 signal star_count_to_star
 
-func system_generate():
-	cluster_variables()
+func system_generate(i: int) -> Node3D:
+	var star_system = Node3D.new()
+	star_system.name = "StarSystem_" + str(i)
 	
 	# Set system age
 	cluster_age /= CLUSTER_TO_SYSTEM_AGE
@@ -42,16 +43,17 @@ func system_generate():
 		#if !_set_orbit_style():
 			#continue
 		
-		_init_stars()
-		stars.sort_custom(_compare_mass)
-		
-		_init_star_orbit()
-		
-		
-		for star in stars:
-			print(star.star_name, ": mass - ", star.mass)
-		
 		break
+	return star_system
+
+func build_system(system: Node3D):
+	_init_stars(system)
+	stars.sort_custom(_compare_mass)
+	
+	_init_star_orbit()
+	
+	for star in stars:
+		print(star.star_name, ": mass - ", star.mass)
 
 # sets star_count to 1 to max, inclusive
 func _set_star_count():
@@ -135,12 +137,12 @@ func _init_star_orbit():
 			stars[0].orbital_period = 50
 			stars[0].is_flipped = true
 			stars[0].can_orbit = true
-			stars[0].orbitMesh.visible = true
+			#stars[0].orbitMesh.visible = true
 			
 			stars[1].eccentricity = stars[0].eccentricity
 			stars[1].orbital_period = stars[0].orbital_period
 			stars[1].can_orbit = true
-			stars[1].orbitMesh.visible = true
+			#stars[1].orbitMesh.visible = true
 			
 			stars[1].semi_minor_axis = stars[1].semi_major_axis *\
 									sqrt(1 - pow(stars[1].eccentricity,2))
@@ -170,6 +172,6 @@ func _calc_center_of_mass(star_group: Array) -> Vector3:
 				summation_of_positional_mass.z / total_mass
 				)
 
-func _init_stars():
+func _init_stars(star_system: Node3D):
 	for star in stars:
-		add_child(star)
+		star_system.add_child(star)
