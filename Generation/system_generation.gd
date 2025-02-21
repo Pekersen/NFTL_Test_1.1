@@ -1,10 +1,14 @@
 class_name SystemGeneration extends GenerateCluster
 
 @onready var star = preload("res://Celestial Objects/Stars/star.tscn")
+@export var system_id: int  # Assigned by UniverseManager
 
-const CLUSTER_TO_SYSTEM_AGE = 1000000
+#signal system_data_generated(star_data)  # Signal to send star info
+
+var built = false  # Track if we've already built the system
 
 var system_age : int
+var system_age_variance : Array
 var star_count : int
 var star_type : String
 
@@ -19,13 +23,22 @@ var stars : Array
 
 signal star_count_to_star
 
+func _ready():
+	if not built:
+		system_generate()
+		built = true
+
 func system_generate():
-	cluster_variables()
+	
+	print("🔄 Star system ", system_id, " is READY!")
 	
 	# Set system age
-	cluster_age /= CLUSTER_TO_SYSTEM_AGE
-	system_age = offsetValue([(cluster_age - (cluster_age / 10)), 
-							cluster_age]) * CLUSTER_TO_SYSTEM_AGE
+	print("Cluster Age per system: ", Start4.cluster_age)
+	cluster_age = Start4.cluster_age
+	system_age_variance = [cluster_age - (cluster_age / 10), cluster_age]
+	print("Lower Limit: ", system_age_variance[0], ", Upper Limit: ", system_age_variance[1])
+	system_age_variance = [(cluster_age - (cluster_age / 10)) / 1000000, cluster_age / 1000000]
+	system_age = Start4.offsetValue(system_age_variance) * 1000000
 	print("System Age: " + str(system_age))
 	
 	while(true):
@@ -52,17 +65,20 @@ func system_generate():
 			print(star.star_name, ": mass - ", star.mass)
 		
 		break
+		
+	#emit_system_data()
+
 
 # sets star_count to 1 to max, inclusive
 func _set_star_count():
 	var random_float = randf()
-	if random_float < 0.00:
+	if random_float < 0.5:
 		star_count = 1
 	elif random_float < 1.0:
 		star_count = 2
 	elif random_float < 1.0:
 		star_count = 3
-	star_count = 2 # TEMP
+	#star_count = 2 # TEMP
 	
 	# cleans stars array
 	for i in range(stars.size() - star_count):
@@ -106,6 +122,8 @@ func _set_orbit_style():
 func _init_star_orbit():
 	match star_count:
 		1:
+			#stars[0].position = Vector3(0,0,0)
+			print("1 STARRRRRRRRRRRRRRRRR")
 			pass
 		2:
 			'Stars orbit each other'
@@ -130,7 +148,7 @@ func _init_star_orbit():
 			elif eccentricity_val < 0.8:
 				stars[0].eccentricity = offsetValue([0.1,0.2])
 			else:
-				stars[0].eccentricity = offsetValue([0.2,1.0])
+				stars[0].eccentricity = offsetValue([0.2,0.8])
 			print("Eccentricity: ", stars[0].eccentricity)
 			stars[0].orbital_period = 50
 			stars[0].is_flipped = true
@@ -144,10 +162,10 @@ func _init_star_orbit():
 			
 			stars[1].semi_minor_axis = stars[1].semi_major_axis *\
 									sqrt(1 - pow(stars[1].eccentricity,2))
-			print("semi minor 1: ", stars[1].semi_minor_axis)
+			#print("semi minor 1: ", stars[1].semi_minor_axis)
 			stars[0].semi_minor_axis = stars[0].semi_major_axis *\
 									sqrt(1 - pow(stars[0].eccentricity,2))
-			print("semi minor 0: ", stars[0].semi_minor_axis)
+			#print("semi minor 0: ", stars[0].semi_minor_axis)
 		3:
 			pass
 		_: 
@@ -173,3 +191,9 @@ func _calc_center_of_mass(star_group: Array) -> Vector3:
 func _init_stars():
 	for star in stars:
 		add_child(star)
+
+
+'func emit_system_data():
+		print("📡 Emitting signal from Star System", system_id)
+		system_data_generated.emit(system_id, stars[system_id])
+	'

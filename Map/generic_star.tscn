@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cux88x3x7umaw"]
+
+[ext_resource type="PackedScene" uid="uid://bequjodqr8tcj" path="res://Celestial Objects/Stars/star.tscn" id="1_yoxjk"]
+
+[node name="Node3D" type="Node3D"]
+
+[node name="Star" parent="." instance=ExtResource("1_yoxjk")]
+script = null
