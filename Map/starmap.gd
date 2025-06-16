@@ -1,3 +1,4 @@
+
 extends Node3D
 
 var stars: Dictionary = {}  # Stores the star mesh instances
@@ -6,7 +7,7 @@ var is_visible = false  # Toggle for visibility
 const STAR_MESH = preload("res://Map/generic_star.tscn")  # Preload a generic star mesh
 
 func _ready():
-	self.hide()  # Start hidden
+	#self.hide()  # Start hidden
 	Start4.switch_to_star_system(0)
 
 # 1️⃣ Generate star representations in a sphere around the current system
@@ -63,4 +64,3 @@ func _on_star_clicked(viewport, event, shape_idx):
 		print("Switching to system:", system_id)
 		Start4.switch_to_star_system(system_id)
 		toggle_map()  # Hide map when switching systems
-

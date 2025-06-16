@@ -48,6 +48,7 @@ func system_generate():
 		
 		print("Star Count: " + str(star_count))
 		
+		
 		_init_star_vars()
 		
 		
@@ -60,6 +61,8 @@ func system_generate():
 		
 		_init_star_orbit()
 		
+		if star_count > 1:
+			_planet_mod()
 		
 		for star in stars:
 			print(star.star_name, ": mass - ", star.mass)
@@ -72,7 +75,7 @@ func system_generate():
 # sets star_count to 1 to max, inclusive
 func _set_star_count():
 	var random_float = randf()
-	if random_float < 0.5:
+	if random_float < 0.7:
 		star_count = 1
 	elif random_float < 1.0:
 		star_count = 2
@@ -136,7 +139,7 @@ func _init_star_orbit():
 				# this should be done after calculating orbit :D
 			# calculate orbit!
 			
-			stars[1].semi_major_axis = stars[1].mass * 5 + 10 
+			stars[1].semi_major_axis = stars[1].mass * 10 + 10 
 			#  b = a * sqrt(1 - e^2)
 			
 			stars[0].semi_major_axis = stars[1].semi_major_axis *\
@@ -197,3 +200,18 @@ func _init_stars():
 		print("📡 Emitting signal from Star System", system_id)
 		system_data_generated.emit(system_id, stars[system_id])
 	'
+	
+func _planet_mod():
+	var difference = abs(stars[0].semi_major_axis - stars[1].semi_major_axis)
+	
+	for i in range(stars[0].planets_semi.size()):
+		if stars[0].get_semimajoraxis(i) > difference:
+			stars[0].remove_child_at_path(i)
+	
+	for i in range(stars[1].planets_semi.size()):
+		if stars[1].get_semimajoraxis(i) > difference:
+			stars[1].remove_child_at_path(i)
+			
+	for star in stars:
+		if star.eccentricity > 0.2:
+			star.remove_all()

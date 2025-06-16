@@ -3,10 +3,16 @@ extends Planet
 @onready var planetMesh = $"RotationPoint/Core/TruePlanet"
 @onready var planetCollision = $"RotationPoint/Core/PlanetCollision"
 @onready var orbitMesh = $Orbit
+@onready var atmosphere = $"RotationPoint/Core/Atmopshere"
 
 var initRotPos : float
 var orbit_path_visible = true
 
+var atmosphere_present : bool
+var atmosphere_size : float
+var atmosphere_thickness : float
+
+var is_flipped := false
 
 func _init():
 	mass = 0.01
@@ -24,6 +30,14 @@ func _ready():
 	# Init click area
 	planetCollision.shape.radius = radius + click_forgiveness
 	
+	if !atmosphere_present:
+		atmosphere.mesh.material.set_transparency(0)
+	else:
+		atmosphere.mesh.material.set_transparency(1)
+		atmosphere.mesh.radius = radius * 0.93
+		atmosphere.mesh.height = (radius * 2) * 0.93
+		atmosphere.mesh.material.albedo_color = Color(color_r, color_g, color_b, 0.01)
+	
 	semi_minor_axis = ((semi_major_axis**2)*(1-(eccentricity**2)))**0.5
 	print("Eccentricity: " + str(eccentricity) + ", Major: " + str(semi_major_axis) + ", Minor: " + str(semi_minor_axis))
 	
@@ -38,7 +52,12 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
-	orbit(delta, core)
+	if can_orbit:
+		orbit(delta, core)
+		if is_flipped:
+			core.position *= -1
+	
+	#orbit(delta, core)
 	
 func _input(event):
 	if event.is_action_pressed("lines") and orbit_path_visible == true:

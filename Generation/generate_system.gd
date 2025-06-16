@@ -251,9 +251,6 @@ func initMoonVars(moonInstance):
 	moonInstance.color_g = offsetValue(color_variance_g)
 	moonInstance.color_b = offsetValue(color_variance_b)
 	
-func initStar():
-	star_gen.emit(star_type)
-	
 func initRing():
 	var ringInstance = ring.instantiate()
 	initRingVars(ringInstance)
@@ -271,3 +268,6 @@ func initRingVars(ringInstance):
 	ringInstance.color_r = offsetValue(color_variance_r)
 	ringInstance.color_g = offsetValue(color_variance_g)
 	ringInstance.color_b = offsetValue(color_variance_b)
+
+func initStar():
+	star_gen.emit(star_type)

@@ -1,6 +1,6 @@
 extends Node  # Since this is an Autoload, it should NOT extend Node3D
 
-const SYSTEM_COUNT = 10
+const SYSTEM_COUNT = 50
 var star_systems: Dictionary = {}  # Store persistent star systems
 var current_system: Node = null
 var current_system_id : int = 0

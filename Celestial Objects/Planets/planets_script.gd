@@ -24,6 +24,6 @@ var atomospheric_composition_variance : Array[float]
 var orbit_speed_variance : Array[float]
 
 
-
 func _ready():
 	can_orbit = true
+

@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://cqtxuyes4fdju"]
+[gd_scene load_steps=9 format=3 uid="uid://cqtxuyes4fdju"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
 
@@ -15,12 +15,23 @@ ring_segments = 64
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_st6bb"]
 resource_local_to_scene = true
+albedo_color = Color(1, 0.694118, 0.25098, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_65kqi"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_st6bb")
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_gfk4t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uncri"]
+resource_local_to_scene = true
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_p47ae"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_uncri")
+radial_segments = 128
+rings = 64
 
 [node name="Planet" type="Node3D" node_paths=PackedStringArray("rotationPoint", "core")]
 script = ExtResource("1_21ytp")
@@ -41,3 +52,7 @@ mesh = SubResource("SphereMesh_65kqi")
 
 [node name="PlanetCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
 shape = SubResource("SphereShape3D_gfk4t")
+
+[node name="Atmopshere" type="MeshInstance3D" parent="RotationPoint/Core"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+mesh = SubResource("SphereMesh_p47ae")
