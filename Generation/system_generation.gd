@@ -110,6 +110,13 @@ func _init_star_vars():
 
 func _compare_mass(a: Star, b: Star) -> int:
 	return (a.mass < b.mass) # > Decending order, < Accending order
+	
+func sort_by_mass():
+	var temp0 = stars[0]
+	var temp1 = stars[1]
+	if (stars[0].mass > stars[1].mass):
+		stars[1] = temp0
+		stars[0] = temp1
 
 func _set_orbit_style():
 	match star_count:
@@ -194,6 +201,14 @@ func _calc_center_of_mass(star_group: Array) -> Vector3:
 func _init_stars():
 	for star in stars:
 		add_child(star)
+	
+	if star_count == 2:
+		if (stars[1].mass > stars[0].mass):
+			Starmap.stars1.append(stars[1])
+		else:
+			Starmap.stars1.append(stars[0])
+	elif star_count == 1:
+		Starmap.stars1.append(stars[0])
 
 
 'func emit_system_data():

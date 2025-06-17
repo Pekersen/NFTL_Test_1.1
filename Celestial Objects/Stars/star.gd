@@ -236,7 +236,7 @@ func  _on_system_star_gen(star_type):
 	color_b = offsetValue(color_variance_b)
 	
 	#TEMP
-	print("Color R: " + str(color_r) + ", Color G: " + str(color_g) + ", Color B: " + str(color_b))
+	#print("Color R: " + str(color_r) + ", Color G: " + str(color_g) + ", Color B: " + str(color_b))
 	
 	starMesh.mesh.radius = radius
 	starMesh.mesh.height = radius * 2
@@ -262,7 +262,7 @@ func init_orbit_mesh():
 	major_axis = semi_major_axis
 	orbitMesh.scale.z = semi_minor_axis/semi_major_axis
 	orbitMesh.position.x = -sqrt(pow(semi_major_axis,2) - pow(semi_minor_axis,2))
-	print("mesh pos: ", orbitMesh.position.x)
+	#print("mesh pos: ", orbitMesh.position.x)
 	if is_flipped:
 		orbitMesh.position.x *= -1
 
@@ -390,9 +390,9 @@ func initPlanetVars(planetInstance, i, star_rad):
 	if (orbit_sum > star_rad * 10 and orbit_sum < star_rad * 20) and (planet_type == "Transitional_Planet") and (random_float > 0.5):
 		planet_type = "Hycean_Planet"
 	
-	print("-----------------------------")
-	print(planet_type, ": ", orbit_sum, ". Habitable zone: ", star_rad * 10, " - ", star_rad * 15)
-	print("-----------------------------")
+	#print("-----------------------------")
+	#print(planet_type, ": ", orbit_sum, ". Habitable zone: ", star_rad * 10, " - ", star_rad * 15)
+	#print("-----------------------------")
 	
 	if planet_type == "Gas_Giant":
 		planet_radius_variance = [0.5,0.8] 

@@ -2,12 +2,12 @@
 
 [ext_resource type="Script" path="res://Celestial Objects/Stars/star.gd" id="1_81nsq"]
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_i2lie"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k228r"]
 shading_mode = 0
 
 [sub_resource type="TorusMesh" id="TorusMesh_t85fv"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_i2lie")
+material = SubResource("StandardMaterial3D_k228r")
 inner_radius = 9.995
 outer_radius = 10.0
 rings = 128
@@ -97,11 +97,11 @@ void fragment() {
 
 "
 
-[sub_resource type="Gradient" id="Gradient_qqrl3"]
+[sub_resource type="Gradient" id="Gradient_b16wq"]
 offsets = PackedFloat32Array(0, 0.513889, 1)
 colors = PackedColorArray(0, 0, 0, 1, 0.873298, 0.873298, 0.873298, 1, 1, 1, 1, 1)
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_mortk"]
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_h3vb1"]
 noise_type = 4
 frequency = 0.0719
 fractal_type = 3
@@ -118,10 +118,10 @@ seamless = true
 seamless_blend_skirt = 1.0
 as_normal_map = true
 bump_strength = 25.1
-color_ramp = SubResource("Gradient_qqrl3")
-noise = SubResource("FastNoiseLite_mortk")
+color_ramp = SubResource("Gradient_b16wq")
+noise = SubResource("FastNoiseLite_h3vb1")
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_8o0t4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dj6he"]
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_5nekp")
@@ -147,7 +147,7 @@ shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
 [sub_resource type="SphereMesh" id="SphereMesh_c8gkq"]
 resource_local_to_scene = true
 lightmap_size_hint = Vector2i(5, 0)
-material = SubResource("ShaderMaterial_8o0t4")
+material = SubResource("ShaderMaterial_dj6he")
 
 [node name="Star" type="Node3D" node_paths=PackedStringArray("core")]
 script = ExtResource("1_81nsq")

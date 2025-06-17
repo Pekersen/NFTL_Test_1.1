@@ -53,6 +53,6 @@ mesh = SubResource("SphereMesh_65kqi")
 [node name="PlanetCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
 shape = SubResource("SphereShape3D_gfk4t")
 
-[node name="Atmopshere" type="MeshInstance3D" parent="RotationPoint/Core"]
+[node name="Atmospshere" type="MeshInstance3D" parent="RotationPoint/Core"]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
 mesh = SubResource("SphereMesh_p47ae")

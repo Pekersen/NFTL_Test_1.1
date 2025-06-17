@@ -1,6 +1,3 @@
-[gd_scene load_steps=2 format=3 uid="uid://cv1wefb65qlmb"]
+[gd_scene format=3 uid="uid://h8k2vvsxutkf"]
 
-[ext_resource type="Script" path="res://Map/starmap.gd" id="1_r6kmq"]
-
-[node name="Node3D" type="Node3D"]
-script = ExtResource("1_r6kmq")
+[node name="Map" type="Node3D"]

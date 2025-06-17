@@ -3,7 +3,7 @@ extends Planet
 @onready var planetMesh = $"RotationPoint/Core/TruePlanet"
 @onready var planetCollision = $"RotationPoint/Core/PlanetCollision"
 @onready var orbitMesh = $Orbit
-@onready var atmosphere = $"RotationPoint/Core/Atmopshere"
+@onready var atmosphere = $"RotationPoint/Core/Atmospshere"
 
 var initRotPos : float
 var orbit_path_visible = true

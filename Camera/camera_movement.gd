@@ -76,13 +76,13 @@ func _process(_delta: float) -> void:
 	springArm.position = position
 	
 	if Input.is_action_pressed("shift") and Input.is_action_pressed("ctrl"):
-		SPEED_INCREASE = 10.0
+		SPEED_INCREASE = 20.0
 	
 	elif Input.is_action_pressed("shift"):
-		SPEED_INCREASE = 5.0
+		SPEED_INCREASE = 10.0
 		
 	elif Input.is_action_pressed("ctrl"):
-		SPEED_INCREASE = 1.0/3
+		SPEED_INCREASE = 0.1
 		
 	else:
 		SPEED_INCREASE = 1.0

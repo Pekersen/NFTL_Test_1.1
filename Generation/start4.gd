@@ -1,6 +1,6 @@
 extends Node  # Since this is an Autoload, it should NOT extend Node3D
 
-const SYSTEM_COUNT = 50
+const SYSTEM_COUNT = 5
 var star_systems: Dictionary = {}  # Store persistent star systems
 var current_system: Node = null
 var current_system_id : int = 0
@@ -16,6 +16,14 @@ func _ready():
 	
 	if star_systems.is_empty():  # Prevent regenerating on reload
 		generate_star_cluster()
+	
+	current_system_id = SYSTEM_COUNT - 1
+	for i in range(SYSTEM_COUNT):
+		switch_to_star_system(current_system_id)
+		current_system_id -= 1
+	current_system_id = 0
+	
+	#Starmap.generate_galaxy_map()
 
 # 1️⃣ Generate all star systems ONCE and keep them in memory
 func generate_star_cluster():
@@ -50,7 +58,10 @@ func switch_to_star_system(id: int):
 		return
 
 	if current_system:
+		#current_system.get_parent().remove_child(current_system)
+		#current_system.process_mode = 4
 		current_system.hide()  # Hide the previous system
+		
 
 	# Get the new system
 	var new_system = star_systems[id]
@@ -61,12 +72,16 @@ func switch_to_star_system(id: int):
 
 	# ✅ Add it to the current scene and show it
 	get_tree().current_scene.add_child(new_system)
+	#new_system.process_mode = 0
 	new_system.show()
+
 	
 	# ✅ Update current system reference
 	current_system = new_system
 
 	print("Switched to:", current_system.name)
+	
+
 
 # 3️⃣ Handle Input (Testing)
 func _input(event):
@@ -74,9 +89,13 @@ func _input(event):
 		if event.keycode == KEY_V and current_system_id + 1 < len(star_systems):  # Press 'V' to visit a random system
 			current_system_id += 1
 			switch_to_star_system(current_system_id)
+			if Starmap.is_visible:
+				Starmap.toggle_map()
 		if event.keycode == KEY_C  and current_system_id - 1 >= 0:  # Press 'V' to visit a random system
 			current_system_id -= 1
 			switch_to_star_system(current_system_id)
+			if Starmap.is_visible:
+				Starmap.toggle_map()
 			
 func offsetValue(offset : Array):
 	if typeof(offset[0]) == TYPE_FLOAT:

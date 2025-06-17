@@ -1,45 +1,50 @@
-
 extends Node3D
 
 var stars: Dictionary = {}  # Stores the star mesh instances
 var is_visible = false  # Toggle for visibility
+var stars1 : Array
 
-const STAR_MESH = preload("res://Map/generic_star.tscn")  # Preload a generic star mesh
+var STAR_MESH = preload("res://Map/generic_star.tscn")  # Preload a generic star mesh
+
+var map_scene = load("res://Map/map.tscn")  
+var map_instance = map_scene.instantiate()  
+var map_generated = false
 
 func _ready():
-	#self.hide()  # Start hidden
 	Start4.switch_to_star_system(0)
 
 # 1️⃣ Generate star representations in a sphere around the current system
 func generate_galaxy_map():
+	print("------------------------- GENERATING GALAXY MAP -------------------")
 	for id in Start4.star_systems.keys():
 		var system = Start4.star_systems[id]
 		var star = STAR_MESH.instantiate()
 		star.name = "Star_" + str(id)
-		
+		map_instance.add_child(star)
 		# Position stars in a sphere around the center
 		var angle1 = randf_range(0, TAU)  # Random azimuth angle
 		var angle2 = randf_range(0, PI)  # Random polar angle
-		var radius = 10  # Distance from center
+		var radius = randf_range(1,10)  # Distance from center
 		var pos = Vector3(
 			radius * sin(angle2) * cos(angle1),
 			radius * sin(angle2) * sin(angle1),
 			radius * cos(angle2)
 		)
-		print("___________________Star Position:", pos)
 		star.position = pos
 
 		# Set star color to match system
-		var star_color = Start4.star_systems[id].star_data.starMesh.mesh.material
-		var mat = StandardMaterial3D.new()
-		mat.albedo_color = star_color
-		star.set_surface_override_material(0, mat)
+		
+		var star_color = stars1[id].starMesh.mesh.material.get_shader_parameter("Sun_Color")
+		var star_size = sqrt(stars1[id].starMesh.mesh.radius)
+		if star_size < 1:
+			star_size = 1
+		star.color = star_color
+		star.size = star_size
 
 		# Add interaction
 		star.set_meta("system_id", id)  # Store system ID for click event
 		star.connect("input_event", _on_star_clicked)
 
-		add_child(star)
 		stars[id] = star  # Store reference
 
 # 2️⃣ Get star color based on system properties
@@ -53,9 +58,14 @@ func generate_galaxy_map():
 func toggle_map():
 	is_visible = !is_visible
 	if is_visible:
-		self.show()
+		Start4.star_systems[Start4.current_system_id].hide()
+		print("SHOWING")
+		get_tree().current_scene.add_child(map_instance)
+		map_instance.show()
 	else:
-		self.hide()
+		Start4.star_systems[Start4.current_system_id].show()
+		print("HIDING")
+		map_instance.hide()
 
 # 4️⃣ Handle clicks on stars
 func _on_star_clicked(viewport, event, shape_idx):
@@ -64,3 +74,11 @@ func _on_star_clicked(viewport, event, shape_idx):
 		print("Switching to system:", system_id)
 		Start4.switch_to_star_system(system_id)
 		toggle_map()  # Hide map when switching systems
+
+func _input(event):
+	if event is InputEventKey and event.pressed:
+		if event.keycode == KEY_M and !map_generated:
+			generate_galaxy_map()
+			map_generated = true
+		if event.keycode == KEY_M:
+			toggle_map()
