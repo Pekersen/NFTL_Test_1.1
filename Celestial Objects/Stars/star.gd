@@ -99,7 +99,7 @@ func _ready():
 	
 func initVars():
 	star_type = pick_star_type()
-	print("Star Type: " + star_type)
+	print("Star Type1: " + star_type)
 	_on_system_star_gen(star_type)
 	num_planets = offsetValue(num_planets_variance) / planet_count_reduction
 	
@@ -287,7 +287,7 @@ func pick_star_type():
 	var random_float = randf()
 	
 
-	if random_float < 0.01 * big_star_probability:
+	if random_float < 0.01: #* big_star_probability:
 		return "O"
 	elif random_float < 0.04 * big_star_probability:
 		return "B"

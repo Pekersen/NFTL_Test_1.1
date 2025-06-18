@@ -1,6 +1,6 @@
 extends Node  # Since this is an Autoload, it should NOT extend Node3D
 
-const SYSTEM_COUNT = 5
+const SYSTEM_COUNT = 50
 var star_systems: Dictionary = {}  # Store persistent star systems
 var current_system: Node = null
 var current_system_id : int = 0
@@ -32,7 +32,7 @@ func generate_star_cluster():
 		var system_scene = load("res://Main/main.tscn")  
 		var system_instance = system_scene.instantiate()  
 		system_instance.name = "StarSystem_" + str(i)  
-		system_instance.set_meta("system_id", i) 
+		system_instance.set_meta("system_id", i)
 		#print("Star System", i, "Position:", system_instance.global_transform.origin)
 		'
 		print("Creating system:", i, "Instance type:", system_instance.get_class())

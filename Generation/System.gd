@@ -3,7 +3,7 @@ extends SystemGeneration
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("____________________________________")
-	system_generate()
+	#system_generate()
 	#initVars()
 	#initStar()
 	#initPlanetChildren()

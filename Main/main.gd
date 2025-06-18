@@ -3,7 +3,7 @@ extends Node3D
 @onready var camera = $PlayerCamera
 @onready var console = $ConsoleWindow
 @onready var system = $System
-@onready var star = $Star
+#@onready var star = $Star
 var rng = RandomNumberGenerator.new()
 
 func _ready():

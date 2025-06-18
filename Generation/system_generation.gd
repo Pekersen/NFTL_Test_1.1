@@ -30,16 +30,16 @@ func _ready():
 
 func system_generate():
 	
-	print("🔄 Star system ", system_id, " is READY!")
+	#print("🔄 Star system ", system_id, " is READY!")
 	
 	# Set system age
-	print("Cluster Age per system: ", Start4.cluster_age)
+	#print("Cluster Age per system: ", Start4.cluster_age)
 	cluster_age = Start4.cluster_age
 	system_age_variance = [cluster_age - (cluster_age / 10), cluster_age]
-	print("Lower Limit: ", system_age_variance[0], ", Upper Limit: ", system_age_variance[1])
+	#print("Lower Limit: ", system_age_variance[0], ", Upper Limit: ", system_age_variance[1])
 	system_age_variance = [(cluster_age - (cluster_age / 10)) / 1000000, cluster_age / 1000000]
 	system_age = Start4.offsetValue(system_age_variance) * 1000000
-	print("System Age: " + str(system_age))
+	#print("System Age: " + str(system_age))
 	
 	while(true):
 		stars = [null, null, null]
@@ -52,7 +52,7 @@ func system_generate():
 		_init_star_vars()
 		
 		
-		print("here")
+		#print("here")
 		#if !_set_orbit_style():
 			#continue
 		
@@ -133,7 +133,7 @@ func _init_star_orbit():
 	match star_count:
 		1:
 			#stars[0].position = Vector3(0,0,0)
-			print("1 STARRRRRRRRRRRRRRRRR")
+			#print("1 STARRRRRRRRRRRRRRRRR")
 			pass
 		2:
 			'Stars orbit each other'
@@ -159,7 +159,7 @@ func _init_star_orbit():
 				stars[0].eccentricity = offsetValue([0.1,0.2])
 			else:
 				stars[0].eccentricity = offsetValue([0.2,0.8])
-			print("Eccentricity: ", stars[0].eccentricity)
+			#print("Eccentricity: ", stars[0].eccentricity)
 			stars[0].orbital_period = 50
 			stars[0].is_flipped = true
 			stars[0].can_orbit = true
@@ -201,7 +201,14 @@ func _calc_center_of_mass(star_group: Array) -> Vector3:
 func _init_stars():
 	for star in stars:
 		add_child(star)
+		Starmap.stars1.append(star)
+		print("APPENDING STAR: ", Starmap.stars1.size(), ", SYSTEM: ", Start4.star_systems.size())
+		if star_count > 1:
+			if star == stars[1]:
+				Starmap.stars2 += 1
+				print("SECOND STARS: ", Starmap.stars2)
 	
+	'''
 	if star_count == 2:
 		if (stars[1].mass > stars[0].mass):
 			Starmap.stars1.append(stars[1])
@@ -209,12 +216,7 @@ func _init_stars():
 			Starmap.stars1.append(stars[0])
 	elif star_count == 1:
 		Starmap.stars1.append(stars[0])
-
-
-'func emit_system_data():
-		print("📡 Emitting signal from Star System", system_id)
-		system_data_generated.emit(system_id, stars[system_id])
-	'
+	'''
 	
 func _planet_mod():
 	var difference = abs(stars[0].semi_major_axis - stars[1].semi_major_axis)

@@ -1,21 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://cux88x3x7umaw"]
+[gd_scene load_steps=14 format=3 uid="uid://cux88x3x7umaw"]
 
 [ext_resource type="Script" path="res://Map/generic_star.gd" id="1_nsism"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k228r"]
-shading_mode = 0
-
-[sub_resource type="TorusMesh" id="TorusMesh_t85fv"]
-resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_k228r")
-inner_radius = 9.995
-outer_radius = 10.0
-rings = 128
-ring_segments = 64
+[ext_resource type="Script" path="res://Map/individual_generic_star1.gd" id="2_hxnx7"]
+[ext_resource type="Script" path="res://Map/individual_generic_star2.gd" id="3_7hx7f"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4mdgf"]
 
 [sub_resource type="Shader" id="Shader_5nekp"]
+resource_local_to_scene = true
 code = "// NOTE: Shader automatically converted from Godot Engine 4.2.1.stable's StandardMaterial3D.
 
 shader_type spatial;
@@ -149,15 +141,121 @@ resource_local_to_scene = true
 lightmap_size_hint = Vector2i(5, 0)
 material = SubResource("ShaderMaterial_dj6he")
 
+[sub_resource type="Shader" id="Shader_88h70"]
+resource_local_to_scene = true
+code = "// NOTE: Shader automatically converted from Godot Engine 4.2.1.stable's StandardMaterial3D.
+
+shader_type spatial;
+render_mode blend_mix,depth_draw_opaque,diffuse_burley,specular_schlick_ggx, shadows_disabled;
+uniform vec4 albedo : source_color;
+uniform sampler2D texture_albedo : source_color,filter_linear_mipmap,repeat_enable;
+uniform float point_size : hint_range(0,128);
+uniform float roughness : hint_range(0,1);
+uniform sampler2D texture_metallic : hint_default_white,filter_linear_mipmap,repeat_enable;
+uniform vec4 metallic_texture_channel;
+uniform sampler2D texture_roughness : hint_roughness_r,filter_linear_mipmap,repeat_enable;
+uniform float specular;
+uniform float metallic;
+uniform vec3 uv1_scale;
+uniform vec3 uv1_offset;
+uniform vec3 uv2_scale;
+uniform vec3 uv2_offset;
+
+uniform float Glow_Power : hint_range(0,10) = 3;
+uniform float Lightness_Difference : hint_range(0,10) = 3;
+uniform vec4 Sun_Color : source_color;
+
+uniform sampler2D voronoi_noise;
+uniform sampler2D emission_noise;
+varying vec3 vertex_pos;
+uniform float waveSpeed : hint_range(0,1) = 0.1;
+uniform float fresnel : hint_range(0,2) = 1.0;
+
+uniform float scale : hint_range(0,2) = 0.01;
+uniform float blendSharpness : hint_range(0,2) = 0.0;
+
+void vertex() {
+	UV=UV*uv1_scale.xy+uv1_offset.xy;
+	vertex_pos = VERTEX;
+}
+
+// TRIPLANAR FUNCTION
+vec4 triplanar_texture(vec3 position, vec3 normal, vec2 offset, sampler2D noise) {
+	vec4 colX = texture(noise, position.xy * scale + offset);
+	vec4 colY = texture(noise, position.xz * scale + offset);
+	vec4 colZ = texture(noise, position.zy * scale + offset);
+	
+	vec3 blendWeight = abs(normal);
+	blendWeight = vec3(pow(blendWeight.x, blendSharpness), pow(blendWeight.y, blendSharpness), pow(blendWeight.z, blendSharpness));
+	blendWeight /= (blendWeight.x + blendWeight.y + blendWeight.z);
+	
+	return colX * blendWeight.x + colY * blendWeight.y + colZ * blendWeight.z;
+}
+
+void fragment() {
+	vec2 base_uv = UV;
+	vec4 albedo_tex = texture(texture_albedo,base_uv);
+	ALBEDO = albedo.rgb * albedo_tex.rgb;
+	float metallic_tex = dot(texture(texture_metallic,base_uv),metallic_texture_channel);
+	METALLIC = metallic_tex * metallic;
+	vec4 roughness_texture_channel = vec4(1.0,0.0,0.0,0.0);
+	float roughness_tex = dot(texture(texture_roughness,base_uv),roughness_texture_channel);
+	ROUGHNESS = roughness_tex * roughness;
+	SPECULAR = specular;
+	
+	
+	// Fresnel
+	float fresnel_out = pow(fresnel - clamp(dot(NORMAL, VIEW), 0.0, fresnel), fresnel);
+
+	vec2 waveOffsetA = vec2(TIME * waveSpeed, TIME * waveSpeed * 0.8);
+	vec2 waveOffsetB = vec2(TIME * waveSpeed * - 0.8, TIME * waveSpeed * -0.3);
+	vec2 result_offset = waveOffsetA + waveOffsetB;
+
+	vec3 cloud_tex = triplanar_texture(vertex_pos, NORMAL, result_offset, voronoi_noise).rgb;
+	vec3 cloud_tex_with_light = cloud_tex * vec3(Lightness_Difference);
+	vec3 cloud_tex_with_light_with_color = cloud_tex_with_light * Sun_Color.rgb;
+	vec3 cloud_tex_with_light_with_color_with_glow = vec3(Glow_Power) * cloud_tex_with_light_with_color;
+
+	vec3 noise_tex = triplanar_texture(vertex_pos, NORMAL, result_offset, emission_noise).rgb;
+	vec3 result = cloud_tex_with_light_with_color_with_glow * noise_tex;
+
+	EMISSION = vec3(fresnel_out) * result;
+}
+
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2kbsu"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_88h70")
+shader_parameter/albedo = null
+shader_parameter/point_size = null
+shader_parameter/roughness = null
+shader_parameter/metallic_texture_channel = null
+shader_parameter/specular = null
+shader_parameter/metallic = null
+shader_parameter/uv1_scale = null
+shader_parameter/uv1_offset = null
+shader_parameter/uv2_scale = null
+shader_parameter/uv2_offset = null
+shader_parameter/Glow_Power = 0.879
+shader_parameter/Lightness_Difference = 0.925
+shader_parameter/Sun_Color = Color(1, 1, 1, 1)
+shader_parameter/waveSpeed = 0.047
+shader_parameter/fresnel = 1.013
+shader_parameter/scale = 0.25
+shader_parameter/blendSharpness = 0.156
+shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
+
+[sub_resource type="SphereMesh" id="SphereMesh_culm1"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_2kbsu")
+
 [node name="Star" type="Node3D"]
 script = ExtResource("1_nsism")
 
-[node name="Orbit" type="MeshInstance3D" parent="."]
-visible = false
-cast_shadow = 0
-mesh = SubResource("TorusMesh_t85fv")
-
 [node name="RotationPoint" type="Node3D" parent="."]
+script = ExtResource("2_hxnx7")
 
 [node name="Core" type="StaticBody3D" parent="RotationPoint"]
 
@@ -173,3 +271,21 @@ skeleton = NodePath("../../..")
 light_color = Color(1, 0.852399, 0.825386, 1)
 shadow_enabled = true
 omni_range = 1000.0
+
+[node name="RotationPoint2" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.33078)
+visible = false
+script = ExtResource("3_7hx7f")
+
+[node name="Core2" type="StaticBody3D" parent="RotationPoint2"]
+
+[node name="StarCollision2" type="CollisionShape3D" parent="RotationPoint2/Core2"]
+shape = SubResource("SphereShape3D_4mdgf")
+
+[node name="StarLight2" type="OmniLight3D" parent="RotationPoint2/Core2"]
+light_color = Color(1, 0.852399, 0.825386, 1)
+shadow_enabled = true
+omni_range = 1000.0
+
+[node name="StarMesh2" type="MeshInstance3D" parent="RotationPoint2/Core2"]
+mesh = SubResource("SphereMesh_culm1")

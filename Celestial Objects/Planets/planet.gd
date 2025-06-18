@@ -39,9 +39,9 @@ func _ready():
 		atmosphere.mesh.material.albedo_color = Color(color_r, color_g, color_b, 0.01)
 	
 	semi_minor_axis = ((semi_major_axis**2)*(1-(eccentricity**2)))**0.5
-	print("Eccentricity: " + str(eccentricity) + ", Major: " + str(semi_major_axis) + ", Minor: " + str(semi_minor_axis))
+	#print("Eccentricity: " + str(eccentricity) + ", Major: " + str(semi_major_axis) + ", Minor: " + str(semi_minor_axis))
 	
-	print("R: " + str(color_r) + ", G: " + str(color_g) + ", B: " + str(color_b))
+	#print("R: " + str(color_r) + ", G: " + str(color_g) + ", B: " + str(color_b))
 	
 	planetMesh.mesh.material.albedo_color = Color(color_r, color_g, color_b)
 	
