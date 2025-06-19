@@ -3,7 +3,7 @@ extends Star
 @onready var starMesh := $RotationPoint/Core/StarMesh
 @onready var starCollision := $RotationPoint/Core/StarCollision
 @onready var starLight := $RotationPoint/Core/StarLight
-@onready var orbitMesh := $Orbit
+@onready var orbitMesh = $Orbit
 
 var star_type : String
 var star_names = ["Centauri", "Sol", "Bernard's Star", "Vega", "Proxima", "Polaris", "Betelgeuse", "Deneb", "Sirius"]
@@ -76,6 +76,8 @@ var planets_nodepaths : Array[String]
 var atmosphere_present : bool
 var atmosphere_size : float
 var atmosphere_thickness : float
+
+var is_home = false
 # ----- EXPERIMENTAL -----
 
 func _ready():		
@@ -92,6 +94,9 @@ func _ready():
 		small_star_probability = 0.4
 		big_star_probability = 0.0
 		planet_count_reduction = 3
+	
+	if is_home:
+		Resources.controlled_systems += 1
 	
 	initVars()
 	initPlanetChildren()

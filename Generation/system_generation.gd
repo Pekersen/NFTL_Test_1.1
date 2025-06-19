@@ -1,6 +1,7 @@
 class_name SystemGeneration extends GenerateCluster
 
 @onready var star = preload("res://Celestial Objects/Stars/star.tscn")
+#var star
 @export var system_id: int  # Assigned by UniverseManager
 
 #signal system_data_generated(star_data)  # Signal to send star info
@@ -21,15 +22,23 @@ var orbit_style : String
 
 var stars : Array
 
+var is_home = false
+
 signal star_count_to_star
 
 func _ready():
-	if not built:
+	system_id = Start4.SYSTEM_COUNT - Start4.systems
+	Start4.systems -= 1
+	print("ACTUAL ID: ", system_id)
+	if !built:
 		system_generate()
 		built = true
 
 func system_generate():
-	
+	if system_id == 0:
+		print("I'M HOOOOOOOOOOME")
+		is_home = true
+	#setup_nodes()
 	#print("🔄 Star system ", system_id, " is READY!")
 	
 	# Set system age
@@ -57,6 +66,10 @@ func system_generate():
 			#continue
 		
 		_init_stars()
+		
+	#	for star in stars:
+	#		await star.ready
+		
 		stars.sort_custom(_compare_mass)
 		
 		_init_star_orbit()
@@ -75,7 +88,7 @@ func system_generate():
 # sets star_count to 1 to max, inclusive
 func _set_star_count():
 	var random_float = randf()
-	if random_float < 0.7:
+	if random_float < 0.0 or is_home:
 		star_count = 1
 	elif random_float < 1.0:
 		star_count = 2
@@ -183,6 +196,7 @@ func _init_star_orbit():
 			return
 	for star in stars:
 		star.init_orbit_mesh()
+		#pass
 
 func _calc_center_of_mass(star_group: Array) -> Vector3:
 	var summation_of_positional_mass := Vector3(0.0,0.0,0.0)
@@ -201,8 +215,13 @@ func _calc_center_of_mass(star_group: Array) -> Vector3:
 func _init_stars():
 	for star in stars:
 		add_child(star)
+		if is_home:
+			star.is_home = true
+		
+		#await get_tree().process_frame
+		
 		Starmap.stars1.append(star)
-		print("APPENDING STAR: ", Starmap.stars1.size(), ", SYSTEM: ", Start4.star_systems.size())
+		#print("APPENDING STAR: ", Starmap.stars1.size(), ", SYSTEM: ", Start4.star_systems.size())
 		if star_count > 1:
 			if star == stars[1]:
 				Starmap.stars2 += 1
@@ -232,3 +251,6 @@ func _planet_mod():
 	for star in stars:
 		if star.eccentricity > 0.2:
 			star.remove_all()
+
+func setup_nodes():
+	star = preload("res://Celestial Objects/Stars/star.tscn")

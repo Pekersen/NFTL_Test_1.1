@@ -1,6 +1,7 @@
 extends Node3D
 
-@onready var firstStarMesh := $Core/StarMesh 
+@onready var firstStarMesh := $Core/StarMesh
+@onready var firstStarCollision := $Core/StarCollision
 #@onready var starCollision := $RotationPoint/Core/StarCollision
 #@onready var starLight := $RotationPoint/Core/StarLight
 
@@ -14,12 +15,14 @@ func _ready():
 	firstStarMesh.mesh.radius = size * 0.1
 	firstStarMesh.mesh.height = size * 0.1 * 2
 	#print("FIRST STAR - Size: ", size, ", Color: ", color)
+	firstStarCollision.shape.radius = size * 1.1
+	
 	if size > 2:
 		print("HERE!")
 	
 	firstStarMesh.mesh.material.set_shader_parameter("Sun_Color", color)
 	#firstStarMesh.mesh.resource_path = "res://Map/generic_star.tscn::SphereMesh_c8gkq"
-
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	pass

@@ -18,8 +18,18 @@ exp_edit = true
 
 [node name="FpsCounter" type="Label" parent="."]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 6.0
+offset_top = 4.0
+offset_right = 74.0
+offset_bottom = 27.0
 text = "FPS 9999"
+
+[node name="SystemName" type="Label" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 30.0
+offset_right = 130.0
+offset_bottom = 56.0
+text = "System Name: 0"
 
 [connection signal="drag_ended" from="TimeSlider" to="." method="_on_time_slider_drag_ended"]

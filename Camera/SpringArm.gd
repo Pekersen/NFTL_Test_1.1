@@ -5,7 +5,7 @@ extends SpringArm3D
 var camera_min : float
 var star_radius : float = 0.0
 
-
+var starmap_reset = false
 # zoom
 @export_group("Camera Zoom")
 ## Default distance to set the camera from the player.
@@ -98,6 +98,17 @@ func _process(delta):
 	if _spring_arm_target_length != spring_arm.spring_length:
 		spring_arm.spring_length = lerp(spring_arm.spring_length, _spring_arm_target_length, camera_lerp_speed * delta)
 	# zoom
+	
+	if Starmap.is_visible:
+		if starmap_reset == false:
+			_spring_arm_target_length = Start4.SYSTEM_COUNT * 0.5
+			starmap_reset = true
+		camera_distance_min = 0.5
+		camera_distance_max = Start4.SYSTEM_COUNT * 3
+	else:
+		starmap_reset = false
+		camera_distance_min = 1.0
+		camera_distance_max = 1000.0
 	
 func _on_base_point_cam_move_to_spring_arm(radius1):
 	star_radius = radius1

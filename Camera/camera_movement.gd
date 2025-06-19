@@ -20,6 +20,7 @@ var locked_camera_offset := Vector3.ZERO
 
 signal cam_move_to_spring_arm(radius1)
 
+var starmap_visible = false
 
 func _on_star_star_rad_for_cam(radius):
 	var radius1 = radius
@@ -28,6 +29,13 @@ func _on_star_star_rad_for_cam(radius):
 	
 
 func _physics_process(delta: float) -> void:
+	if Starmap.is_visible:
+		free_movement_enabled = false
+		position = Vector3(0,0,0)
+	else:
+		free_movement_enabled = true
+	
+	
 	if free_movement_enabled:
 		var input = Input.get_vector("left", "right", "forward", "back")
 		var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
@@ -175,6 +183,8 @@ func shoot_ray_left():
 		springArmIntitialRotation = springArm.rotation
 		cameraRotationDifference = Vector3.ZERO
 		print(springArmIntitialRotation)
+		if starmap_visible == true:
+			springArm._spring_arm_target_length = 1.0
 		
 func follow_camera():
 	position = clicked_node.global_position + locked_camera_offset

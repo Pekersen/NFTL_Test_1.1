@@ -21,6 +21,7 @@ ConsoleDataManager="*res://addons/simply-console/singletons/console_data_manager
 Global="*res://Globals/global.gd"
 Start4="*res://Generation/start4.gd"
 Starmap="*res://Map/starmap.gd"
+Resources="*res://Empire Info/Resources/resources.gd"
 
 [display]
 

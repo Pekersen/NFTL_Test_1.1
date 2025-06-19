@@ -1,9 +1,12 @@
 extends Node  # Since this is an Autoload, it should NOT extend Node3D
 
-const SYSTEM_COUNT = 50
-var star_systems: Dictionary = {}  # Store persistent star systems
+const SYSTEM_COUNT = 10
+#const SYSTEM_SCENE := preload("res://Main/main.tscn")
+
+var star_systems : Dictionary = {}  # Store persistent star systems
 var current_system: Node = null
 var current_system_id : int = 0
+var current_system_instance = null
 
 var cluster_type : String
 var cluster_age_variance : Array[float]
@@ -11,11 +14,15 @@ var cluster_age : int
 
 var rng = RandomNumberGenerator.new()
 
+var systems = SYSTEM_COUNT
+
 func _ready():
 	cluster_variables()
 	
 	if star_systems.is_empty():  # Prevent regenerating on reload
 		generate_star_cluster()
+	
+	print("TRANSITION")
 	
 	current_system_id = SYSTEM_COUNT - 1
 	for i in range(SYSTEM_COUNT):
@@ -29,57 +36,112 @@ func _ready():
 func generate_star_cluster():
 	print("Generating star cluster...")
 	for i in range(SYSTEM_COUNT):
+		#print("SYSTEM: ", i)
 		var system_scene = load("res://Main/main.tscn")  
 		var system_instance = system_scene.instantiate()  
-		system_instance.name = "StarSystem_" + str(i)  
+		system_instance.name = "StarSystem_" + str(i) 
+		print("GIVEN ID: ", i) 
 		system_instance.set_meta("system_id", i)
-		#print("Star System", i, "Position:", system_instance.global_transform.origin)
-		'
-		print("Creating system:", i, "Instance type:", system_instance.get_class())
-		# ✅ DEBUG: Check if the script is correctly attached
-		print("Star system", i, "Script attached:", system_instance.get_script())
-	
-		if system_instance.has_signal("system_data_generated"):
-			system_instance.system_data_generated.connect(_on_system_data_received.bind(i))
-			print("Signal Connected")
-		else:
-			push_error("Star system " + str(i) + " does not have the signal!")'
+		
+		'''
+		#EXPERIMENTAL
+		add_child(system_instance)
+		await get_tree().process_frame
+		print("System", i, "has", system_instance.get_child_count(), "children before packing")
+		#await system_instance.ready
+		
+		var packed_scene = PackedScene.new()
+		packed_scene.pack(system_instance)
+		star_systems[i] = packed_scene
+		
+		remove_child(system_instance)
+		system_instance.queue_free()
+		'''
+		
+		#var real_root = system_instance.get_node("System")
+		
+		# ✅ Trigger initial setup manually (normally done in _ready)
+		#if real_root.has_method("system_generate"):
+		#	real_root.system_generate()
 		
 		star_systems[i] = system_instance  
 		system_instance.hide()  
 		
+		'''
+		var packed := PackedScene.new()
+		packed.pack(system_instance)
+		star_systems[i] = packed
+		'''
 			
 	print("Star cluster generated!")
 
 # 2️⃣ Switch to a star system
 func switch_to_star_system(id: int):
 	if not star_systems.has(id):
-		print("Star system", id, "not found!")
+		print("Star system_", id, " not found!")
 		return
-
-	if current_system:
-		#current_system.get_parent().remove_child(current_system)
-		#current_system.process_mode = 4
-		current_system.hide()  # Hide the previous system
 		
-
+	'''
+	#EXPERIMENTAL
+	current_system_id = id
+	
+	if current_system_instance and current_system_instance.get_parent():
+		current_system_instance.get_parent().remove_child(current_system_instance)
+		current_system_instance.queue_free()
+		current_system_instance = null
+		
+	# Instance the packed version
+	var packed_scene = star_systems[id]
+	current_system_instance = packed_scene.instantiate()
+	get_tree().get_root().add_child(current_system_instance)
+	
+	print("✅ Switched to system:", current_system_instance.name)
+	
+	'''
+	
 	# Get the new system
 	var new_system = star_systems[id]
 
+	if current_system:
+		#current_system.get_parent().remove_child(current_system)
+		current_system.process_mode = 4
+		current_system.hide()  # Hide the previous system
+		#current_system.disabled
+		
+		#EXPERIMENTAL
+	#	if current_system.get_parent() == get_tree().current_scene:
+	#		get_tree().current_scene.remove_child(current_system)
+
+	
+	# ✅ Add the new system to the scene tree ONLY if not already added
+#	if new_system.get_parent() != get_tree().current_scene:
+#		get_tree().current_scene.add_child(new_system)
+	
+	
+	
 	# ✅ If the system is already in another scene, reparent it
 	if new_system.get_parent():
 		new_system.get_parent().remove_child(new_system)
-
+	
 	# ✅ Add it to the current scene and show it
 	get_tree().current_scene.add_child(new_system)
-	#new_system.process_mode = 0
+	new_system.process_mode = 0
 	new_system.show()
-
+	
+	'''
+	current_system_id = id
+	var packed_scene = star_systems[id]
+	get_tree().change_scene_to_packed(packed_scene)
+	'''
+	
+	#var new_system_id = new_system.get_path()
+	#get_tree().change_scene_to_file(new_system_id)
 	
 	# ✅ Update current system reference
 	current_system = new_system
-
-	print("Switched to:", current_system.name)
+	
+	
+	#print("Switched to:", current_system.name)
 	
 
 

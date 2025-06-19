@@ -6,6 +6,8 @@ extends Node3D
 
 @onready var firstStarRotPoint := $RotationPoint
 @onready var secondStarRotPoint := $RotationPoint2
+
+@onready var firstCore := $RotationPoint/Core
 #@onready var secondStarMesh := $RotationPoint2/Core2/StarMesh2
 
 #var real_star : bool
@@ -16,6 +18,8 @@ var second_star = false
 var second_color : Color
 var second_size : float
 var second_position : Vector3
+
+var id : int
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -42,4 +46,6 @@ func _ready():
 		
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
+	#if firstCore.is_processing_input():
+	#	Start4.switch_to_star_system(id)
 	pass

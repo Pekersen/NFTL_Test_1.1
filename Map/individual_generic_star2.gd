@@ -12,8 +12,8 @@ func _ready():
 	color = get_parent_node_3d().second_color
 	second_star = get_parent_node_3d().second_star
 	if second_star:
-		secondStarMesh.mesh.radius = size * 0.2
-		secondStarMesh.mesh.height = size * 0.2 * 2
+		secondStarMesh.mesh.radius = size * 0.1
+		secondStarMesh.mesh.height = size * 0.1 * 2
 		#print("SECOND STAR - Size: ", size, ", Color: ", color)
 		if size > 2:
 			print("HERE!")

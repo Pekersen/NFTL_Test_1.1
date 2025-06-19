@@ -29,7 +29,8 @@ func generate_galaxy_map():
 		var star = STAR_MESH.instantiate()
 		star.name = "Star_" + str(id)
 		map_instance.add_child(star)
-
+		
+		star.id = id
 		# Set star color to match system
 		#print("FIRST STAR: ", stars1[i].star_type, ", ", i, ", REAL ID: ", id)
 		var star_color = stars1[i].starMesh.mesh.material.get_shader_parameter("Sun_Color")
@@ -41,7 +42,7 @@ func generate_galaxy_map():
 		
 		# Add interaction
 		star.set_meta("system_id", id)  # Store system ID for click event
-		#star.connect("input_event", _on_star_clicked)
+		star.connect("input_event", _on_star_clicked)
 		
 		stars[id] = star  # Store reference
 		
@@ -112,7 +113,7 @@ func _input(event):
 func _calc_position(inner, outer):
 	# Position stars in a sphere around the center
 		var angle1 = randf_range(0, TAU)  # Random azimuth angle
-		var angle2 = randf_range(0, PI)  # Random polar angle
+		var angle2 = randf_range(0, TAU)  # Random polar angle
 		var radius = randf_range(inner,outer)  # Distance from center
 		var pos = Vector3(
 			radius * sin(angle2) * cos(angle1),
@@ -134,6 +135,6 @@ func _generate_false_stars():
 		star.first_color = Color(color, color, color)
 		star.first_size = randf_range(0.6, 1.0)
 		
-		star.position = _calc_position(outer, false_outer)
+		star.position = _calc_position(outer + 1.0, false_outer)
 		
 		
