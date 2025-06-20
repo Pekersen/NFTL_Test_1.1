@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://bw03f27geudtx"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qwxrn"]
+resource_local_to_scene = true
+shading_mode = 0
+
+[sub_resource type="SphereMesh" id="SphereMesh_7dxkg"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_qwxrn")
+
+[node name="Asteroid" type="MeshInstance3D"]
+mesh = SubResource("SphereMesh_7dxkg")

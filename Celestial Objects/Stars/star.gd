@@ -26,9 +26,10 @@ var num_planets_variance = [0, 8] # so size = 2
 @onready var planet = preload("res://Celestial Objects/Planets/planet.tscn")
 @onready var moon = preload("res://Celestial Objects/Moons/moon.tscn")
 @onready var ring = preload("res://Celestial Objects/Rings/ring.tscn")
+@onready var belt = preload("res://Celestial Objects/Belts/belt.tscn")
 
 var num_planets : int
-var num_astroids : int
+var num_belts : int
 var num_moons : int
 var num_rings : int
 var planet_type : String
@@ -38,6 +39,7 @@ var planet_radius_variance : Array[float]
 var num_moons_variance : Array[float]
 var num_rings_variance : Array[float]
 var ring_size_variance : Array[float]
+var num_belts_variance = [1, 3]
 
 var orbit_sum := 0.0
 var planetInstance_distance
@@ -78,6 +80,11 @@ var atmosphere_size : float
 var atmosphere_thickness : float
 
 var is_home = false
+
+var belts : Array
+var belt_orbit_sum = 1
+
+var belt_radii : Array
 # ----- EXPERIMENTAL -----
 
 func _ready():		
@@ -95,18 +102,33 @@ func _ready():
 		big_star_probability = 0.0
 		planet_count_reduction = 3
 	
-	if is_home:
-		Resources.controlled_systems += 1
 	
 	initVars()
+	if star_count == 1:
+		initBeltChildren()
 	initPlanetChildren()
 	
+	if is_home:
+		Resources.controlled_systems += 1
 	
 func initVars():
 	star_type = pick_star_type()
 	print("Star Type1: " + star_type)
 	_on_system_star_gen(star_type)
 	num_planets = offsetValue(num_planets_variance) / planet_count_reduction
+	var rand = randf()
+	if rand < 0.7:
+		num_belts = 0
+	elif rand < 0.85:
+		num_belts = 1
+	elif rand < 0.95:
+		num_belts = 2
+	else:
+		num_belts = 3
+	if num_planets == 0 and num_belts > 1:
+		num_belts = 1
+	if num_planets < 4 and num_belts > 2:
+		num_belts = 2
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -292,7 +314,7 @@ func pick_star_type():
 	var random_float = randf()
 	
 
-	if random_float < 0.01: #* big_star_probability:
+	if random_float < 0.01 * big_star_probability:
 		return "O"
 	elif random_float < 0.04 * big_star_probability:
 		return "B"
@@ -604,6 +626,23 @@ func initPlanetVars(planetInstance, i, star_rad):
 	
 	planetInstance_individual_distance = offsetValue(planetInstance_distance_variance)
 	planetInstance_distance = planetInstance_individual_distance + orbit_sum + planet_post_distance#LOOK AT LATER
+	var x = 10
+	
+	print("PLANETINSTANCEDISTANCE: ", planetInstance_distance, ", ", planetInstance_distance + star_rad)
+	
+	if belt_radii.size() > 0:
+		if planetInstance_distance + star_rad > belt_radii[0] - x and planetInstance_distance < belt_radii[1] + x:
+			planetInstance_distance = belt_radii[1] + (belt_radii[1] - belt_radii[0])
+			print("ADDING ", belt_radii[1] - belt_radii[0])
+	if belt_radii.size() > 2:
+		if planetInstance_distance + star_rad > belt_radii[2] - x and planetInstance_distance < belt_radii[3] + x:
+			planetInstance_distance = belt_radii[3] + (belt_radii[3] - belt_radii[2])
+			print("ADDING ", belt_radii[3] - belt_radii[2])
+	if belt_radii.size() > 4:
+		if planetInstance_distance + star_rad > belt_radii[4] - x and planetInstance_distance < belt_radii[5] + x:
+			planetInstance_distance = belt_radii[5] + (belt_radii[5] - belt_radii[4])
+			print("ADDING ", belt_radii[5] - belt_radii[4])
+		
 	planetInstance.semi_major_axis = planetInstance_distance + star_rad
 	planet_post_distance = planetInstance_individual_distance
 	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
@@ -678,3 +717,23 @@ func remove_all():
 		get_node("RotationPoint/Core").remove_child(planet)
 		planet.queue_free()
 	planets.clear()
+	
+func initBeltChildren():
+	belt_orbit_sum = randf_range(0, star_rad * 50)
+	#print("BELT CHILDREN: ", num_belts)
+	for i in range(num_belts):
+		var beltInstance = belt.instantiate()
+		initBeltVars(beltInstance)
+		get_node("RotationPoint/Core").add_child(beltInstance)
+		belts.append(beltInstance)
+		belt_orbit_sum += beltInstance.outer
+		
+func initBeltVars(beltInstance):
+	beltInstance.asteroid_num = randf_range(900, 1400)
+	beltInstance.inner = randf_range(belt_orbit_sum + 30, belt_orbit_sum + 60)
+	belt_radii.append(beltInstance.inner)
+	print("INNER: ", beltInstance.inner)
+	beltInstance.outer = beltInstance.inner + randf_range(20, 30)
+	belt_radii.append(beltInstance.outer)
+	print("OUTER: ", beltInstance.outer)
+	

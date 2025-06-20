@@ -88,7 +88,7 @@ func system_generate():
 # sets star_count to 1 to max, inclusive
 func _set_star_count():
 	var random_float = randf()
-	if random_float < 0.0 or is_home:
+	if random_float < 0.7 or is_home:
 		star_count = 1
 	elif random_float < 1.0:
 		star_count = 2

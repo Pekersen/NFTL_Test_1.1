@@ -1,0 +1,45 @@
+extends Belts
+
+@onready var asteroid = preload("res://Celestial Objects/Belts/asteroid.tscn")
+
+var asteroid_num : float
+var inner : float
+var outer : float
+
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	#print("ASTEROID NUM: ", asteroid_num)
+	for i in range(asteroid_num):
+		var asteroidInstance = asteroid.instantiate()
+		initAsteroidVars(asteroidInstance)
+		add_child(asteroidInstance)
+		asteroidInstance.position = asteroidPosition(inner, outer)
+		#print("BUILT ASTEROID: ", asteroidInstance.position)
+		
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	pass
+	
+func initAsteroidVars(asteroidInstance):
+	var size = randf_range(0.005, 0.03)
+	asteroidInstance.mesh.radius = size
+	asteroidInstance.mesh.height = size * 2
+	
+	var color = randf_range(0.1, 0.9)
+	asteroidInstance.mesh.material.albedo_color = Color(color, color, color)
+
+func asteroidPosition(inner, outer):
+	var angle1 = randf_range(0, TAU)  # Random azimuth angle
+	#var angle2 = randf_range(0, PI)  # Random polar angle
+	var radius = randf_range(inner,outer)  # Distance from center
+	var pos = Vector3(
+		radius * cos(angle1),
+		randf_range(-2, 2),
+		radius * sin(angle1)
+	)
+	return pos
+	
+	
+	
+	

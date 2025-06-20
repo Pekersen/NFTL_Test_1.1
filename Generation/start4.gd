@@ -1,6 +1,6 @@
 extends Node  # Since this is an Autoload, it should NOT extend Node3D
 
-const SYSTEM_COUNT = 10
+const SYSTEM_COUNT = 50
 #const SYSTEM_SCENE := preload("res://Main/main.tscn")
 
 var star_systems : Dictionary = {}  # Store persistent star systems
