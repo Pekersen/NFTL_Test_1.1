@@ -2,7 +2,7 @@ extends CharacterBody3D
 
 @onready var springArm = $SpringArm3D
 @onready var camera = $SpringArm3D/Camera3D
-var SPEED = 10
+var SPEED = 150
 var SPEED_INCREASE = 1.0
 
 var clicked_node
@@ -32,6 +32,7 @@ func _physics_process(delta: float) -> void:
 	if Starmap.is_visible:
 		free_movement_enabled = false
 		position = Vector3(0,0,0)
+		
 	else:
 		free_movement_enabled = true
 	
@@ -84,10 +85,10 @@ func _process(_delta: float) -> void:
 	springArm.position = position
 	
 	if Input.is_action_pressed("shift") and Input.is_action_pressed("ctrl"):
-		SPEED_INCREASE = 20.0
+		SPEED_INCREASE = 10.0
 	
 	elif Input.is_action_pressed("shift"):
-		SPEED_INCREASE = 10.0
+		SPEED_INCREASE = 5.0
 		
 	elif Input.is_action_pressed("ctrl"):
 		SPEED_INCREASE = 0.1

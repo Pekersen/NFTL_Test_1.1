@@ -11,7 +11,7 @@ var map_scene = load("res://Map/map.tscn")
 var map_instance = map_scene.instantiate()  
 var map_generated = false
 
-var inner = 2
+var inner = 3.1
 var outer = (Start4.SYSTEM_COUNT * 2) / 5
 
 func _ready():
@@ -54,7 +54,7 @@ func generate_galaxy_map():
 			var second_size = sqrt(stars1[i].starMesh.mesh.radius)
 			if second_size < 1:
 				second_size = 1
-			var second_position = _calc_position((star_size + second_size) * 0.2, (star_size + second_size) * 0.3)
+			var second_position = _calc_position((star_size + second_size) * 0.2, (star_size + second_size) * 0.3, 1)
 			
 			star.second_star = true
 			star.second_color = second_color
@@ -62,7 +62,7 @@ func generate_galaxy_map():
 			star.second_position = second_position
 
 		
-		star.position = _calc_position(inner, outer)
+		star.position = _calc_position(inner, outer, id)
 		i += 1
 		
 	
@@ -75,7 +75,7 @@ func generate_galaxy_map():
 		for id in Start4.star_systems.keys():
 			for id_next in Start4.star_systems.keys():
 				if (stars[id].position.distance_to(stars[id_next].position)) < x && (stars[id].position.distance_to(stars[id_next].position) != 0):
-					stars[id].position = _calc_position(inner, outer)
+					stars[id].position = _calc_position(inner, outer, 1)
 					changed = true
 					#print("RECALCULATING POSITION")
 	
@@ -110,8 +110,11 @@ func _input(event):
 		if event.keycode == KEY_M:
 			toggle_map()
 			
-func _calc_position(inner, outer):
+func _calc_position(inner, outer, id):
 	# Position stars in a sphere around the center
+	if id == Start4.star_systems.keys().size() - 1:
+		return Vector3(0, 0, 0)
+	else:
 		var angle1 = randf_range(0, TAU)  # Random azimuth angle
 		var angle2 = randf_range(0, TAU)  # Random polar angle
 		var radius = randf_range(inner,outer)  # Distance from center
@@ -135,6 +138,6 @@ func _generate_false_stars():
 		star.first_color = Color(color, color, color)
 		star.first_size = randf_range(0.6, 1.0)
 		
-		star.position = _calc_position(outer + 1.0, false_outer)
+		star.position = _calc_position(outer + 1.0, false_outer, 1)
 		
 		

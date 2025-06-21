@@ -5,6 +5,9 @@ extends Star
 @onready var starLight := $RotationPoint/Core/StarLight
 @onready var orbitMesh = $Orbit
 
+@onready var innerZone = $InnerZone
+@onready var outerZone = $OuterZone
+
 var star_type : String
 var star_names = ["Centauri", "Sol", "Bernard's Star", "Vega", "Proxima", "Polaris", "Betelgeuse", "Deneb", "Sirius"]
 @export var star_name : String
@@ -22,7 +25,7 @@ signal star_rad_for_cam(radius)
 var orbit_path_visible = true
 
 # ----- EXPERIMENTAL -----
-var num_planets_variance = [0, 8] # so size = 2
+var num_planets_variance = [0, 10] # so size = 2
 @onready var planet = preload("res://Celestial Objects/Planets/planet.tscn")
 @onready var moon = preload("res://Celestial Objects/Moons/moon.tscn")
 @onready var ring = preload("res://Celestial Objects/Rings/ring.tscn")
@@ -80,6 +83,8 @@ var atmosphere_size : float
 var atmosphere_thickness : float
 
 var is_home = false
+var home_world_added = false
+var gas_added = false
 
 var belts : Array
 var belt_orbit_sum = 1
@@ -102,14 +107,16 @@ func _ready():
 		big_star_probability = 0.0
 		planet_count_reduction = 3
 	
+	if is_home:
+		#Resources.controlled_systems += 1
+		print("I'M ALSO HOOOOOOOOOOOME!!!")
 	
 	initVars()
 	if star_count == 1:
 		initBeltChildren()
 	initPlanetChildren()
 	
-	if is_home:
-		Resources.controlled_systems += 1
+	
 	
 func initVars():
 	star_type = pick_star_type()
@@ -127,8 +134,14 @@ func initVars():
 		num_belts = 3
 	if num_planets == 0 and num_belts > 1:
 		num_belts = 1
-	if num_planets < 4 and num_belts > 2:
+	elif num_planets < 4 and num_belts > 2:
 		num_belts = 2
+	
+	if is_home:
+		num_belts = 2
+		num_planets = randf_range(7, 9)
+		
+	
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -292,6 +305,13 @@ func init_orbit_mesh():
 	#print("mesh pos: ", orbitMesh.position.x)
 	if is_flipped:
 		orbitMesh.position.x *= -1
+	
+	'''
+	innerZone.mesh.outer_radius = star_rad * 20 + 0.1
+	innerZone.mesh.inner_radius = star_rad * 20 - 0.1
+	outerZone.mesh.outer_radius = star_rad * 40 + 0.1
+	outerZone.mesh.inner_radius = star_rad * 40 - 0.1
+	'''
 
 # For console
 func get_star_info() -> String:
@@ -313,7 +333,14 @@ func set_star_type(newStarType : String):
 func pick_star_type():
 	var random_float = randf()
 	
-
+	if is_home:
+		if random_float < 0.33:
+			return "F"
+		elif random_float < 0.66:
+			return "G"
+		else:
+			return "K"
+		
 	if random_float < 0.01 * big_star_probability:
 		return "O"
 	elif random_float < 0.04 * big_star_probability:
@@ -355,7 +382,6 @@ func offsetValue(offset : Array):
 
 func initPlanetChildren():
 	print(num_planets)
-	
 	orbit_sum = offsetValue([0.0, 5.0 * star_rad])
 	
 	for i in range(num_planets):
@@ -379,6 +405,13 @@ func initPlanetChildren():
 			var ringInstance = initRing()
 			planetInstance.get_node("RotationPoint/Core").add_child(ringInstance)
 			#print("Ring Size 2: " + str(ring_size))
+	
+	'''
+	if is_home and !home_world_added:
+		var planetInstance = planet.instantiate()
+		orbit_sum = 
+		initPlanetVars(planetInstance, i , star_rad)
+	'''
 
 func initPlanetVars(planetInstance, i, star_rad):
 	# TEMP VALUES
@@ -401,6 +434,10 @@ func initPlanetVars(planetInstance, i, star_rad):
 		planet_type = "Terrestrial_Planet"
 	else:
 		planet_type = "Transitional_Planet"
+		
+	if is_home and home_world_added and !gas_added and i > 5:
+		planet_type = "Gas_Giant"
+		print("Force-added Gas Giant")
 	
 	if (orbit_sum <= 2.0) and (planet_type == "Gas_Giant"):
 		planet_type = "Cthonian_Planet"
@@ -411,11 +448,25 @@ func initPlanetVars(planetInstance, i, star_rad):
 	
 	random_float = randf()
 	
-	if (orbit_sum > star_rad * 10 and orbit_sum < star_rad * 20) and (planet_type == "Terrestrial_Planet") and (random_float > 0.5):
+	if (orbit_sum < star_rad * 20) and is_home:
+		if random_float < 0.5:
+			planet_type = "Terrestrial_Planet"
+		else:
+			planet_type = "Transitional_Planet"
+	
+	random_float = randf()
+	
+	if (orbit_sum > star_rad * 20 and orbit_sum < star_rad * 40) and (planet_type == "Terrestrial_Planet") and (random_float > 0.5):
 		planet_type = "Water_World"
 	
-	if (orbit_sum > star_rad * 10 and orbit_sum < star_rad * 20) and (planet_type == "Transitional_Planet") and (random_float > 0.5):
+	if (orbit_sum > star_rad * 20 and orbit_sum < star_rad * 40) and (planet_type == "Transitional_Planet") and (random_float > 0.5):
 		planet_type = "Hycean_Planet"
+		
+	if (is_home) and (orbit_sum > star_rad * 20 and orbit_sum < star_rad * 40) and (!home_world_added):
+		planet_type = "Water_World" #"Home_World"
+		home_world_added = true
+		print("Home World Added")
+		
 	
 	#print("-----------------------------")
 	#print(planet_type, ": ", orbit_sum, ". Habitable zone: ", star_rad * 10, " - ", star_rad * 15)
@@ -451,6 +502,7 @@ func initPlanetVars(planetInstance, i, star_rad):
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
+		gas_added = true
 	
 	if planet_type == "Hot_Giant":
 		planet_radius_variance = [0.4,0.7] 
@@ -472,6 +524,7 @@ func initPlanetVars(planetInstance, i, star_rad):
 	
 		atmosphere_present = true
 		atmosphere_thickness = 0.3
+		gas_added = true
 		
 	elif planet_type == "Cthonian_Planet":
 		planet_radius_variance = [0.15,0.3]
@@ -569,11 +622,14 @@ func initPlanetVars(planetInstance, i, star_rad):
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
+		gas_added = true
 	
 	elif planet_type == "Transitional_Planet":
 		planet_radius_variance = [0.25,0.4]
 		num_moons_variance = [0,3]
 		planetInstance_distance_variance = [7.0,20.0]
+		if is_home:
+			planetInstance_distance_variance = [7.0, 15.0]
 		random_float = randf()
 		if random_float < 0.8:
 			num_rings_variance = [0,4]
@@ -628,20 +684,20 @@ func initPlanetVars(planetInstance, i, star_rad):
 	planetInstance_distance = planetInstance_individual_distance + orbit_sum + planet_post_distance#LOOK AT LATER
 	var x = 10
 	
-	print("PLANETINSTANCEDISTANCE: ", planetInstance_distance, ", ", planetInstance_distance + star_rad)
+	#print("PLANETINSTANCEDISTANCE: ", planetInstance_distance, ", ", planetInstance_distance + star_rad)
 	
 	if belt_radii.size() > 0:
 		if planetInstance_distance + star_rad > belt_radii[0] - x and planetInstance_distance < belt_radii[1] + x:
 			planetInstance_distance = belt_radii[1] + (belt_radii[1] - belt_radii[0])
-			print("ADDING ", belt_radii[1] - belt_radii[0])
+			#print("ADDING ", belt_radii[1] - belt_radii[0])
 	if belt_radii.size() > 2:
 		if planetInstance_distance + star_rad > belt_radii[2] - x and planetInstance_distance < belt_radii[3] + x:
 			planetInstance_distance = belt_radii[3] + (belt_radii[3] - belt_radii[2])
-			print("ADDING ", belt_radii[3] - belt_radii[2])
+			#print("ADDING ", belt_radii[3] - belt_radii[2])
 	if belt_radii.size() > 4:
 		if planetInstance_distance + star_rad > belt_radii[4] - x and planetInstance_distance < belt_radii[5] + x:
 			planetInstance_distance = belt_radii[5] + (belt_radii[5] - belt_radii[4])
-			print("ADDING ", belt_radii[5] - belt_radii[4])
+			#print("ADDING ", belt_radii[5] - belt_radii[4])
 		
 	planetInstance.semi_major_axis = planetInstance_distance + star_rad
 	planet_post_distance = planetInstance_individual_distance
@@ -720,6 +776,8 @@ func remove_all():
 	
 func initBeltChildren():
 	belt_orbit_sum = randf_range(0, star_rad * 50)
+	if is_home:
+		belt_orbit_sum = randf_range (25 * star_rad, 50 * star_rad)
 	#print("BELT CHILDREN: ", num_belts)
 	for i in range(num_belts):
 		var beltInstance = belt.instantiate()
@@ -732,8 +790,8 @@ func initBeltVars(beltInstance):
 	beltInstance.asteroid_num = randf_range(900, 1400)
 	beltInstance.inner = randf_range(belt_orbit_sum + 30, belt_orbit_sum + 60)
 	belt_radii.append(beltInstance.inner)
-	print("INNER: ", beltInstance.inner)
+	#print("INNER: ", beltInstance.inner)
 	beltInstance.outer = beltInstance.inner + randf_range(20, 30)
 	belt_radii.append(beltInstance.outer)
-	print("OUTER: ", beltInstance.outer)
+	#print("OUTER: ", beltInstance.outer)
 	

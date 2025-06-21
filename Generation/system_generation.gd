@@ -27,7 +27,7 @@ var is_home = false
 signal star_count_to_star
 
 func _ready():
-	system_id = Start4.SYSTEM_COUNT - Start4.systems
+	system_id = Start4.systems - 1
 	Start4.systems -= 1
 	print("ACTUAL ID: ", system_id)
 	if !built:
@@ -107,6 +107,7 @@ func _init_star_vars():
 	for i in range(star_count):
 		var star_instance = star.instantiate()
 		star_instance.star_count = star_count
+		star_instance.is_home = is_home
 		stars[i] = star_instance
 		
 		stars[i].age = system_age
@@ -215,8 +216,6 @@ func _calc_center_of_mass(star_group: Array) -> Vector3:
 func _init_stars():
 	for star in stars:
 		add_child(star)
-		if is_home:
-			star.is_home = true
 		
 		#await get_tree().process_frame
 		

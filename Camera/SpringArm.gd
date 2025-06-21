@@ -15,7 +15,7 @@ var starmap_reset = false
 ## Mininum distance the camera can zoom in to.
 @export var camera_distance_min := 1.0 # TODO: Make it variable to celestial obj size
 ## How far the camera will move per zoom input.
-@export var camera_zoom_step := 0.6
+@export var camera_zoom_step := 3.0#0.6
 ## How quickly the camera zoom interpolates.
 @export var camera_lerp_speed := 5.0
 # zoom
@@ -104,7 +104,7 @@ func _process(delta):
 			_spring_arm_target_length = Start4.SYSTEM_COUNT * 0.5
 			starmap_reset = true
 		camera_distance_min = 0.5
-		camera_distance_max = Start4.SYSTEM_COUNT * 3
+		camera_distance_max = Start4.SYSTEM_COUNT * 2
 	else:
 		starmap_reset = false
 		camera_distance_min = 1.0
