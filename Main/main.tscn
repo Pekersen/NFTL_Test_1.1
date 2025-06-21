@@ -1,5 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://dffhqmxhub7ir"]
+[gd_scene load_steps=4 format=3 uid="uid://dffhqmxhub7ir"]
 
+[ext_resource type="Script" path="res://Main/localresources.gd" id="2_3ltpm"]
 [ext_resource type="Script" path="res://Generation/system_generation.gd" id="4_c5e6n"]
 
 [sub_resource type="Environment" id="Environment_y5lqt"]
@@ -20,3 +21,8 @@ environment = SubResource("Environment_y5lqt")
 
 [node name="System" type="Node3D" parent="."]
 script = ExtResource("4_c5e6n")
+
+[node name="LocalResources" type="Node3D" parent="."]
+script = ExtResource("2_3ltpm")
+
+[connection signal="system_to_localresources" from="System" to="LocalResources" method="_on_system_system_to_localresources"]

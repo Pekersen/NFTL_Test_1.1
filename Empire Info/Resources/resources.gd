@@ -36,11 +36,14 @@ var computational_power : int
 var local_computational_power : Array
 
 var current_system_id : int
-var controlled_systems : int
+var controlled_systems = 1
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	energy = _sum_local(local_energy)
+	local_energy.resize(controlled_systems)
+	print("SIZE: ", local_energy.size())
+	#energy = _sum_local(local_energy)
+	
 	light_gases = _sum_local(local_light_gases)
 	heavy_gases = _sum_local(local_heavy_gases)
 	bio_mass = _sum_local(local_bio_mass)
@@ -51,15 +54,18 @@ func _ready():
 	exotic_materials = _sum_local(local_exotic_materials)
 	
 	population = _sum_local(local_population)
-	#happiness = _sum_local(local_happiness) / controlled_systems
+	happiness = _sum_local(local_happiness) / controlled_systems
 	computational_power = _sum_local(local_computational_power)
+	#energy = 100
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	current_system_id = Start4.current_system_id
 	
-	energy = _sum_local(local_energy)
+	if local_energy[0] != null:
+		energy = _sum_local(local_energy)
+	#print("FIRST ENERGY: ", local_energy[0])
 	light_gases = _sum_local(local_light_gases)
 	heavy_gases = _sum_local(local_heavy_gases)
 	bio_mass = _sum_local(local_bio_mass)
@@ -73,8 +79,10 @@ func _process(delta):
 	happiness = _sum_local(local_happiness) / (controlled_systems + 1)
 	computational_power = _sum_local(local_computational_power)
 	
+	
+	
 func _sum_local(array : Array):
-	var sum := 0
-	for i in range(array.size()):
-		sum += array[i]
+	var sum = 0
+	for i in array:
+		sum += i
 	return sum

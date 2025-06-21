@@ -25,6 +25,7 @@ var stars : Array
 var is_home = false
 
 signal star_count_to_star
+signal system_to_localresources
 
 func _ready():
 	system_id = Start4.systems - 1
@@ -38,6 +39,9 @@ func system_generate():
 	if system_id == 0:
 		print("I'M HOOOOOOOOOOME")
 		is_home = true
+		
+	system_to_localresources.emit(system_id)
+	
 	#setup_nodes()
 	#print("🔄 Star system ", system_id, " is READY!")
 	
@@ -253,3 +257,4 @@ func _planet_mod():
 
 func setup_nodes():
 	star = preload("res://Celestial Objects/Stars/star.tscn")
+	

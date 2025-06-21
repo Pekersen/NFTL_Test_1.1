@@ -4,6 +4,13 @@ extends Control
 @onready var fps_counter = $FpsCounter
 @onready var system_name = $SystemName
 
+@onready var resource_panel = $Info/ResourcesContainer/ResourcePanel
+@onready var total_resource_bar = $Info/ResourcesContainer/ResourcePanel/TotalResourceBar
+
+@onready var energy = $Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer1/Energy
+
+var gui_visible = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass
@@ -15,9 +22,11 @@ func _process(delta):
 	if !Starmap.is_visible:
 		system_name.set_text("System Name: %d" % Start4.current_system_id)
 		if Start4.current_system_id == 0:
-			system_name.set_text("System Name: Home System")
+			system_name.set_text("Home System")
 	else:
 		system_name.set_text("Star Map")
+	
+	energy.set_text(" Energy: %d " % Resources.energy)
 
 func _on_time_slider_drag_ended(_value_changed):
 	Global.ticks_per_second = time_slider.value
@@ -33,3 +42,10 @@ func _input(event):
 			previous_time_value = time_slider.value
 			time_slider.value = 0
 		Global.ticks_per_second = time_slider.value
+		
+	if event.is_action_pressed("lines") and gui_visible == true:
+		self.visible = false
+		gui_visible = false
+	elif event.is_action_pressed("lines") and gui_visible == false:
+		self.visible = true
+		gui_visible = true

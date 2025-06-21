@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://d2sfk2lwhos4t"]
+[gd_scene load_steps=3 format=3 uid="uid://d2sfk2lwhos4t"]
 
 [ext_resource type="Script" path="res://GUI/gui.gd" id="1_6ijcx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_djoa6"]
+font_size = 12
 
 [node name="Gui" type="Control"]
 layout_mode = 3
@@ -18,10 +21,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = 999.0
-offset_top = 8.0
-offset_right = 1146.0
-offset_bottom = 30.0
+offset_left = 996.0
+offset_top = 53.0
+offset_right = 1143.0
+offset_bottom = 75.0
 grow_horizontal = 0
 tooltip_text = "Adjust to change the speed at which stars, planets, moons, and ships orbit and time passes."
 max_value = 128.0
@@ -29,19 +32,407 @@ value = 8.0
 exp_edit = true
 
 [node name="FpsCounter" type="Label" parent="."]
-layout_mode = 0
-offset_left = 6.0
-offset_top = 4.0
-offset_right = 74.0
-offset_bottom = 27.0
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = 1069.0
+offset_top = 85.0
+offset_right = 1137.0
+offset_bottom = 108.0
+grow_horizontal = 0
 text = "FPS 9999"
 
 [node name="SystemName" type="Label" parent="."]
-layout_mode = 0
-offset_left = 5.0
-offset_top = 30.0
-offset_right = 130.0
-offset_bottom = 56.0
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 516.0
+offset_top = 618.0
+offset_right = 641.0
+offset_bottom = 644.0
+grow_horizontal = 2
+grow_vertical = 0
 text = "System Name: 0"
+
+[node name="TabBar" type="TabBar" parent="."]
+visible = false
+layout_mode = 0
+offset_left = -12.0
+offset_top = 6.0
+offset_right = 528.0
+offset_bottom = 37.0
+tab_count = 4
+scrolling_enabled = false
+scroll_to_selected = false
+select_with_rmb = true
+tab_0/title = ""
+tab_0/disabled = true
+tab_1/title = "Energy"
+tab_2/title = "Basic Metals"
+tab_3/title = "Rare Metals"
+
+[node name="Info" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = -1.0
+offset_right = 966.0
+offset_bottom = 57.0
+
+[node name="InfoContainer" type="PanelContainer" parent="Info"]
+layout_mode = 2
+
+[node name="OtherInfo" type="VBoxContainer" parent="Info/InfoContainer"]
+layout_mode = 2
+
+[node name="PanelContainer1" type="PanelContainer" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="Population" type="Label" parent="Info/InfoContainer/OtherInfo/PanelContainer1"]
+layout_mode = 2
+tooltip_text = "Population, measured in millions"
+mouse_filter = 1
+text = " Population: 0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="HSeparator1" type="HSeparator" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="Happiness" type="Label" parent="Info/InfoContainer/OtherInfo/PanelContainer2"]
+layout_mode = 2
+tooltip_text = "The overall happiness of the population"
+mouse_filter = 1
+text = " Happiness: 0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="HSeparator2" type="HSeparator" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="PanelContainer5" type="PanelContainer" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="Population" type="Label" parent="Info/InfoContainer/OtherInfo/PanelContainer5"]
+layout_mode = 2
+tooltip_text = "Population, measured in millions"
+mouse_filter = 1
+text = " Local Population: 0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="HSeparator4" type="HSeparator" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="PanelContainer4" type="PanelContainer" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="LocalHappiness" type="Label" parent="Info/InfoContainer/OtherInfo/PanelContainer4"]
+layout_mode = 2
+tooltip_text = "The overall happiness of the population"
+mouse_filter = 1
+text = " Local Happiness: 0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="HSeparator3" type="HSeparator" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="PanelContainer3" type="PanelContainer" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="Computational Power" type="Label" parent="Info/InfoContainer/OtherInfo/PanelContainer3"]
+layout_mode = 2
+tooltip_text = "Computational Power, the processing power of the entire civilization
+Necessary to research all technology"
+mouse_filter = 1
+text = " Computational 
+ Power: 0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="PanelContainer" type="PanelContainer" parent="Info/InfoContainer/OtherInfo"]
+layout_mode = 2
+
+[node name="ResourcesContainer" type="VBoxContainer" parent="Info"]
+layout_mode = 2
+
+[node name="ResourcePanel" type="PanelContainer" parent="Info/ResourcesContainer"]
+layout_mode = 2
+
+[node name="TotalResourceBar" type="HBoxContainer" parent="Info/ResourcesContainer/ResourcePanel"]
+layout_mode = 2
+
+[node name="PanelContainer1" type="PanelContainer" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="Energy" type="Label" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer1"]
+layout_mode = 2
+tooltip_text = "The capacity for doing work, measured in Exa Joules (EJ)
+Necessary for most functions, including living, growing, building, and moving"
+mouse_filter = 1
+text = " Energy: 0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator" type="VSeparator" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="LightGases" type="Label" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer2"]
+layout_mode = 2
+tooltip_text = "Primarily Hydrogen (H) and Helium (He), measured in Mega Tons (Mt)
+Used in fusion to generate energy or create heavier elements"
+mouse_filter = 1
+text = " Light Gases:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator2" type="VSeparator" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer3" type="PanelContainer" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="HeavyGases" type="Label" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer3"]
+layout_mode = 2
+tooltip_text = "Includes heavy gases and gas molecules, including H2O, CO2, O2, and more 
+Measured in Mega Tons (Mt)
+Used in chemical reactions and necessary for all life"
+mouse_filter = 1
+text = " Heavy Gases:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator3" type="VSeparator" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer4" type="PanelContainer" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="BioMass" type="Label" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer4"]
+layout_mode = 2
+tooltip_text = "Mass harvested from plants and animals
+Measured in Kilo Tons (Kt)
+Necessary for sustaining population and some technologies"
+mouse_filter = 1
+text = " Bio Mass:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator4" type="VSeparator" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer5" type="PanelContainer" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="BasicMetals" type="Label" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer5"]
+layout_mode = 2
+tooltip_text = "Basic metals, including iron, silver, copper, platinum; and basic minerals, including silicates
+Measured in Mega Tons (Mt)
+Used in construction and the manufacturing of low-level technologies"
+mouse_filter = 1
+text = " Basic Metals:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator5" type="VSeparator" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer6" type="PanelContainer" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="RareMetals" type="Label" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer6"]
+layout_mode = 2
+tooltip_text = "Rare or special metals, including uranium, plutonium, and thorium
+Measured in Kilo Tons (Kt)
+Used in low to medium-tech energy generation, weapons, and propolsion."
+mouse_filter = 1
+text = " Rare Metals:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator6" type="VSeparator" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer7" type="PanelContainer" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="BasicMaterials" type="Label" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer7"]
+layout_mode = 2
+tooltip_text = "Basic materials, including electronics and mechanical parts
+Measured in Kilo Tons (Kt)
+Used in most construction and technologies"
+mouse_filter = 1
+text = " Basic Materials:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator7" type="VSeparator" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer8" type="PanelContainer" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="RefinedMaterials" type="Label" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer8"]
+layout_mode = 2
+tooltip_text = "Refined materials, including carbon-fiber and nanomachines
+Measured in Tons (t)
+Used in medium-level technologies"
+mouse_filter = 1
+text = " Refined Materials:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator8" type="VSeparator" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer9" type="PanelContainer" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="ExoticMaterials" type="Label" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer9"]
+layout_mode = 2
+tooltip_text = "Exotic materials, including antimatter, strong-interaction material, exotic matter, and neutronium
+Measured in various units
+Used in high-level technologies"
+mouse_filter = 1
+text = " Exotic Materials:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator9" type="VSeparator" parent="Info/ResourcesContainer/ResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="LocalResourcePanel" type="PanelContainer" parent="Info/ResourcesContainer"]
+layout_mode = 2
+
+[node name="TotalResourceBar" type="HBoxContainer" parent="Info/ResourcesContainer/LocalResourcePanel"]
+layout_mode = 2
+
+[node name="PanelContainer1" type="PanelContainer" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="Energy" type="Label" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar/PanelContainer1"]
+layout_mode = 2
+tooltip_text = "The capacity for doing work, measured in Exa Joules (EJ)
+Necessary for most functions, including living, growing, building, and moving"
+mouse_filter = 1
+text = " Energy: 0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator" type="VSeparator" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer2" type="PanelContainer" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="LightGases" type="Label" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar/PanelContainer2"]
+layout_mode = 2
+tooltip_text = "Primarily Hydrogen (H) and Helium (He), measured in Mega Tons (Mt)
+Used in fusion to generate energy or create heavier elements"
+mouse_filter = 1
+text = " Light Gases:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator2" type="VSeparator" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer3" type="PanelContainer" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="HeavyGases" type="Label" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar/PanelContainer3"]
+layout_mode = 2
+tooltip_text = "Includes heavy gases and gas molecules, including H2O, CO2, O2, and more 
+Measured in Mega Tons (Mt)
+Used in chemical reactions and necessary for all life"
+mouse_filter = 1
+text = " Heavy Gases:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator3" type="VSeparator" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer4" type="PanelContainer" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="BioMass" type="Label" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar/PanelContainer4"]
+layout_mode = 2
+tooltip_text = "Mass harvested from plants and animals
+Measured in Kilo Tons (Kt)
+Necessary for sustaining population and some technologies"
+mouse_filter = 1
+text = " Bio Mass:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator4" type="VSeparator" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer5" type="PanelContainer" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="BasicMetals" type="Label" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar/PanelContainer5"]
+layout_mode = 2
+tooltip_text = "Basic metals, including iron, silver, copper, platinum; and basic minerals, including silicates
+Measured in Mega Tons (Mt)
+Used in construction and the manufacturing of low-level technologies"
+mouse_filter = 1
+text = " Basic Metals:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator5" type="VSeparator" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer6" type="PanelContainer" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="RareMetals" type="Label" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar/PanelContainer6"]
+layout_mode = 2
+tooltip_text = "Rare or special metals, including uranium, plutonium, and thorium
+Measured in Kilo Tons (Kt)
+Used in low to medium-tech energy generation, weapons, and propolsion."
+mouse_filter = 1
+text = " Rare Metals:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator6" type="VSeparator" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer7" type="PanelContainer" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="BasicMaterials" type="Label" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar/PanelContainer7"]
+layout_mode = 2
+tooltip_text = "Basic materials, including electronics and mechanical parts
+Measured in Kilo Tons (Kt)
+Used in most construction and technologies"
+mouse_filter = 1
+text = " Basic Materials:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator7" type="VSeparator" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer8" type="PanelContainer" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="RefinedMaterials" type="Label" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar/PanelContainer8"]
+layout_mode = 2
+tooltip_text = "Refined materials, including carbon-fiber and nanomachines
+Measured in Tons (t)
+Used in medium-level technologies"
+mouse_filter = 1
+text = " Refined Materials:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator8" type="VSeparator" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="PanelContainer9" type="PanelContainer" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
+
+[node name="ExoticMaterials" type="Label" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar/PanelContainer9"]
+layout_mode = 2
+tooltip_text = "Exotic materials, including antimatter, strong-interaction material, exotic matter, and neutronium
+Measured in various units
+Used in high-level technologies"
+mouse_filter = 1
+text = " Exotic Materials:  0 "
+label_settings = SubResource("LabelSettings_djoa6")
+
+[node name="VSeparator9" type="VSeparator" parent="Info/ResourcesContainer/LocalResourcePanel/TotalResourceBar"]
+layout_mode = 2
 
 [connection signal="drag_ended" from="TimeSlider" to="." method="_on_time_slider_drag_ended"]
