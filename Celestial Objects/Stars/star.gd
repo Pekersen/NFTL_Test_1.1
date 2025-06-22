@@ -18,8 +18,6 @@ var big_star_probability : float
 
 var star_count : int
 
-var is_flipped := false
-
 signal star_rad_for_cam(radius)
 
 var orbit_path_visible = true
@@ -294,24 +292,6 @@ func  _on_system_star_gen(star_type):
 	star_name = star_names[name_index - 1]
 	
 	star_rad_for_cam.emit(radius)
-	
-
-func init_orbit_mesh():
-	orbitMesh.mesh.outer_radius = semi_major_axis + 0.1
-	orbitMesh.mesh.inner_radius = semi_major_axis - 0.1
-	major_axis = semi_major_axis
-	orbitMesh.scale.z = semi_minor_axis/semi_major_axis
-	orbitMesh.position.x = -sqrt(pow(semi_major_axis,2) - pow(semi_minor_axis,2))
-	#print("mesh pos: ", orbitMesh.position.x)
-	if is_flipped:
-		orbitMesh.position.x *= -1
-	
-	'''
-	innerZone.mesh.outer_radius = star_rad * 20 + 0.1
-	innerZone.mesh.inner_radius = star_rad * 20 - 0.1
-	outerZone.mesh.outer_radius = star_rad * 40 + 0.1
-	outerZone.mesh.inner_radius = star_rad * 40 - 0.1
-	'''
 
 # For console
 func get_star_info() -> String:
@@ -400,13 +380,14 @@ func initPlanetChildren():
 		for j in range(num_moons):
 			var moonInstance = initMoon()
 			planetInstance.get_node("RotationPoint/Core").add_child(moonInstance)
+			moonInstance.init_orbit_mesh(moonInstance.orbitMesh, moonInstance.initRotPos)			
 		
 		for k in range(num_rings):
 			var ringInstance = initRing()
 			planetInstance.get_node("RotationPoint/Core").add_child(ringInstance)
 			#print("Ring Size 2: " + str(ring_size))
 		
-		planetInstance.init_orbit_mesh()
+		planetInstance.init_orbit_mesh(planetInstance.orbitMesh, planetInstance.initRotPos)
 		
 	'''
 	if is_home and !home_world_added:
@@ -704,9 +685,11 @@ func initPlanetVars(planetInstance, i, star_rad):
 			#print("ADDING ", belt_radii[5] - belt_radii[4])
 		
 	planetInstance.semi_major_axis = planetInstance_distance + star_rad
+	planetInstance.eccentricity = rng.randf_range(0.0, 0.05) #TODO: Make accurate eccentricity values	
+	planetInstance.semi_minor_axis = planetInstance.semi_major_axis *\
+									sqrt(1 - pow(planetInstance.eccentricity,2))
 	planet_post_distance = planetInstance_individual_distance
 	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
-	planetInstance.eccentricity = rng.randf_range(0, 0) #TODO: Make accurate eccentricity values
 	
 	planets_semi.append(planetInstance_distance)
 	
@@ -740,8 +723,10 @@ func initMoonVars(moonInstance):
 	# TEMP VALUES
 	moonInstance_distance = offsetValue([0.1, 0.3])
 	moonInstance.semi_major_axis = moonInstance_distance + radius + ring_max + 1.0
+	moonInstance.eccentricity = rng.randf_range(0, 0.2) #TODO: Make acurrate eccentricity values	
+	moonInstance.semi_minor_axis = moonInstance.semi_major_axis *\
+									sqrt(1 - pow(moonInstance.eccentricity,2))
 	moonInstance.orbital_period = moonInstance.semi_major_axis **(3.0/2)
-	moonInstance.eccentricity = rng.randf_range(0, 0.1) #TODO: Make acurrate eccentricity values
 	moonInstance.radius = offsetValue([0.01,0.05])
 	moonInstance.rotation.x = offsetValue([-0.3,0.3])
 	moonInstance.rotation.z = offsetValue([-0.3,0.3])

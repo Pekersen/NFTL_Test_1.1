@@ -166,6 +166,7 @@ script = ExtResource("1_81nsq")
 core = NodePath("RotationPoint/Core")
 
 [node name="Orbit" type="MeshInstance3D" parent="."]
+visible = false
 cast_shadow = 0
 mesh = SubResource("TorusMesh_t85fv")
 

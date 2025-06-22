@@ -18,6 +18,7 @@ const ORBIT_SPEED_CONST := 20
 var time_passed := 0.0
 
 var can_orbit := false
+var is_flipped := false
 
 var semi_major_axis: float
 var semi_minor_axis: float # not needed for orbit
@@ -72,3 +73,17 @@ func get_true_anomaly(E: float, ecc: float) -> float:
 # Function to calculate the radial distance at a given true anomaly
 func get_radius(true_anomaly: float, semi_major_axis: float, ecc: float) -> float:
 	return (semi_major_axis * (1 - ecc * ecc)) / (1 + ecc * cos(true_anomaly))
+	
+func init_orbit_mesh(orbitMesh: Node3D, initRotPos: float = 0):
+	#orbitMesh.mesh.outer_radius = semi_major_axis + 0.1
+	#orbitMesh.mesh.inner_radius = semi_major_axis - 0.1
+	
+	orbitMesh.rotation.y = initRotPos
+	orbitMesh.scale.z = semi_minor_axis/semi_major_axis
+	print("SCALE: ", orbitMesh.scale.z, " NODE: ", orbitMesh.get_parent())
+	var total_distance = -sqrt(pow(semi_major_axis,2) - pow(semi_minor_axis,2))
+	#orbitMesh.position.x = total_distance
+	orbitMesh.translate(Vector3(total_distance,0,0))
+	
+	if is_flipped:
+		orbitMesh.position.x *= -1
