@@ -31,10 +31,13 @@ func _on_star_star_rad_for_cam(radius):
 func _physics_process(delta: float) -> void:
 	if Starmap.is_visible:
 		free_movement_enabled = false
-		position = Vector3(0,0,0)
+		reset()
+		#position = Vector3(0,0,0)
+		starmap_visible = true
 		
 	else:
 		free_movement_enabled = true
+		starmap_visible = false
 	
 	
 	if free_movement_enabled:
@@ -97,12 +100,7 @@ func _process(_delta: float) -> void:
 		SPEED_INCREASE = 1.0
 	
 	if Input.is_action_just_pressed("camera_reset"):
-		position.x = 0
-		position.y = 2
-		position.z = 0
-		rotation.x = 0
-		rotation.y = 0
-		rotation.z = 0
+		reset()
 	
 	rotation_degrees.x = springArm.rotation_degrees.x
 	rotation_degrees.y = springArm.rotation_degrees.y
@@ -178,14 +176,24 @@ func shoot_ray_left():
 	# HERE IS WHERE YOU CAN MAKE IT DO SOMETHING (LIKE OPEN A GUI MENU)
 	# TODO:
 	if !raycast_result.is_empty():
-		following = true
-		print("clicked " + str(raycast_result.collider))
 		clicked_node = raycast_result.collider
-		springArmIntitialRotation = springArm.rotation
-		cameraRotationDifference = Vector3.ZERO
-		print(springArmIntitialRotation)
 		if starmap_visible == true:
-			springArm._spring_arm_target_length = 1.0
+			if clicked_node.get_parent().get_id() != -1:
+				print("ATTEMPTING SWITCH TO SYSTEM ", (Start4.SYSTEM_COUNT - clicked_node.get_parent().get_id()) - 1)
+				springArm._spring_arm_target_length = 1.0
+				Starmap.on_click = true
+				Starmap.toggle_map()
+				Start4.switch_to_star_system((Start4.SYSTEM_COUNT - clicked_node.get_parent().get_id()) - 1)
+				
+		else:
+			following = true
+			print("clicked " + str(raycast_result.collider))
+			springArmIntitialRotation = springArm.rotation
+			cameraRotationDifference = Vector3.ZERO
+			print(springArmIntitialRotation)
+		
+			
+			#print("ATTEMPTING SWITCH TO SYSTEM ", clicked_node.get_parent().get_parent().id)
 		
 func follow_camera():
 	position = clicked_node.global_position + locked_camera_offset
@@ -199,5 +207,12 @@ func locked_camera_rotation(value : bool):
 	# when console does command:
 	return "Locked camera rotation was set to " + str(value)
 
-
-
+func reset():
+	#print("RESET")
+	position.x = 0
+	position.y = 0
+	position.z = 0
+	rotation.x = 0
+	rotation.y = 0
+	rotation.z = 0
+	following = false

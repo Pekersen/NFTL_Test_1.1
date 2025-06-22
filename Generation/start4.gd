@@ -1,6 +1,6 @@
 extends Node  # Since this is an Autoload, it should NOT extend Node3D
 
-const SYSTEM_COUNT = 5
+const SYSTEM_COUNT = 50
 #const SYSTEM_SCENE := preload("res://Main/main.tscn")
 
 var star_systems : Dictionary = {}  # Store persistent star systems
@@ -111,7 +111,9 @@ func switch_to_star_system(id: int):
 		#EXPERIMENTAL
 	#	if current_system.get_parent() == get_tree().current_scene:
 	#		get_tree().current_scene.remove_child(current_system)
-
+	
+	#if Starmap.is_visible:
+	#	Starmap.toggle_map()
 	
 	# ✅ Add the new system to the scene tree ONLY if not already added
 #	if new_system.get_parent() != get_tree().current_scene:
@@ -127,6 +129,7 @@ func switch_to_star_system(id: int):
 	get_tree().current_scene.add_child(new_system)
 	new_system.process_mode = 0
 	new_system.show()
+	print("My Name is System ", id)
 	
 	'''
 	current_system_id = id
@@ -139,7 +142,7 @@ func switch_to_star_system(id: int):
 	
 	# ✅ Update current system reference
 	current_system = new_system
-	
+	current_system_id = id
 	
 	#print("Switched to:", current_system.name)
 	
@@ -148,12 +151,12 @@ func switch_to_star_system(id: int):
 # 3️⃣ Handle Input (Testing)
 func _input(event):
 	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_V and current_system_id + 1 < len(star_systems):  # Press 'V' to visit a random system
+		if event.keycode == KEY_V and current_system_id + 1 < len(star_systems):  # Press 'V' to visit the next system
 			current_system_id += 1
 			switch_to_star_system(current_system_id)
 			if Starmap.is_visible:
 				Starmap.toggle_map()
-		if event.keycode == KEY_C  and current_system_id - 1 >= 0:  # Press 'V' to visit a random system
+		if event.keycode == KEY_C  and current_system_id - 1 >= 0:  # Press 'V' to visit the previous system
 			current_system_id -= 1
 			switch_to_star_system(current_system_id)
 			if Starmap.is_visible:

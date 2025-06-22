@@ -20,6 +20,7 @@ var second_size : float
 var second_position : Vector3
 
 var id : int
+var is_real = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -49,3 +50,8 @@ func _process(delta):
 	#if firstCore.is_processing_input():
 	#	Start4.switch_to_star_system(id)
 	pass
+	
+func get_id():
+	if !is_real:
+		return -1
+	return id

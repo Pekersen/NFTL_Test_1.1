@@ -24,7 +24,7 @@ var mouse_locked = false
 
 # zoom
 # Variable for handling smooth zooming.
-var _spring_arm_target_length := camera_default_distance
+var _spring_arm_target_length := camera_default_distance + 10.0
 
 ## The camera [SpringArm3D], which prevents the camera passing through objects.
 @onready var spring_arm := $"." as SpringArm3D
@@ -101,12 +101,15 @@ func _process(delta):
 	
 	if Starmap.is_visible:
 		if starmap_reset == false:
-			_spring_arm_target_length = Start4.SYSTEM_COUNT * 0.5
+			_spring_arm_target_length = Start4.SYSTEM_COUNT * 0.2
 			starmap_reset = true
 		camera_distance_min = 0.5
 		camera_distance_max = Start4.SYSTEM_COUNT * 2
 	else:
-		starmap_reset = false
+		if starmap_reset == true:
+			_spring_arm_target_length = camera_default_distance + 10.0
+			starmap_reset = false
+		#starmap_reset = false
 		camera_distance_min = 1.0
 		camera_distance_max = 1000.0
 	
