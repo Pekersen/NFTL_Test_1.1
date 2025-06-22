@@ -14,6 +14,8 @@ var map_generated = false
 var inner = 3.1
 var outer = (Start4.SYSTEM_COUNT * 2) / 5
 
+var on_click = false
+
 func _ready():
 	Start4.switch_to_star_system(0)
 
@@ -42,7 +44,7 @@ func generate_galaxy_map():
 		
 		# Add interaction
 		star.set_meta("system_id", id)  # Store system ID for click event
-		star.connect("input_event", _on_star_clicked)
+	#	star.connect("input_event", _on_star_clicked)
 		
 		stars[id] = star  # Store reference
 		
@@ -74,7 +76,7 @@ func generate_galaxy_map():
 		changed = false
 		for id in Start4.star_systems.keys():
 			for id_next in Start4.star_systems.keys():
-				if (stars[id].position.distance_to(stars[id_next].position)) < x && (stars[id].position.distance_to(stars[id_next].position) != 0):
+				if (stars[id].position.distance_to(stars[id_next].position)) < x && (stars[id].position.distance_to(stars[id_next].position) != 0 && id != Start4.star_systems.keys().size() - 1):
 					stars[id].position = _calc_position(inner, outer, 1)
 					changed = true
 					#print("RECALCULATING POSITION")
@@ -85,15 +87,26 @@ func generate_galaxy_map():
 func toggle_map():
 	is_visible = !is_visible
 	if is_visible:
-		Start4.star_systems[Start4.current_system_id].hide()
+		if !on_click:
+			Start4.star_systems[Start4.current_system_id].process_mode = 4
+			Start4.star_systems[Start4.current_system_id].hide()
+		else:
+			on_click = false
 		print("SHOWING")
 		get_tree().current_scene.add_child(map_instance)
+		map_instance.process_mode = 0
 		map_instance.show()
 	else:
-		Start4.star_systems[Start4.current_system_id].show()
+		if !on_click:
+			Start4.star_systems[Start4.current_system_id].process_mode = 0
+			Start4.star_systems[Start4.current_system_id].show()
+		else:
+			on_click = false
 		print("HIDING")
+		map_instance.process_mode = 4
 		map_instance.hide()
 
+'''
 # Handle clicks on stars
 func _on_star_clicked(viewport, event, shape_idx):
 	if event is InputEventMouseButton and event.pressed:
@@ -101,6 +114,7 @@ func _on_star_clicked(viewport, event, shape_idx):
 		print("Switching to system:", system_id)
 		Start4.switch_to_star_system(system_id)
 		toggle_map()  # Hide map when switching systems
+'''
 
 func _input(event):
 	if event is InputEventKey and event.pressed:
@@ -113,6 +127,7 @@ func _input(event):
 func _calc_position(inner, outer, id):
 	# Position stars in a sphere around the center
 	if id == Start4.star_systems.keys().size() - 1:
+		print("AT 0")
 		return Vector3(0, 0, 0)
 	else:
 		var angle1 = randf_range(0, TAU)  # Random azimuth angle
@@ -139,5 +154,6 @@ func _generate_false_stars():
 		star.first_size = randf_range(0.6, 1.0)
 		
 		star.position = _calc_position(outer + 1.0, false_outer, 1)
+		star.is_real = false
 		
 		

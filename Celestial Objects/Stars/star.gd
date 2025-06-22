@@ -111,7 +111,7 @@ func _ready():
 	
 	initVars()
 	if star_count == 1:
-		# initBeltChildren() 
+		#initBeltChildren() 
 		pass
 	initPlanetChildren()
 	
@@ -727,6 +727,7 @@ func initMoonVars(moonInstance):
 	moonInstance.semi_minor_axis = moonInstance.semi_major_axis *\
 									sqrt(1 - pow(moonInstance.eccentricity,2))
 	moonInstance.orbital_period = moonInstance.semi_major_axis **(3.0/2)
+	moonInstance.eccentricity = rng.randf_range(0, 0.0) #TODO: Make acurrate eccentricity values
 	moonInstance.radius = offsetValue([0.01,0.05])
 	moonInstance.rotation.x = offsetValue([-0.3,0.3])
 	moonInstance.rotation.z = offsetValue([-0.3,0.3])
