@@ -200,7 +200,7 @@ func _init_star_orbit():
 			print("Unkown star count. Star orbit was not initialized.")
 			return
 	for star in stars:
-		star.init_orbit_mesh()
+		star.init_orbit_mesh(star.orbitMesh)
 		#pass
 
 func _calc_center_of_mass(star_group: Array) -> Vector3:
