@@ -118,7 +118,6 @@ func _ready():
 	initPlanetChildren()
 	
 	
-	
 func initVars():
 	star_type = pick_star_type()
 	print("Star Type1: " + star_type)
