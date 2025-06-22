@@ -55,4 +55,5 @@ shape = SubResource("SphereShape3D_gfk4t")
 
 [node name="Atmospshere" type="MeshInstance3D" parent="RotationPoint/Core"]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+visible = false
 mesh = SubResource("SphereMesh_p47ae")

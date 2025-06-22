@@ -113,7 +113,8 @@ func _ready():
 	
 	initVars()
 	if star_count == 1:
-		initBeltChildren()
+		# initBeltChildren() 
+		pass
 	initPlanetChildren()
 	
 	
@@ -405,7 +406,9 @@ func initPlanetChildren():
 			var ringInstance = initRing()
 			planetInstance.get_node("RotationPoint/Core").add_child(ringInstance)
 			#print("Ring Size 2: " + str(ring_size))
-	
+		
+		planetInstance.init_orbit_mesh()
+		
 	'''
 	if is_home and !home_world_added:
 		var planetInstance = planet.instantiate()
@@ -421,6 +424,8 @@ func initPlanetVars(planetInstance, i, star_rad):
 	# Orbital tilt
 	planetInstance.rotation.x = offsetValue([-0.01,0.01])
 	planetInstance.rotation.z = offsetValue([-0.01,0.01])
+	
+	planetInstance.can_orbit = true
 	
 	#NOTE: Split Transitional into Super-Earth and Mini Neptune
 	#ADD: Additional red color to Gas_Giant for hot jupiters when close to star
@@ -702,7 +707,7 @@ func initPlanetVars(planetInstance, i, star_rad):
 	planetInstance.semi_major_axis = planetInstance_distance + star_rad
 	planet_post_distance = planetInstance_individual_distance
 	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
-	planetInstance.eccentricity = rng.randf_range(0, 0.1) #TODO: Make accurate eccentricity values
+	planetInstance.eccentricity = rng.randf_range(0, 0) #TODO: Make accurate eccentricity values
 	
 	planets_semi.append(planetInstance_distance)
 	
@@ -741,6 +746,7 @@ func initMoonVars(moonInstance):
 	moonInstance.radius = offsetValue([0.01,0.05])
 	moonInstance.rotation.x = offsetValue([-0.3,0.3])
 	moonInstance.rotation.z = offsetValue([-0.3,0.3])
+	moonInstance.can_orbit = true
 
 func initRing():
 	var ringInstance = ring.instantiate()
