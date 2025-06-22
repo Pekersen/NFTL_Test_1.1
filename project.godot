@@ -31,6 +31,10 @@ window/vsync/vsync_mode=0
 
 enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg", "res://addons/godot_style/plugin.cfg", "res://addons/simply-console/plugin.cfg")
 
+[filesystem]
+
+import/blender/enabled=false
+
 [input]
 
 camera_to_cursor={
