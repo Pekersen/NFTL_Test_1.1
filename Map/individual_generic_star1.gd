@@ -23,9 +23,6 @@ func _ready():
 	firstStarMesh.mesh.material.set_shader_parameter("Sun_Color", color)
 	#firstStarMesh.mesh.resource_path = "res://Map/generic_star.tscn::SphereMesh_c8gkq"
 	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
 	
 func get_id():
 	return self.get_parent().get_id()

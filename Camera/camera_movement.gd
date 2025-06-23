@@ -28,7 +28,7 @@ func _on_star_star_rad_for_cam(radius):
 
 	
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if Starmap.is_visible:
 		free_movement_enabled = false
 		reset()

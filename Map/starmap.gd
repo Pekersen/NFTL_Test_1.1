@@ -12,7 +12,7 @@ var map_instance = map_scene.instantiate()
 var map_generated = false
 
 var inner = 3.1
-var outer = (Start4.SYSTEM_COUNT * 2) / 5
+var outer = (Start4.SYSTEM_COUNT * 2) / 5.0
 
 var on_click = false
 
@@ -26,8 +26,6 @@ func generate_galaxy_map():
 	print("------------------------- GENERATING GALAXY MAP -------------------")
 	var i = 0
 	for id in Start4.star_systems.keys():
-		
-		var system = Start4.star_systems[id]
 		var star = STAR_MESH.instantiate()
 		star.name = "Star_" + str(id)
 		map_instance.add_child(star)
@@ -124,7 +122,7 @@ func _input(event):
 		if event.keycode == KEY_M:
 			toggle_map()
 			
-func _calc_position(inner, outer, id):
+func _calc_position(inner_pos, outer_pos, id):
 	# Position stars in a sphere around the center
 	if id == Start4.star_systems.keys().size() - 1:
 		print("AT 0")
@@ -132,7 +130,7 @@ func _calc_position(inner, outer, id):
 	else:
 		var angle1 = randf_range(0, TAU)  # Random azimuth angle
 		var angle2 = randf_range(0, TAU)  # Random polar angle
-		var radius = randf_range(inner,outer)  # Distance from center
+		var radius = randf_range(inner_pos,outer_pos)  # Distance from center
 		var pos = Vector3(
 			radius * sin(angle2) * cos(angle1),
 			radius * sin(angle2) * sin(angle1),

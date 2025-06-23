@@ -33,16 +33,16 @@ func offset_value(offset : Array[float]):
 	return rng.randf_range(offset[0], offset[1])
 
 # moves 'core' in an orbit
-func orbit(delta, core):
+func orbit(delta, core_obj):
 	if can_orbit:
 		time_passed += delta * Global.ticks_per_second / ORBIT_SPEED_CONST
 		
 		# Calculate the current position in the elliptical orbit
-		core.position = calculate_orbit_position(time_passed)
+		core_obj.position = calculate_orbit_position(time_passed)
 
 # Function to calculate the position in Cartesian coordinates
-func calculate_orbit_position(time_passed: float) -> Vector3:
-	var M = get_mean_anomaly(time_passed, orbital_period)
+func calculate_orbit_position(time: float) -> Vector3:
+	var M = get_mean_anomaly(time)
 	var E = solve_kepler(M, eccentricity)
 	var theta = get_true_anomaly(E, eccentricity)
 	var r = get_radius(theta, semi_major_axis , eccentricity)
@@ -54,8 +54,8 @@ func calculate_orbit_position(time_passed: float) -> Vector3:
 	return Vector3(x, y, z)
 
 # Function to calculate the mean anomaly
-func get_mean_anomaly(time_passed: float, period: float) -> float:
-	return ((2 * PI) / orbital_period) * time_passed
+func get_mean_anomaly(time: float) -> float:
+	return ((2 * PI) / orbital_period) * time
 
 # Function to solve Kepler's equation for eccentric anomaly using Newton's method
 func solve_kepler(M: float, ecc: float, tolerance: float = 1e-6) -> float:
@@ -71,8 +71,8 @@ func get_true_anomaly(E: float, ecc: float) -> float:
 	return 2.0 * atan(sqrt((1.0 + ecc) / (1.0 - ecc)) * tan(E / 2.0))
 
 # Function to calculate the radial distance at a given true anomaly
-func get_radius(true_anomaly: float, semi_major_axis: float, ecc: float) -> float:
-	return (semi_major_axis * (1 - ecc * ecc)) / (1 + ecc * cos(true_anomaly))
+func get_radius(true_anomaly: float, semi_major: float, ecc: float) -> float:
+	return (semi_major * (1 - ecc * ecc)) / (1 + ecc * cos(true_anomaly))
 	
 func init_orbit_mesh(orbitMesh: Node3D, initRotPos: float = 0):
 	orbitMesh.rotation.y = initRotPos

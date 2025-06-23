@@ -137,7 +137,7 @@ func _init_vars():
 	
 	if is_home:
 		num_belts = 2
-		num_planets = randf_range(7, 9)
+		num_planets = randi_range(7, 9)
 		
 	
 	
@@ -149,8 +149,8 @@ func _process(delta):
 		if is_flipped:
 			core.position *= -1
 
-func  _on_system_star_gen(star_type):
-	self.star_type = star_type
+func  _on_system_star_gen(s_type):
+	self.star_type = s_type
 	
 	if star_type == "O":
 		radius_variance = [13.2,20]
@@ -397,7 +397,7 @@ func _init_planet_children():
 		_init_planet_vars(planetInstance, i , star_rad)
 	'''
 
-func _init_planet_vars(planetInstance, i, star_rad):
+func _init_planet_vars(planetInstance, i, star_radius):
 	# TEMP VALUES
 	# Axial tilt
 	planetInstance.core.rotation.x = offset_value([-0.3,0.3])
@@ -419,22 +419,22 @@ func _init_planet_vars(planetInstance, i, star_rad):
 	planetInstance_distance = planetInstance_individual_distance + orbit_sum + planet_post_distance#LOOK AT LATER
 	var x = 10
 	
-	#print("PLANETINSTANCEDISTANCE: ", planetInstance_distance, ", ", planetInstance_distance + star_rad)
+	#print("PLANETINSTANCEDISTANCE: ", planetInstance_distance, ", ", planetInstance_distance + star_radius)
 	
 	if belt_radii.size() > 0:
-		if planetInstance_distance + star_rad > belt_radii[0] - x and planetInstance_distance < belt_radii[1] + x:
+		if planetInstance_distance + star_radius > belt_radii[0] - x and planetInstance_distance < belt_radii[1] + x:
 			planetInstance_distance = belt_radii[1] + (belt_radii[1] - belt_radii[0])
 			#print("ADDING ", belt_radii[1] - belt_radii[0])
 	if belt_radii.size() > 2:
-		if planetInstance_distance + star_rad > belt_radii[2] - x and planetInstance_distance < belt_radii[3] + x:
+		if planetInstance_distance + star_radius > belt_radii[2] - x and planetInstance_distance < belt_radii[3] + x:
 			planetInstance_distance = belt_radii[3] + (belt_radii[3] - belt_radii[2])
 			#print("ADDING ", belt_radii[3] - belt_radii[2])
 	if belt_radii.size() > 4:
-		if planetInstance_distance + star_rad > belt_radii[4] - x and planetInstance_distance < belt_radii[5] + x:
+		if planetInstance_distance + star_radius > belt_radii[4] - x and planetInstance_distance < belt_radii[5] + x:
 			planetInstance_distance = belt_radii[5] + (belt_radii[5] - belt_radii[4])
 			#print("ADDING ", belt_radii[5] - belt_radii[4])
 		
-	planetInstance.semi_major_axis = planetInstance_distance + star_rad
+	planetInstance.semi_major_axis = planetInstance_distance + star_radius
 	planetInstance.eccentricity = rng.randf_range(0.0, 0.05) #TODO: Make accurate eccentricity values	
 	planetInstance.semi_minor_axis = planetInstance.semi_major_axis *\
 									sqrt(1 - pow(planetInstance.eccentricity,2))
@@ -505,14 +505,14 @@ func get_semimajoraxis(i : int):
 	return planets_semi[i]
 	
 func remove_child_at_path(i : int):
-	var planet = planets[i]
-	get_node("RotationPoint/Core").remove_child(planet)
-	planet.queue_free()
+	var p = planets[i]
+	get_node("RotationPoint/Core").remove_child(p)
+	p.queue_free()
 
 func remove_all():
-	for planet in planets:
-		get_node("RotationPoint/Core").remove_child(planet)
-		planet.queue_free()
+	for p in planets:
+		get_node("RotationPoint/Core").remove_child(p)
+		p.queue_free()
 	planets.clear()
 	
 func _init_belt_children():
