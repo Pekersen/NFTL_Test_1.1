@@ -17,10 +17,6 @@ func _ready():
 		#print("BUILT ASTEROID: ", asteroidInstance.position)
 		
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
-	
 func initAsteroidVars(asteroidInstance):
 	var size = randf_range(0.005, 0.03)
 	asteroidInstance.mesh.radius = size
@@ -29,14 +25,14 @@ func initAsteroidVars(asteroidInstance):
 	var color = randf_range(0.1, 0.9)
 	asteroidInstance.mesh.material.albedo_color = Color(color, color, color)
 
-func asteroidPosition(inner, outer):
+func asteroidPosition(inner_pos, outer_pos):
 	var angle1 = randf_range(0, TAU)  # Random azimuth angle
 	#var angle2 = randf_range(0, PI)  # Random polar angle
-	var radius = randf_range(inner,outer)  # Distance from center
+	var r = randf_range(inner_pos,outer_pos)  # Distance from center
 	var pos = Vector3(
 		radius * cos(angle1),
 		randf_range(-2, 2),
-		radius * sin(angle1)
+		r * sin(angle1)
 	)
 	return pos
 	

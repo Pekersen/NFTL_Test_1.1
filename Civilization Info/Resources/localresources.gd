@@ -11,7 +11,7 @@ func _ready():
 		is_controlled = true
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	if is_controlled:
 		Resources.local_energy[id] = energy
 	

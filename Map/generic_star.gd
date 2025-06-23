@@ -44,12 +44,6 @@ func _ready():
 		
 	
 	#WHICHEVER IS SECOND SEEMS TO TAKE PRIORITY AND BOTH STARS WILL APPEAR THAT WAY
-		
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	#if firstCore.is_processing_input():
-	#	Start4.switch_to_star_system(id)
-	pass
 	
 func get_id():
 	if !is_real:

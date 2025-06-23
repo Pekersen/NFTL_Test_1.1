@@ -17,7 +17,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	fps_counter.set_text("FPS %d" % Engine.get_frames_per_second())
 	if !Starmap.is_visible:
 		system_name.set_text("System Name: %d" % Start4.current_system_id)

@@ -4,9 +4,9 @@ extends SystemGeneration
 func _ready():
 	print("____________________________________")
 	#system_generate()
-	#initVars()
+	#_init_vars()
 	#initStar()
-	#initPlanetChildren()
+	#init_planet_children()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):

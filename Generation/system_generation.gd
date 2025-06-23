@@ -1,6 +1,6 @@
 class_name SystemGeneration extends GenerateCluster
 
-@onready var star = preload("res://Celestial Objects/Stars/star.tscn")
+@onready var star_obj = preload("res://Celestial Objects/Stars/star.tscn")
 #var star
 @export var system_id: int  # Assigned by UniverseManager
 
@@ -32,17 +32,17 @@ func _ready():
 	Start4.systems -= 1
 	print("ACTUAL ID: ", system_id)
 	if !built:
-		system_generate()
+		_system_generate()
 		built = true
 
-func system_generate():
+func _system_generate():
 	if system_id == 0:
 		print("I'M HOOOOOOOOOOME")
 		is_home = true
 		
 	system_to_localresources.emit(system_id)
 	
-	#setup_nodes()
+	#_setup_nodes()
 	#print("🔄 Star system ", system_id, " is READY!")
 	
 	# Set system age
@@ -51,7 +51,7 @@ func system_generate():
 	system_age_variance = [cluster_age - (cluster_age / 10), cluster_age]
 	#print("Lower Limit: ", system_age_variance[0], ", Upper Limit: ", system_age_variance[1])
 	system_age_variance = [(cluster_age - (cluster_age / 10)) / 1000000, cluster_age / 1000000]
-	system_age = Start4.offsetValue(system_age_variance) * 1000000
+	system_age = Start4.offset_value(system_age_variance) * 1000000
 	#print("System Age: " + str(system_age))
 	
 	while(true):
@@ -109,7 +109,7 @@ func _set_star_count():
 # initializes stars for each star_count	
 func _init_star_vars():
 	for i in range(star_count):
-		var star_instance = star.instantiate()
+		var star_instance = star_obj.instantiate()
 		star_instance.star_count = star_count
 		star_instance.is_home = is_home
 		stars[i] = star_instance
@@ -129,7 +129,7 @@ func _init_star_vars():
 func _compare_mass(a: Star, b: Star) -> int:
 	return (a.mass < b.mass) # > Decending order, < Accending order
 	
-func sort_by_mass():
+func _sort_by_mass():
 	var temp0 = stars[0]
 	var temp1 = stars[1]
 	if (stars[0].mass > stars[1].mass):
@@ -170,23 +170,23 @@ func _init_star_orbit():
 			stars[0].semi_major_axis = stars[1].semi_major_axis *\
 										(stars[1].mass/stars[0].mass)
 			
-			var eccentricity_val = offsetValue([0.0,1.0])
+			var eccentricity_val = offset_value([0.0,1.0])
 			if eccentricity_val < 0.5:
-				stars[0].eccentricity = offsetValue([0.0,0.1])
+				stars[0].eccentricity = offset_value([0.0,0.1])
 			elif eccentricity_val < 0.8:
-				stars[0].eccentricity = offsetValue([0.1,0.2])
+				stars[0].eccentricity = offset_value([0.1,0.2])
 			else:
-				stars[0].eccentricity = offsetValue([0.2,0.8])
+				stars[0].eccentricity = offset_value([0.2,0.8])
 			#print("Eccentricity: ", stars[0].eccentricity)
 			stars[0].orbital_period = 50
 			stars[0].is_flipped = true
 			stars[0].can_orbit = true
-			stars[0].orbitMesh.visible = true
+			stars[0].orbitMesh.visible = false
 			
 			stars[1].eccentricity = stars[0].eccentricity
 			stars[1].orbital_period = stars[0].orbital_period
 			stars[1].can_orbit = true
-			stars[1].orbitMesh.visible = true
+			stars[1].orbitMesh.visible = false
 			
 			stars[1].semi_minor_axis = stars[1].semi_major_axis *\
 									sqrt(1 - pow(stars[1].eccentricity,2))
@@ -200,8 +200,10 @@ func _init_star_orbit():
 			print("Unkown star count. Star orbit was not initialized.")
 			return
 	for star in stars:
+		star.orbitMesh.mesh.outer_radius = star.semi_major_axis + 0.1
+		star.orbitMesh.mesh.inner_radius = star.semi_major_axis - 0.1
+		star.orbitMesh.visible = true
 		star.init_orbit_mesh(star.orbitMesh)
-		#pass
 
 func _calc_center_of_mass(star_group: Array) -> Vector3:
 	var summation_of_positional_mass := Vector3(0.0,0.0,0.0)
@@ -255,6 +257,6 @@ func _planet_mod():
 		if star.eccentricity > 0.2:
 			star.remove_all()
 
-func setup_nodes():
-	star = preload("res://Celestial Objects/Stars/star.tscn")
+func _setup_nodes() -> void:
+	star_obj = preload("res://Celestial Objects/Stars/star.tscn")
 	

@@ -57,7 +57,7 @@ func _ready():
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
+func _process(_delta):
 	current_system_id = Start4.current_system_id
 	
 	if local_energy[0] != null:
