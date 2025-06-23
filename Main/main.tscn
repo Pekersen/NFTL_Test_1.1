@@ -1,6 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://dffhqmxhub7ir"]
+[gd_scene load_steps=5 format=3 uid="uid://dffhqmxhub7ir"]
 
 [ext_resource type="Script" path="res://Civilization Info/Resources/localresources.gd" id="2_3ltpm"]
+[ext_resource type="PackedScene" uid="uid://bnkkl230n0fev" path="res://Assets/Models/Space Stations/small_space_station.glb" id="3_q3bhv"]
 [ext_resource type="Script" path="res://Generation/system_generation.gd" id="4_c5e6n"]
 
 [sub_resource type="Environment" id="Environment_y5lqt"]
@@ -24,5 +25,8 @@ script = ExtResource("4_c5e6n")
 
 [node name="LocalResources" type="Node3D" parent="."]
 script = ExtResource("2_3ltpm")
+
+[node name="small_space_station" parent="." instance=ExtResource("3_q3bhv")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.82313, 0)
 
 [connection signal="system_to_localresources" from="System" to="LocalResources" method="_on_system_system_to_localresources"]

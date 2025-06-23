@@ -80,7 +80,7 @@ func init_orbit_mesh(orbitMesh: Node3D, initRotPos: float = 0):
 	
 	orbitMesh.rotation.y = initRotPos
 	orbitMesh.scale.z = semi_minor_axis/semi_major_axis
-	print("SCALE: ", orbitMesh.scale.z, " NODE: ", orbitMesh.get_parent())
+	#print("SCALE: ", orbitMesh.scale.z, " NODE: ", orbitMesh.get_parent())
 	var total_distance = -sqrt(pow(semi_major_axis,2) - pow(semi_minor_axis,2))
 	#orbitMesh.position.x = total_distance
 	orbitMesh.translate(Vector3(total_distance,0,0))

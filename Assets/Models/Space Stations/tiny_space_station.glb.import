@@ -3,20 +3,20 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b26jkfjy10abl"
-path="res://.godot/imported/stl1.0.glb-d821d6eefc5500a8dc2fef945dca92f3.scn"
+uid="uid://b8wttyqg8452d"
+path="res://.godot/imported/tiny_space_station.glb-0a4e3fc89c6681b1a46ebff49fff0bdd.scn"
 
 [deps]
 
-source_file="res://Assets/Models/Space Stations/stl1.0.glb"
-dest_files=["res://.godot/imported/stl1.0.glb-d821d6eefc5500a8dc2fef945dca92f3.scn"]
+source_file="res://Assets/Models/Space Stations/tiny_space_station.glb"
+dest_files=["res://.godot/imported/tiny_space_station.glb-0a4e3fc89c6681b1a46ebff49fff0bdd.scn"]
 
 [params]
 
-nodes/root_type=""
+nodes/root_type="MeshInstance3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
-nodes/root_scale=1.0
+nodes/root_scale=0.01
 meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true
