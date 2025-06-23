@@ -181,12 +181,12 @@ func _init_star_orbit():
 			stars[0].orbital_period = 50
 			stars[0].is_flipped = true
 			stars[0].can_orbit = true
-			stars[0].orbitMesh.visible = true
+			stars[0].orbitMesh.visible = false
 			
 			stars[1].eccentricity = stars[0].eccentricity
 			stars[1].orbital_period = stars[0].orbital_period
 			stars[1].can_orbit = true
-			stars[1].orbitMesh.visible = true
+			stars[1].orbitMesh.visible = false
 			
 			stars[1].semi_minor_axis = stars[1].semi_major_axis *\
 									sqrt(1 - pow(stars[1].eccentricity,2))
@@ -200,8 +200,10 @@ func _init_star_orbit():
 			print("Unkown star count. Star orbit was not initialized.")
 			return
 	for star in stars:
+		star.orbitMesh.mesh.outer_radius = star.semi_major_axis + 0.1
+		star.orbitMesh.mesh.inner_radius = star.semi_major_axis - 0.1
+		star.orbitMesh.visible = true
 		star.init_orbit_mesh(star.orbitMesh)
-		#pass
 
 func _calc_center_of_mass(star_group: Array) -> Vector3:
 	var summation_of_positional_mass := Vector3(0.0,0.0,0.0)
