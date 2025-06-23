@@ -16,6 +16,8 @@ var rng = RandomNumberGenerator.new()
 
 var systems = SYSTEM_COUNT
 
+var scale = 10
+
 func _ready():
 	cluster_variables()
 	

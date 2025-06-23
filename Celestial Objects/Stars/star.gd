@@ -88,6 +88,8 @@ var belts : Array
 var belt_orbit_sum = 1
 
 var belt_radii : Array
+
+var s = Start4.scale
 # ----- EXPERIMENTAL -----
 
 func _ready():		
@@ -111,7 +113,7 @@ func _ready():
 	
 	_init_vars()
 	if star_count == 1:
-		#_init_belt_children() 
+		_init_belt_children() 
 		pass
 	_init_planet_children()
 	
@@ -263,7 +265,7 @@ func  _on_system_star_gen(s_type):
 	else:
 		rotation_speed_variance = [0.01,1.25]
 		
-	radius = offset_value(radius_variance)
+	radius = offset_value(radius_variance) * s
 	mass = offset_value(mass_variance)
 	luminosity = offset_value(luminosity_variance)
 	temperature = offset_value(temperature_variance)
@@ -283,7 +285,7 @@ func  _on_system_star_gen(s_type):
 	
 	starCollision.shape.radius = radius + click_forgiveness
 	
-	starLight.light_energy = luminosity
+	starLight.light_energy = luminosity * s
 	
 	starMesh.mesh.material.set_shader_parameter("Sun_Color", Color(color_r, color_g, color_b))
 	starLight.light_color = Color(1.0, 1.0, 1.0)
@@ -363,7 +365,7 @@ func offset_value(offset : Array):
 
 func _init_planet_children():
 	print(num_planets)
-	orbit_sum = offset_value([0.0, 5.0 * star_rad])
+	orbit_sum = offset_value([0.0, 2.0 * star_rad])
 	
 	for i in range(num_planets):
 		#print("making planet...")
@@ -415,7 +417,7 @@ func _init_planet_vars(planetInstance, i, star_radius):
 	
 	_set_planet_type(i)
 	
-	planetInstance_individual_distance = offset_value(planetInstance_distance_variance)
+	planetInstance_individual_distance = offset_value(planetInstance_distance_variance) * s
 	planetInstance_distance = planetInstance_individual_distance + orbit_sum + planet_post_distance#LOOK AT LATER
 	var x = 10
 	
@@ -443,7 +445,7 @@ func _init_planet_vars(planetInstance, i, star_radius):
 	
 	planets_semi.append(planetInstance_distance)
 	
-	radius = offset_value(planet_radius_variance)
+	radius = offset_value(planet_radius_variance) * s
 	planetInstance.radius = radius
 	num_moons = offset_value(num_moons_variance)
 	
@@ -471,14 +473,14 @@ func _init_moon():
 	
 func _init_moon_vars(moonInstance):
 	# TEMP VALUES
-	moonInstance_distance = offset_value([0.1, 0.3])
+	moonInstance_distance = offset_value([0.1, 0.3]) * (s * s)
 	moonInstance.semi_major_axis = moonInstance_distance + radius + ring_max + 1.0
 	moonInstance.eccentricity = rng.randf_range(0, 0.2) #TODO: Make acurrate eccentricity values	
 	moonInstance.semi_minor_axis = moonInstance.semi_major_axis *\
 									sqrt(1 - pow(moonInstance.eccentricity,2))
 	moonInstance.orbital_period = moonInstance.semi_major_axis **(3.0/2)
 	moonInstance.eccentricity = rng.randf_range(0, 0.0) #TODO: Make acurrate eccentricity values
-	moonInstance.radius = offset_value([0.01,0.05])
+	moonInstance.radius = offset_value([0.01,0.05]) * s
 	moonInstance.rotation.x = offset_value([-0.3,0.3])
 	moonInstance.rotation.z = offset_value([-0.3,0.3])
 	moonInstance.can_orbit = true
@@ -489,7 +491,7 @@ func _init_ring():
 	return ringInstance
 	
 func _init_ring_vars(ringInstance):
-	ring_size = offset_value(ring_size_variance)
+	ring_size = offset_value(ring_size_variance) * s
 	ringInstance.semi_major_axis = ring_size + radius
 	
 	var colors = offset_value([0.0,1.0])
@@ -532,7 +534,7 @@ func _init_belt_vars(beltInstance):
 	beltInstance.inner = randf_range(belt_orbit_sum + 30, belt_orbit_sum + 60)
 	belt_radii.append(beltInstance.inner)
 	#print("INNER: ", beltInstance.inner)
-	beltInstance.outer = beltInstance.inner + randf_range(20, 30)
+	beltInstance.outer = beltInstance.inner + (randf_range(20, 30) * s)
 	belt_radii.append(beltInstance.outer)
 	#print("OUTER: ", beltInstance.outer)
 	

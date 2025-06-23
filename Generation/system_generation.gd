@@ -24,6 +24,8 @@ var stars : Array
 
 var is_home = false
 
+var s = Start4.scale
+
 signal star_count_to_star
 signal system_to_localresources
 
@@ -115,7 +117,7 @@ func _init_star_vars():
 		stars[i] = star_instance
 		
 		stars[i].age = system_age
-		stars[i].position.x = stars[i].mass * 10
+		stars[i].position.x = stars[i].mass * 10 * s
 		''' HR Diagram Code (Change number of stars to 400)
 		if starInstance.temperature > 10000:
 			starInstance.position.x = (-(starInstance.temperature) / 100 ) - 350
@@ -164,7 +166,7 @@ func _init_star_orbit():
 				# this should be done after calculating orbit :D
 			# calculate orbit!
 			
-			stars[1].semi_major_axis = stars[1].mass * 10 + 10 
+			stars[1].semi_major_axis = (stars[1].mass * 10 + 10) * s
 			#  b = a * sqrt(1 - e^2)
 			
 			stars[0].semi_major_axis = stars[1].semi_major_axis *\
@@ -243,7 +245,7 @@ func _init_stars():
 	'''
 	
 func _planet_mod():
-	var difference = abs(stars[0].semi_major_axis - stars[1].semi_major_axis)
+	var difference = abs(stars[0].semi_major_axis - stars[1].semi_major_axis) * 2
 	
 	for i in range(stars[0].planets_semi.size()):
 		if stars[0].get_semimajoraxis(i) > difference:

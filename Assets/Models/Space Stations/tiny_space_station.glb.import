@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://b8wttyqg8452d"
+uid="uid://damp53dc38lev"
 path="res://.godot/imported/tiny_space_station.glb-0a4e3fc89c6681b1a46ebff49fff0bdd.scn"
 
 [deps]
@@ -16,7 +16,7 @@ dest_files=["res://.godot/imported/tiny_space_station.glb-0a4e3fc89c6681b1a46ebf
 nodes/root_type="MeshInstance3D"
 nodes/root_name=""
 nodes/apply_root_scale=true
-nodes/root_scale=0.01
+nodes/root_scale=0.001
 meshes/ensure_tangents=true
 meshes/generate_lods=true
 meshes/create_shadow_meshes=true

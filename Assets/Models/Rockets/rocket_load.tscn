@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cpgxj7yexe2gm" path="res://Assets/Models/Rockets/small_rocket.glb" id="1_25ncx"]
 [ext_resource type="PackedScene" uid="uid://bgi3i5uegkd7b" path="res://Assets/Models/Rockets/medium_rocket.glb" id="1_pykum"]
-[ext_resource type="PackedScene" uid="uid://clnsemh4wpnpv" path="res://Assets/Models/Rockets/large_rocket.glb" id="3_7mq31"]
+[ext_resource type="PackedScene" uid="uid://drjiwhf4gnl8b" path="res://Assets/Models/Rockets/large_rocket.glb" id="3_7mq31"]
 
 [node name="RocketLoad" type="Node3D"]
 
@@ -12,4 +12,4 @@ transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0384
 [node name="small_rocket" parent="." instance=ExtResource("1_25ncx")]
 
 [node name="large_rocket" parent="." instance=ExtResource("3_7mq31")]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.1, 0, 0)
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, 0.0741812, 0, 0)

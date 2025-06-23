@@ -4,6 +4,7 @@ extends SpringArm3D
 
 var camera_min : float
 var star_radius : float = 0.0
+var s = Start4.scale
 
 var starmap_reset = false
 # zoom
@@ -11,7 +12,7 @@ var starmap_reset = false
 ## Default distance to set the camera from the player.
 @export var camera_default_distance := 2.0
 ## Maximum distance the camera can zoom out to.
-@export var camera_distance_max := 1000.0
+@export var camera_distance_max = 1000.0 #* s
 ## Mininum distance the camera can zoom in to.
 @export var camera_distance_min := 1.0 # TODO: Make it variable to celestial obj size
 ## How far the camera will move per zoom input.
@@ -24,7 +25,7 @@ var mouse_locked = false
 
 # zoom
 # Variable for handling smooth zooming.
-var _spring_arm_target_length := camera_default_distance + 10.0
+var _spring_arm_target_length = camera_default_distance * s + 10.0
 
 ## The camera [SpringArm3D], which prevents the camera passing through objects.
 @onready var spring_arm := $"." as SpringArm3D
@@ -56,10 +57,10 @@ func _unhandled_input(event: InputEvent) -> void:
 	# Handle camera zoom.
 	elif event.is_action_pressed("zoom_in"):
 		_spring_arm_target_length -= camera_zoom_step * zoom_increase
-		_spring_arm_target_length = clamp(_spring_arm_target_length, camera_distance_min, camera_distance_max)
+		_spring_arm_target_length = clamp(_spring_arm_target_length, camera_distance_min, camera_distance_max * s)
 	elif event.is_action_pressed("zoom_out"):
 		_spring_arm_target_length += camera_zoom_step * zoom_increase
-		_spring_arm_target_length = clamp(_spring_arm_target_length, camera_distance_min, camera_distance_max)
+		_spring_arm_target_length = clamp(_spring_arm_target_length, camera_distance_min, camera_distance_max * s)
 	# zoom
 	
 	
