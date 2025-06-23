@@ -29,7 +29,7 @@ var orbital_period: float # in seconds
 # though user is clicking on nothing visually
 var click_forgiveness : float = 1.0
 
-func offsetValue(offset : Array[float]):
+func offset_value(offset : Array[float]):
 	return rng.randf_range(offset[0], offset[1])
 
 # moves 'core' in an orbit

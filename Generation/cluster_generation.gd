@@ -6,7 +6,7 @@ var cluster_age : int
 
 var rng = RandomNumberGenerator.new()
 
-func offsetValue(offset : Array):
+func offset_value(offset : Array):
 	if typeof(offset[0]) == TYPE_FLOAT:
 		return rng.randf_range(offset[0], offset[1])
 	elif typeof(offset[0]) == TYPE_INT:
@@ -28,7 +28,7 @@ func cluster_variables():
 		cluster_age_variance = [10000000000, 14000000000]
 		print("Very Old System")
 		
-	cluster_age = offsetValue(cluster_age_variance)
+	cluster_age = offset_value(cluster_age_variance)
 	
 	if cluster_age < 99999999:
 		cluster_type = "Association"

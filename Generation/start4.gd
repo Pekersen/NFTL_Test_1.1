@@ -162,7 +162,7 @@ func _input(event):
 			if Starmap.is_visible:
 				Starmap.toggle_map()
 			
-func offsetValue(offset : Array):
+func offset_value(offset : Array):
 	if typeof(offset[0]) == TYPE_FLOAT:
 		return rng.randf_range(offset[0], offset[1])
 	elif typeof(offset[0]) == TYPE_INT:
@@ -184,7 +184,7 @@ func cluster_variables():
 		cluster_age_variance = [10000000000, 14000000000]
 		print("Very Old System")
 		
-	cluster_age = int((int(offsetValue(cluster_age_variance) / 1000000)) * 1000000)
+	cluster_age = int((int(offset_value(cluster_age_variance) / 1000000)) * 1000000)
 	
 	if cluster_age < 99999999:
 		cluster_type = "Association"

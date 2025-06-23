@@ -45,7 +45,7 @@ func _ready():
 	
 	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
 	
-	initRotPos = offsetValue([0, (2 * PI)])
+	initRotPos = offset_value([0, (2 * PI)])
 	rotationPoint.rotate_y(initRotPos)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -109,18 +109,18 @@ func _ready():
 		#Resources.controlled_systems += 1
 		print("I'M ALSO HOOOOOOOOOOOME!!!")
 	
-	initVars()
+	_init_vars()
 	if star_count == 1:
-		#initBeltChildren() 
+		#_init_belt_children() 
 		pass
-	initPlanetChildren()
+	_init_planet_children()
 	
 	
-func initVars():
-	star_type = pick_star_type()
+func _init_vars():
+	star_type = _pick_star_type()
 	print("Star Type1: " + star_type)
 	_on_system_star_gen(star_type)
-	num_planets = offsetValue(num_planets_variance) / planet_count_reduction
+	num_planets = offset_value(num_planets_variance) / planet_count_reduction
 	var rand = randf()
 	if rand < 0.7:
 		num_belts = 0
@@ -263,15 +263,15 @@ func  _on_system_star_gen(star_type):
 	else:
 		rotation_speed_variance = [0.01,1.25]
 		
-	radius = offsetValue(radius_variance)
-	mass = offsetValue(mass_variance)
-	luminosity = offsetValue(luminosity_variance)
-	temperature = offsetValue(temperature_variance)
-	rotation_speed = offsetValue(rotation_speed_variance)
+	radius = offset_value(radius_variance)
+	mass = offset_value(mass_variance)
+	luminosity = offset_value(luminosity_variance)
+	temperature = offset_value(temperature_variance)
+	rotation_speed = offset_value(rotation_speed_variance)
 	
-	color_r = offsetValue(color_variance_r)
-	color_g = offsetValue(color_variance_g)
-	color_b = offsetValue(color_variance_b)
+	color_r = offset_value(color_variance_r)
+	color_g = offset_value(color_variance_g)
+	color_b = offset_value(color_variance_b)
 	
 	#TEMP
 	#print("Color R: " + str(color_r) + ", Color G: " + str(color_g) + ", Color B: " + str(color_b))
@@ -288,12 +288,12 @@ func  _on_system_star_gen(star_type):
 	starMesh.mesh.material.set_shader_parameter("Sun_Color", Color(color_r, color_g, color_b))
 	starLight.light_color = Color(1.0, 1.0, 1.0)
 	
-	var name_index = offsetValue([0, star_names.size()])
+	var name_index = offset_value([0, star_names.size()])
 	star_name = star_names[name_index - 1]
 	
 	star_rad_for_cam.emit(radius)
 
-# For console
+### Console Commands ###
 func get_star_info() -> String:
 	# Command currently based on Star node being in Main. Will have to change eventually.
 	return "Star type: " + str(star_type) + "\nRadius: " + str(radius) + "\nMass: " +\
@@ -303,14 +303,15 @@ func get_star_info() -> String:
 
 func set_star_type(newStarType : String):
 	if newStarType == "random":
-		newStarType = pick_star_type()
+		newStarType = _pick_star_type()
 		_on_system_star_gen(newStarType)
 	else:
 		_on_system_star_gen(newStarType)
 	return "Set star type to " + (str(newStarType))
 
-# temp
-func pick_star_type():
+### End Console Commands ###
+
+func _pick_star_type():
 	var random_float = randf()
 	
 	if is_home:
@@ -354,20 +355,20 @@ func _input(event):
 # E X P E R I M E N T A L  //  E X P E R I M E N T A L  //  E X P E R I M E N T A L
 #===================================================================================
 
-func offsetValue(offset : Array):
+func offset_value(offset : Array):
 	if typeof(offset[0]) == TYPE_FLOAT:
 		return rng.randf_range(offset[0], offset[1])
 	elif typeof(offset[0]) == TYPE_INT:
 		return rng.randi_range(offset[0], offset[1])
 
-func initPlanetChildren():
+func _init_planet_children():
 	print(num_planets)
-	orbit_sum = offsetValue([0.0, 5.0 * star_rad])
+	orbit_sum = offset_value([0.0, 5.0 * star_rad])
 	
 	for i in range(num_planets):
 		#print("making planet...")
 		var planetInstance = planet.instantiate()
-		initPlanetVars(planetInstance, i, star_rad)
+		_init_planet_vars(planetInstance, i, star_rad)
 		
 		orbit_sum = planetInstance_distance
 		
@@ -378,12 +379,12 @@ func initPlanetChildren():
 		planets.append(planetInstance)
 		
 		for j in range(num_moons):
-			var moonInstance = initMoon()
+			var moonInstance = _init_moon()
 			planetInstance.get_node("RotationPoint/Core").add_child(moonInstance)
 			moonInstance.init_orbit_mesh(moonInstance.orbitMesh, moonInstance.initRotPos)			
 		
 		for k in range(num_rings):
-			var ringInstance = initRing()
+			var ringInstance = _init_ring()
 			planetInstance.get_node("RotationPoint/Core").add_child(ringInstance)
 			#print("Ring Size 2: " + str(ring_size))
 		
@@ -393,17 +394,17 @@ func initPlanetChildren():
 	if is_home and !home_world_added:
 		var planetInstance = planet.instantiate()
 		orbit_sum = 
-		initPlanetVars(planetInstance, i , star_rad)
+		_init_planet_vars(planetInstance, i , star_rad)
 	'''
 
-func initPlanetVars(planetInstance, i, star_rad):
+func _init_planet_vars(planetInstance, i, star_rad):
 	# TEMP VALUES
 	# Axial tilt
-	planetInstance.core.rotation.x = offsetValue([-0.3,0.3])
-	planetInstance.core.rotation.z = offsetValue([-0.3,0.3])
+	planetInstance.core.rotation.x = offset_value([-0.3,0.3])
+	planetInstance.core.rotation.z = offset_value([-0.3,0.3])
 	# Orbital tilt
-	planetInstance.rotation.x = offsetValue([-0.01,0.01])
-	planetInstance.rotation.z = offsetValue([-0.01,0.01])
+	planetInstance.rotation.x = offset_value([-0.01,0.01])
+	planetInstance.rotation.z = offset_value([-0.01,0.01])
 	
 	planetInstance.can_orbit = true
 	
@@ -412,6 +413,130 @@ func initPlanetVars(planetInstance, i, star_rad):
 	#Mini Neptunes should be ice colors when far away
 	#ADD: Green, Magenta, Brown, and Blue Colors to corresponding planets
 	
+	_set_planet_type(i)
+	
+	planetInstance_individual_distance = offset_value(planetInstance_distance_variance)
+	planetInstance_distance = planetInstance_individual_distance + orbit_sum + planet_post_distance#LOOK AT LATER
+	var x = 10
+	
+	#print("PLANETINSTANCEDISTANCE: ", planetInstance_distance, ", ", planetInstance_distance + star_rad)
+	
+	if belt_radii.size() > 0:
+		if planetInstance_distance + star_rad > belt_radii[0] - x and planetInstance_distance < belt_radii[1] + x:
+			planetInstance_distance = belt_radii[1] + (belt_radii[1] - belt_radii[0])
+			#print("ADDING ", belt_radii[1] - belt_radii[0])
+	if belt_radii.size() > 2:
+		if planetInstance_distance + star_rad > belt_radii[2] - x and planetInstance_distance < belt_radii[3] + x:
+			planetInstance_distance = belt_radii[3] + (belt_radii[3] - belt_radii[2])
+			#print("ADDING ", belt_radii[3] - belt_radii[2])
+	if belt_radii.size() > 4:
+		if planetInstance_distance + star_rad > belt_radii[4] - x and planetInstance_distance < belt_radii[5] + x:
+			planetInstance_distance = belt_radii[5] + (belt_radii[5] - belt_radii[4])
+			#print("ADDING ", belt_radii[5] - belt_radii[4])
+		
+	planetInstance.semi_major_axis = planetInstance_distance + star_rad
+	planetInstance.eccentricity = rng.randf_range(0.0, 0.05) #TODO: Make accurate eccentricity values	
+	planetInstance.semi_minor_axis = planetInstance.semi_major_axis *\
+									sqrt(1 - pow(planetInstance.eccentricity,2))
+	planet_post_distance = planetInstance_individual_distance
+	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
+	
+	planets_semi.append(planetInstance_distance)
+	
+	radius = offset_value(planet_radius_variance)
+	planetInstance.radius = radius
+	num_moons = offset_value(num_moons_variance)
+	
+	if atmosphere_present:
+		planetInstance.atmosphere_present = true
+		planetInstance.atmosphere_size = atmosphere_size
+		planetInstance.atmosphere_thickness = atmosphere_thickness
+	
+	planetInstance.color_r = offset_value(color_variance_r)
+	planetInstance.color_g = offset_value(color_variance_g)
+	planetInstance.color_b = offset_value(color_variance_b)
+	
+	num_rings = offset_value(num_rings_variance)
+	#print("Number of rings: " + str(num_rings))
+	
+	#print("Generate System script radius: " + str(planetInstance.radius))
+	#print("Generate System script orbital_period: " + str(planetInstance.orbital_period))
+	#print("Moons: " + str(num_moons))
+	
+func _init_moon():
+	var moonInstance = moon.instantiate()
+	_init_moon_vars(moonInstance)
+	moon_sum += moonInstance_distance
+	return moonInstance
+	
+func _init_moon_vars(moonInstance):
+	# TEMP VALUES
+	moonInstance_distance = offset_value([0.1, 0.3])
+	moonInstance.semi_major_axis = moonInstance_distance + radius + ring_max + 1.0
+	moonInstance.eccentricity = rng.randf_range(0, 0.2) #TODO: Make acurrate eccentricity values	
+	moonInstance.semi_minor_axis = moonInstance.semi_major_axis *\
+									sqrt(1 - pow(moonInstance.eccentricity,2))
+	moonInstance.orbital_period = moonInstance.semi_major_axis **(3.0/2)
+	moonInstance.eccentricity = rng.randf_range(0, 0.0) #TODO: Make acurrate eccentricity values
+	moonInstance.radius = offset_value([0.01,0.05])
+	moonInstance.rotation.x = offset_value([-0.3,0.3])
+	moonInstance.rotation.z = offset_value([-0.3,0.3])
+	moonInstance.can_orbit = true
+
+func _init_ring():
+	var ringInstance = ring.instantiate()
+	_init_ring_vars(ringInstance)
+	return ringInstance
+	
+func _init_ring_vars(ringInstance):
+	ring_size = offset_value(ring_size_variance)
+	ringInstance.semi_major_axis = ring_size + radius
+	
+	var colors = offset_value([0.0,1.0])
+	color_variance_r = [colors,colors]
+	color_variance_g = [colors,colors]
+	color_variance_b = [colors,colors]
+	
+	ringInstance.color_r = offset_value(color_variance_r)
+	ringInstance.color_g = offset_value(color_variance_g)
+	ringInstance.color_b = offset_value(color_variance_b)
+	
+func get_semimajoraxis(i : int):
+	return planets_semi[i]
+	
+func remove_child_at_path(i : int):
+	var planet = planets[i]
+	get_node("RotationPoint/Core").remove_child(planet)
+	planet.queue_free()
+
+func remove_all():
+	for planet in planets:
+		get_node("RotationPoint/Core").remove_child(planet)
+		planet.queue_free()
+	planets.clear()
+	
+func _init_belt_children():
+	belt_orbit_sum = randf_range(0, star_rad * 50)
+	if is_home:
+		belt_orbit_sum = randf_range (25 * star_rad, 50 * star_rad)
+	#print("BELT CHILDREN: ", num_belts)
+	for i in range(num_belts):
+		var beltInstance = belt.instantiate()
+		_init_belt_vars(beltInstance)
+		get_node("RotationPoint/Core").add_child(beltInstance)
+		belts.append(beltInstance)
+		belt_orbit_sum += beltInstance.outer
+		
+func _init_belt_vars(beltInstance):
+	beltInstance.asteroid_num = randf_range(900, 1400)
+	beltInstance.inner = randf_range(belt_orbit_sum + 30, belt_orbit_sum + 60)
+	belt_radii.append(beltInstance.inner)
+	#print("INNER: ", beltInstance.inner)
+	beltInstance.outer = beltInstance.inner + randf_range(20, 30)
+	belt_radii.append(beltInstance.outer)
+	#print("OUTER: ", beltInstance.outer)
+	
+func _set_planet_type(i : int):
 	var random_float = randf()
 	if random_float < 0.4:
 		planet_type = "Gas_Giant"
@@ -522,7 +647,7 @@ func initPlanetVars(planetInstance, i, star_rad):
 		
 		random_float = randf()
 		if random_float < 0.5:
-			var colors = offsetValue([0.1,0.5])
+			var colors = offset_value([0.1,0.5])
 			color_variance_r = [colors, colors]
 			color_variance_g = [colors, colors]
 			color_variance_b = [colors, colors]
@@ -549,7 +674,7 @@ func initPlanetVars(planetInstance, i, star_rad):
 		
 		random_float = randf()
 		if random_float < 0.5:
-			var colors = offsetValue([0.2,0.8])
+			var colors = offset_value([0.2,0.8])
 			color_variance_r = [colors, colors]
 			color_variance_g = [colors, colors]
 			color_variance_b = [colors, colors]
@@ -627,7 +752,7 @@ func initPlanetVars(planetInstance, i, star_rad):
 		
 		random_float = randf()
 		if random_float < 0.5:
-			var colors = offsetValue([0.2,0.8])
+			var colors = offset_value([0.2,0.8])
 			color_variance_r = [colors, colors]
 			color_variance_g = [colors, colors]
 			color_variance_b = [colors, colors]
@@ -664,125 +789,3 @@ func initPlanetVars(planetInstance, i, star_rad):
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
-	
-	planetInstance_individual_distance = offsetValue(planetInstance_distance_variance)
-	planetInstance_distance = planetInstance_individual_distance + orbit_sum + planet_post_distance#LOOK AT LATER
-	var x = 10
-	
-	#print("PLANETINSTANCEDISTANCE: ", planetInstance_distance, ", ", planetInstance_distance + star_rad)
-	
-	if belt_radii.size() > 0:
-		if planetInstance_distance + star_rad > belt_radii[0] - x and planetInstance_distance < belt_radii[1] + x:
-			planetInstance_distance = belt_radii[1] + (belt_radii[1] - belt_radii[0])
-			#print("ADDING ", belt_radii[1] - belt_radii[0])
-	if belt_radii.size() > 2:
-		if planetInstance_distance + star_rad > belt_radii[2] - x and planetInstance_distance < belt_radii[3] + x:
-			planetInstance_distance = belt_radii[3] + (belt_radii[3] - belt_radii[2])
-			#print("ADDING ", belt_radii[3] - belt_radii[2])
-	if belt_radii.size() > 4:
-		if planetInstance_distance + star_rad > belt_radii[4] - x and planetInstance_distance < belt_radii[5] + x:
-			planetInstance_distance = belt_radii[5] + (belt_radii[5] - belt_radii[4])
-			#print("ADDING ", belt_radii[5] - belt_radii[4])
-		
-	planetInstance.semi_major_axis = planetInstance_distance + star_rad
-	planetInstance.eccentricity = rng.randf_range(0.0, 0.05) #TODO: Make accurate eccentricity values	
-	planetInstance.semi_minor_axis = planetInstance.semi_major_axis *\
-									sqrt(1 - pow(planetInstance.eccentricity,2))
-	planet_post_distance = planetInstance_individual_distance
-	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
-	
-	planets_semi.append(planetInstance_distance)
-	
-	radius = offsetValue(planet_radius_variance)
-	planetInstance.radius = radius
-	num_moons = offsetValue(num_moons_variance)
-	
-	if atmosphere_present:
-		planetInstance.atmosphere_present = true
-		planetInstance.atmosphere_size = atmosphere_size
-		planetInstance.atmosphere_thickness = atmosphere_thickness
-	
-	planetInstance.color_r = offsetValue(color_variance_r)
-	planetInstance.color_g = offsetValue(color_variance_g)
-	planetInstance.color_b = offsetValue(color_variance_b)
-	
-	num_rings = offsetValue(num_rings_variance)
-	#print("Number of rings: " + str(num_rings))
-	
-	#print("Generate System script radius: " + str(planetInstance.radius))
-	#print("Generate System script orbital_period: " + str(planetInstance.orbital_period))
-	#print("Moons: " + str(num_moons))
-	
-func initMoon():
-	var moonInstance = moon.instantiate()
-	initMoonVars(moonInstance)
-	moon_sum += moonInstance_distance
-	return moonInstance
-	
-func initMoonVars(moonInstance):
-	# TEMP VALUES
-	moonInstance_distance = offsetValue([0.1, 0.3])
-	moonInstance.semi_major_axis = moonInstance_distance + radius + ring_max + 1.0
-	moonInstance.eccentricity = rng.randf_range(0, 0.2) #TODO: Make acurrate eccentricity values	
-	moonInstance.semi_minor_axis = moonInstance.semi_major_axis *\
-									sqrt(1 - pow(moonInstance.eccentricity,2))
-	moonInstance.orbital_period = moonInstance.semi_major_axis **(3.0/2)
-	moonInstance.eccentricity = rng.randf_range(0, 0.0) #TODO: Make acurrate eccentricity values
-	moonInstance.radius = offsetValue([0.01,0.05])
-	moonInstance.rotation.x = offsetValue([-0.3,0.3])
-	moonInstance.rotation.z = offsetValue([-0.3,0.3])
-	moonInstance.can_orbit = true
-
-func initRing():
-	var ringInstance = ring.instantiate()
-	initRingVars(ringInstance)
-	return ringInstance
-	
-func initRingVars(ringInstance):
-	ring_size = offsetValue(ring_size_variance)
-	ringInstance.semi_major_axis = ring_size + radius
-	
-	var colors = offsetValue([0.0,1.0])
-	color_variance_r = [colors,colors]
-	color_variance_g = [colors,colors]
-	color_variance_b = [colors,colors]
-	
-	ringInstance.color_r = offsetValue(color_variance_r)
-	ringInstance.color_g = offsetValue(color_variance_g)
-	ringInstance.color_b = offsetValue(color_variance_b)
-	
-func get_semimajoraxis(i : int):
-	return planets_semi[i]
-	
-func remove_child_at_path(i : int):
-	var planet = planets[i]
-	get_node("RotationPoint/Core").remove_child(planet)
-	planet.queue_free()
-
-func remove_all():
-	for planet in planets:
-		get_node("RotationPoint/Core").remove_child(planet)
-		planet.queue_free()
-	planets.clear()
-	
-func initBeltChildren():
-	belt_orbit_sum = randf_range(0, star_rad * 50)
-	if is_home:
-		belt_orbit_sum = randf_range (25 * star_rad, 50 * star_rad)
-	#print("BELT CHILDREN: ", num_belts)
-	for i in range(num_belts):
-		var beltInstance = belt.instantiate()
-		initBeltVars(beltInstance)
-		get_node("RotationPoint/Core").add_child(beltInstance)
-		belts.append(beltInstance)
-		belt_orbit_sum += beltInstance.outer
-		
-func initBeltVars(beltInstance):
-	beltInstance.asteroid_num = randf_range(900, 1400)
-	beltInstance.inner = randf_range(belt_orbit_sum + 30, belt_orbit_sum + 60)
-	belt_radii.append(beltInstance.inner)
-	#print("INNER: ", beltInstance.inner)
-	beltInstance.outer = beltInstance.inner + randf_range(20, 30)
-	belt_radii.append(beltInstance.outer)
-	#print("OUTER: ", beltInstance.outer)
-	
