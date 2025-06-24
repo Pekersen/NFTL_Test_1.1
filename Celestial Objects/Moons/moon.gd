@@ -14,6 +14,7 @@ func _init():
 	
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	semi_minor_axis = ((semi_major_axis**2)*(1-(eccentricity**2)))**0.5
 	var parent = get_parent()
 	global_position.x = parent.global_position.x
 	global_rotation.y = parent.global_rotation.y
