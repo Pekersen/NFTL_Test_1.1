@@ -13,7 +13,8 @@ layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 texture = ExtResource("1_wqorv")
-expand_mode = 2
+expand_mode = 1
+stretch_mode = 1
 
 [node name="ButtonCenter" type="CenterContainer" parent="."]
 layout_mode = 0
@@ -42,6 +43,7 @@ layout_mode = 2
 text = "Quit"
 
 [node name="TitleCenter" type="CenterContainer" parent="."]
+layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 365.0
 
