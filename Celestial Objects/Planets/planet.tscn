@@ -1,6 +1,7 @@
-[gd_scene load_steps=13 format=3 uid="uid://cqtxuyes4fdju"]
+[gd_scene load_steps=14 format=3 uid="uid://cqtxuyes4fdju"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
+[ext_resource type="Script" path="res://Celestial Objects/Planets/tilebuilder.gd" id="2_0wlpl"]
 [ext_resource type="Shader" path="res://Experimental/Experimental Planet Mesh/planet_terrain.gdshader" id="2_57dcy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbg0y"]
@@ -80,6 +81,9 @@ billboard = 1
 fixed_size = true
 text = "Planet"
 outline_size = 0
+
+[node name="TileBuilder" type="Node3D" parent="RotationPoint/Core"]
+script = ExtResource("2_0wlpl")
 
 [node name="SubViewport" type="SubViewport" parent="RotationPoint"]
 disable_3d = true
