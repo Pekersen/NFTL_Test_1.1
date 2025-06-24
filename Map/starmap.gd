@@ -11,8 +11,10 @@ var map_scene = load("res://Map/map.tscn")
 var map_instance = map_scene.instantiate()  
 var map_generated = false
 
-var inner = 3.1
-var outer = (Start4.SYSTEM_COUNT * 2) / 5.0
+var s = Start4.scale
+
+var inner = 3.1 * s
+var outer = (Start4.SYSTEM_COUNT * 2) / 5.0 * s
 
 var on_click = false
 
@@ -34,11 +36,12 @@ func generate_galaxy_map():
 		# Set star color to match system
 		#print("FIRST STAR: ", stars1[i].star_type, ", ", i, ", REAL ID: ", id)
 		var star_color = stars1[i].starMesh.mesh.material.get_shader_parameter("Sun_Color")
-		var star_size = sqrt(stars1[i].starMesh.mesh.radius)
+		var star_size = sqrt(stars1[i].starMesh.mesh.radius) * 1.2
 		if star_size < 1:
 			star_size = 1
 		star.first_color = star_color
 		star.first_size = star_size
+		star.first_name = stars1[i].system_name
 		
 		# Add interaction
 		star.set_meta("system_id", id)  # Store system ID for click event
@@ -68,7 +71,7 @@ func generate_galaxy_map():
 	
 	# Checks if any stars are less than x units (x ly) away from each other
 	# If any are, then the positions are recalculated.
-	var x = 3
+	var x = 3 * s
 	var changed = true
 	while (changed == true):
 		changed = false
@@ -140,7 +143,7 @@ func _calc_position(inner_pos, outer_pos, id):
 		
 func _generate_false_stars():
 	var false_star_num = stars1.size() * 15
-	var false_outer = stars1.size() * 2
+	var false_outer = stars1.size() * 2 * s
 	for i in false_star_num:
 		#print("GENERATING FALSE STAR")
 		var star = STAR_MESH.instantiate()
@@ -149,7 +152,7 @@ func _generate_false_stars():
 		
 		var color = randf_range(0.5, 1.0)
 		star.first_color = Color(color, color, color)
-		star.first_size = randf_range(0.6, 1.0)
+		star.first_size = randf_range(0.6, 1.0) * s
 		
 		star.position = _calc_position(outer + 1.0, false_outer, 1)
 		star.is_real = false

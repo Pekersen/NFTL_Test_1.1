@@ -3,6 +3,7 @@ extends Moon
 @onready var moonMesh = $RotationPoint/Core/TrueMoon
 @onready var moonCollision = $"RotationPoint/Core/MoonCollision"
 @onready var orbitMesh = $Orbit
+@onready var label = $"RotationPoint/Core/Label3D"
 var initRotPos : float
 
 var orbit_path_visible = true
@@ -33,6 +34,9 @@ func _ready():
 
 	initRotPos = offset_value([0, (2 * PI)])
 	rotationPoint.rotate_y(initRotPos)
+	
+	label.position = Vector3(0, radius * 2.0, 0)
+	label.font_size = 12
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -43,6 +47,12 @@ func _input(event):
 	if event.is_action_pressed("lines") and orbit_path_visible == true:
 		orbitMesh.visible = false
 		orbit_path_visible = false
+		label.visible = false
 	elif event.is_action_pressed("lines") and orbit_path_visible == false:
 		orbitMesh.visible = true
 		orbit_path_visible = true
+		label.visible = true
+		
+func change_name(new_name : String):
+	label.text = new_name
+	object_name = new_name

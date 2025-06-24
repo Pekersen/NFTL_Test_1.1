@@ -26,6 +26,11 @@ var is_home = false
 
 var s = Start4.scale
 
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+const l_letters = "abcdefghijklmnopqrstuvwxyz"
+const numbers = "0123456789"
+var system_name : String
+
 signal star_count_to_star
 signal system_to_localresources
 
@@ -33,6 +38,13 @@ func _ready():
 	system_id = Start4.systems - 1
 	Start4.systems -= 1
 	print("ACTUAL ID: ", system_id)
+	
+	system_name = letters[randi() % letters.length()]
+	for i in range(6):
+		system_name += numbers[randi() % numbers.length()]
+	print("SYSTEM NAME: ", system_name)
+	Start4.system_names.append(system_name)
+	
 	if !built:
 		_system_generate()
 		built = true
@@ -63,9 +75,7 @@ func _system_generate():
 		
 		print("Star Count: " + str(star_count))
 		
-		
 		_init_star_vars()
-		
 		
 		#print("here")
 		#if !_set_orbit_style():
@@ -73,6 +83,7 @@ func _system_generate():
 		
 		_init_stars()
 		
+		_assign_names()
 	#	for star in stars:
 	#		await star.ready
 		
@@ -80,11 +91,12 @@ func _system_generate():
 		
 		_init_star_orbit()
 		
-		if star_count > 1:
-			_planet_mod()
+		#if star_count > 1:
+		_planet_mod()
 		
 		for star in stars:
 			print(star.star_name, ": mass - ", star.mass)
+			star.change_name()
 		
 		break
 		
@@ -245,20 +257,47 @@ func _init_stars():
 	'''
 	
 func _planet_mod():
-	var difference = abs(stars[0].semi_major_axis - stars[1].semi_major_axis) * 2
-	
-	for i in range(stars[0].planets_semi.size()):
-		if stars[0].get_semimajoraxis(i) > difference:
-			stars[0].remove_child_at_path(i)
-	
-	for i in range(stars[1].planets_semi.size()):
-		if stars[1].get_semimajoraxis(i) > difference:
-			stars[1].remove_child_at_path(i)
+	if star_count > 1:
+		var difference = abs(stars[0].semi_major_axis - stars[1].semi_major_axis) * 2
+		
+		for i in range(stars[0].planets_semi.size()):
+			if stars[0].get_semimajoraxis(i) > difference:
+				stars[0].remove_child_at_path(i)
+		
+		for i in range(stars[1].planets_semi.size()):
+			if stars[1].get_semimajoraxis(i) > difference:
+				stars[1].remove_child_at_path(i)
+				
+		for star in stars:
+			if star.eccentricity > 0.2:
+				star.remove_all()
 			
 	for star in stars:
-		if star.eccentricity > 0.2:
-			star.remove_all()
+		for i in range(star.planets.size()):
+			star.planets[i].change_name(star.object_name + l_letters[i])
+			print("New Name: ", star.object_name + l_letters[i])
+			for j in range(star.planets[i].moons.size()):
+				star.planets[i].moons[j].change_name(star.object_name + l_letters[i] + str(j + 1))
 
 func _setup_nodes() -> void:
 	star_obj = preload("res://Celestial Objects/Stars/star.tscn")
 	
+func _assign_names():
+	if stars.size() == 1:
+		stars[0].object_name = system_name + "A"
+		stars[0].system_name = system_name
+	elif stars.size() == 2:
+		if stars[0].luminosity > stars[1].luminosity:
+			stars[0].object_name = system_name + "A"
+			stars[1].object_name = system_name + "B"
+			stars[0].system_name = system_name
+			stars[1].system_name = system_name
+		else:
+			stars[0].object_name = system_name + "B"
+			stars[1].object_name = system_name +"A"
+			stars[0].system_name = system_name
+			stars[1].system_name = system_name
+	else:
+		pass
+		
+		

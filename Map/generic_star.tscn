@@ -272,6 +272,13 @@ light_color = Color(1, 0.852399, 0.825386, 1)
 shadow_enabled = true
 omni_range = 1000.0
 
+[node name="Label3D" type="Label3D" parent="RotationPoint/Core"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.07828, 0)
+pixel_size = 0.001
+billboard = 1
+fixed_size = true
+outline_size = 0
+
 [node name="RotationPoint2" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.33078)
 visible = false
@@ -289,3 +296,10 @@ omni_range = 1000.0
 
 [node name="StarMesh2" type="MeshInstance3D" parent="RotationPoint2/Core2"]
 mesh = SubResource("SphereMesh_culm1")
+
+[node name="Label3D" type="Label3D" parent="RotationPoint2/Core2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.07828, 0)
+pixel_size = 0.001
+billboard = 1
+fixed_size = true
+outline_size = 0

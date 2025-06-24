@@ -20,7 +20,7 @@ func _ready():
 func _process(_delta):
 	fps_counter.set_text("FPS %d" % Engine.get_frames_per_second())
 	if !Starmap.is_visible:
-		system_name.set_text("System Name: %d" % Start4.current_system_id)
+		system_name.set_text("System: %s" % Start4.system_names[Start4.SYSTEM_COUNT - Start4.current_system_id - 1])
 		if Start4.current_system_id == 0:
 			system_name.set_text("Home System")
 	else:

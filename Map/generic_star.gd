@@ -22,6 +22,8 @@ var second_position : Vector3
 var id : int
 var is_real = true
 
+var first_name : String
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	

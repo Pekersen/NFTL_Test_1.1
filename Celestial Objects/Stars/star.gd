@@ -4,6 +4,7 @@ extends Star
 @onready var starCollision := $RotationPoint/Core/StarCollision
 @onready var starLight := $RotationPoint/Core/StarLight
 @onready var orbitMesh = $Orbit
+@onready var label = $"RotationPoint/Core/Label3D"
 
 @onready var innerZone = $InnerZone
 @onready var outerZone = $OuterZone
@@ -83,6 +84,7 @@ var atmosphere_thickness : float
 var is_home = false
 var home_world_added = false
 var gas_added = false
+var home_world_num
 
 var belts : Array
 var belt_orbit_sum = 1
@@ -90,9 +92,13 @@ var belt_orbit_sum = 1
 var belt_radii : Array
 
 var s = Start4.scale
+
+var system_name : String
+
 # ----- EXPERIMENTAL -----
 
 func _ready():		
+	
 	# TEMP Values
 	if star_count == 1:
 		small_star_probability = 0.0
@@ -113,9 +119,12 @@ func _ready():
 	
 	_init_vars()
 	if star_count == 1:
-		_init_belt_children() 
+		#_init_belt_children() 
 		pass
 	_init_planet_children()
+	
+	label.position = Vector3(0, star_rad * 2.0 + 5.0, 0)
+	label.font_size = 48
 	
 	
 func _init_vars():
@@ -345,13 +354,18 @@ func _pick_star_type():
 	else:
 		return "M"
 		
+func change_name():
+	label.text = object_name
+		
 func _input(event):
 	if event.is_action_pressed("lines") and orbit_path_visible == true:
 		orbitMesh.visible = false
 		orbit_path_visible = false
+		label.visible = false
 	elif event.is_action_pressed("lines") and orbit_path_visible == false:
 		orbitMesh.visible = true
 		orbit_path_visible = true
+		label.visible = true
 
 #===================================================================================
 # E X P E R I M E N T A L  //  E X P E R I M E N T A L  //  E X P E R I M E N T A L
@@ -383,7 +397,8 @@ func _init_planet_children():
 		for j in range(num_moons):
 			var moonInstance = _init_moon()
 			planetInstance.get_node("RotationPoint/Core").add_child(moonInstance)
-			moonInstance.init_orbit_mesh(moonInstance.orbitMesh, moonInstance.initRotPos)			
+			moonInstance.init_orbit_mesh(moonInstance.orbitMesh, moonInstance.initRotPos)	
+			planetInstance.moons.append(moonInstance)
 		
 		for k in range(num_rings):
 			var ringInstance = _init_ring()
@@ -391,6 +406,8 @@ func _init_planet_children():
 			#print("Ring Size 2: " + str(ring_size))
 		
 		planetInstance.init_orbit_mesh(planetInstance.orbitMesh, planetInstance.initRotPos)
+		if home_world_added:
+			planets[home_world_num].is_home_world = true
 		
 	'''
 	if is_home and !home_world_added:
@@ -577,6 +594,7 @@ func _set_planet_type(i : int):
 	if (is_home) and (orbit_sum > star_rad * 20 and orbit_sum < star_rad * 40) and (!home_world_added):
 		planet_type = "Water_World" #"Home_World"
 		home_world_added = true
+		home_world_num = i
 		print("Home World Added")
 		
 	

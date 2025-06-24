@@ -43,3 +43,11 @@ mesh = SubResource("SphereMesh_t0jrq")
 
 [node name="MoonCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
 shape = SubResource("SphereShape3D_gfk4t")
+
+[node name="Label3D" type="Label3D" parent="RotationPoint/Core"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.07828, 0)
+pixel_size = 0.001
+billboard = 1
+fixed_size = true
+text = "Moon"
+outline_size = 0

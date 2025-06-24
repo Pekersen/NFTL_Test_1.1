@@ -97,18 +97,18 @@ func _process(delta):
 	# zoom
 		# Handle smooth camera zooming.
 	if _spring_arm_target_length != spring_arm.spring_length:
-		spring_arm.spring_length = lerp(spring_arm.spring_length, _spring_arm_target_length, camera_lerp_speed * delta)
+		spring_arm.spring_length = lerp(spring_arm.spring_length, _spring_arm_target_length + 0.0, camera_lerp_speed * delta)
 	# zoom
 	
 	if Starmap.is_visible:
 		if starmap_reset == false:
-			_spring_arm_target_length = Start4.SYSTEM_COUNT * 0.2
+			_spring_arm_target_length = Start4.SYSTEM_COUNT * 0.2 * s
 			starmap_reset = true
 		camera_distance_min = 0.5
 		camera_distance_max = Start4.SYSTEM_COUNT * 2
 	else:
 		if starmap_reset == true:
-			_spring_arm_target_length = camera_default_distance + 10.0
+			_spring_arm_target_length = (camera_default_distance + 10.0) * s
 			starmap_reset = false
 		#starmap_reset = false
 		camera_distance_min = 1.0

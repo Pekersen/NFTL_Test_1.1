@@ -25,6 +25,8 @@ var semi_minor_axis: float # not needed for orbit
 var eccentricity: float
 var orbital_period: float # in seconds
 
+var object_name : String
+
 # When clicking on an object, there will be additional space where the click will go through even
 # though user is clicking on nothing visually
 var click_forgiveness : float = 1.0
