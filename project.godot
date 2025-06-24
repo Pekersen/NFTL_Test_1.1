@@ -23,6 +23,7 @@ Start4="*res://Generation/start4.gd"
 Starmap="*res://Map/starmap.gd"
 Resources="*res://Civilization Info/Resources/resources.gd"
 DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
+SceneLoader="*res://addons/scene_loader/autoloads/scene_loader.gd"
 
 [display]
 
