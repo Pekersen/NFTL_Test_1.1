@@ -20,27 +20,15 @@ var locked_camera_offset := Vector3.ZERO
 
 signal cam_move_to_spring_arm(radius1)
 
-var starmap_visible = false
-
 func _on_star_star_rad_for_cam(radius):
 	var radius1 = radius
 	cam_move_to_spring_arm.emit(radius1)
 
 	
 
-func _physics_process(_delta: float) -> void:
-	if Starmap.is_visible:
-		free_movement_enabled = false
-		reset()
-		#position = Vector3(0,0,0)
-		starmap_visible = true
-		
-	else:
-		free_movement_enabled = true
-		starmap_visible = false
-	
-	
+func _physics_process(_delta: float) -> void:	
 	if free_movement_enabled:
+		print("here")
 		var input = Input.get_vector("left", "right", "forward", "back")
 		var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
 		
@@ -107,6 +95,18 @@ func _process(_delta: float) -> void:
 
 	
 func _input(event):
+	if event.is_action_pressed("starmap"):
+		if !Starmap.map_generated:
+			Starmap.generate_galaxy_map()
+			Starmap.map_generated = true	
+		Starmap.toggle_map()
+		if Starmap.is_visible:
+			free_movement_enabled = false
+			locked_movement_enabled = false
+			reset()
+		else:
+			free_movement_enabled = true
+			locked_movement_enabled = false
 	if event.is_action_released("click"):
 		shoot_ray_left()
 	if event.is_action_pressed("right click"):
@@ -114,6 +114,8 @@ func _input(event):
 	if event.is_action_pressed("locked_camera_movement_switch"):
 		locked_movement_enabled = !locked_movement_enabled
 		free_movement_enabled = !locked_movement_enabled
+		print("locked, ",  locked_movement_enabled)
+		print("free, ", free_movement_enabled)
 		if !locked_camera_offset:
 			locked_camera_offset = Vector3.ZERO
 	
@@ -177,7 +179,7 @@ func shoot_ray_left():
 	# TODO:
 	if !raycast_result.is_empty():
 		clicked_node = raycast_result.collider
-		if starmap_visible == true:
+		if Starmap.is_visible:
 			if clicked_node.get_parent().get_id() != -1:
 				print("ATTEMPTING SWITCH TO SYSTEM ", (Start4.SYSTEM_COUNT - clicked_node.get_parent().get_id()) - 1)
 				springArm._spring_arm_target_length = 1.0

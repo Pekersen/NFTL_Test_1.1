@@ -117,14 +117,6 @@ func _on_star_clicked(viewport, event, shape_idx):
 		Start4.switch_to_star_system(system_id)
 		toggle_map()  # Hide map when switching systems
 '''
-
-func _input(event):
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_M and !map_generated:
-			generate_galaxy_map()
-			map_generated = true
-		if event.keycode == KEY_M:
-			toggle_map()
 			
 func _calc_position(inner_pos, outer_pos, id):
 	# Position stars in a sphere around the center
