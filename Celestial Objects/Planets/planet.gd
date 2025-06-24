@@ -6,6 +6,8 @@ extends Planet
 @onready var atmosphere = $"RotationPoint/Core/Atmospshere"
 @onready var label = $"RotationPoint/Core/Label3D"
 
+#var base_material := preload("res://Experimental/Experimental Planet Mesh/planet_terrain_shader_material.tres")
+
 var initRotPos : float
 var orbit_path_visible = true
 
@@ -15,6 +17,9 @@ var atmosphere_thickness : float
 
 var is_home_world = false
 var moons : Array
+
+var is_gas = false
+var random : float
 
 func _init():
 	mass = 0.01
@@ -55,6 +60,24 @@ func _ready():
 	label.position = Vector3(0, radius * 2.0 + 20.0, 0)
 	label.font_size = 32
 	
+	if is_gas:
+		planetMesh.mesh.material.albedo_texture = null
+		planetMesh.mesh.material.roughness_texture = null
+	else:
+		pass
+		'''
+		var unique_material = base_material.duplicate()
+		unique_material.set_shader_parameter("v", (randf_range(0.0, 99999.9)))
+		planetMesh.material_override = unique_material
+		print(unique_material.shader.get_shader_uniform_list())
+		'''
+		
+		'''
+		var material = load("res://Experimental/Experimental Planet Mesh/planet_terrain.gdshader")
+		var shader_material = ShaderMaterial.new()
+		shader_material.set_shader(material)
+		shader_material.set_shader_parameter("rand", random)
+		'''
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:

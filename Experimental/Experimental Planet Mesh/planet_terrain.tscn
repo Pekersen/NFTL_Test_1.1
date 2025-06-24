@@ -1,0 +1,46 @@
+[gd_scene load_steps=7 format=3 uid="uid://bqt00slkcg6cs"]
+
+[ext_resource type="Shader" path="res://Experimental/Experimental Planet Mesh/planet_terrain.gdshader" id="1_83dhk"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hj64t"]
+shader = ExtResource("1_83dhk")
+shader_parameter/val = null
+shader_parameter/v = Vector2(0, 0)
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_uhr8l"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_kcjet"]
+viewport_path = NodePath("SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_u6jb7"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_uhr8l")
+metallic_specular = 1.0
+roughness_texture = SubResource("ViewportTexture_kcjet")
+roughness_texture_channel = 3
+
+[sub_resource type="SphereMesh" id="SphereMesh_2r06n"]
+material = SubResource("StandardMaterial3D_u6jb7")
+
+[node name="PlanetTerrain" type="Node3D"]
+
+[node name="SubViewport" type="SubViewport" parent="."]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1024, 512)
+
+[node name="ColorRect" type="ColorRect" parent="SubViewport"]
+material = SubResource("ShaderMaterial_hj64t")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("SphereMesh_2r06n")
+
+[node name="Camera3D" type="Camera3D" parent="MeshInstance3D"]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]

@@ -1,0 +1,8 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://d27d3vr6wr11e"]
+
+[ext_resource type="Shader" path="res://Experimental/Experimental Planet Mesh/planet_terrain.gdshader" id="1_243cf"]
+
+[resource]
+resource_local_to_scene = true
+shader = ExtResource("1_243cf")
+shader_parameter/v = Vector2(0, 0)
