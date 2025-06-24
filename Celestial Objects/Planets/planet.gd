@@ -26,16 +26,8 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
-	# Init orbit visuals
-	orbitMesh.mesh.outer_radius = semi_major_axis + 0.05
-	orbitMesh.mesh.inner_radius = semi_major_axis - 0.05
-	core.position.x = semi_major_axis
-	# Init planet visuals
-	planetMesh.mesh.radius = radius
-	planetMesh.mesh.height = radius * 2
-	# Init click area
-	planetCollision.shape.radius = radius + click_forgiveness
+	_init_variance()
+	_init_vars()
 	
 	if !atmosphere_present:
 		atmosphere.mesh.material.set_transparency(0)
@@ -79,12 +71,34 @@ func _ready():
 		shader_material.set_shader_parameter("rand", random)
 		'''
 
+func _init_variance():
+	axial_tilt_variance = [-0.3,0.3]
+	rotation_speed_variance = [0.001,0.01]
+
+func _init_vars():
+	# Axial tilt
+	core.rotation.x = offset_value(axial_tilt_variance)
+	core.rotation.z = offset_value(axial_tilt_variance)
+	axial_tilt = core.rotation
+	# Rotation speed
+	rotations_per_tick = offset_value(rotation_speed_variance)
+	# Init orbit visuals
+	orbitMesh.mesh.outer_radius = semi_major_axis + 0.05
+	orbitMesh.mesh.inner_radius = semi_major_axis - 0.05
+	core.position.x = semi_major_axis
+	# Init planet visuals
+	planetMesh.mesh.radius = radius
+	planetMesh.mesh.height = radius * 2
+	# Init click area
+	planetCollision.shape.radius = radius + click_forgiveness
+
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+func _process(delta: float) -> void:
 	if can_orbit:
 		orbit(delta, core)
 		if is_flipped:
 			core.position *= -1
+	celestial_rotation(delta, planetMesh)
 	
 	#orbit(delta, core)
 	

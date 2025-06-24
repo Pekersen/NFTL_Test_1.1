@@ -9,10 +9,6 @@ var clicked_node
 var following := false
 @export var rotation_lock := false
 
-var cameraRotationDifference = Vector3.ZERO
-var calculatingCamera = false
-var springArmIntitialRotation = Vector3.ZERO
-
 var free_movement_enabled := true
 var locked_movement_enabled := false
 
@@ -28,7 +24,6 @@ func _on_star_star_rad_for_cam(radius):
 
 func _physics_process(_delta: float) -> void:	
 	if free_movement_enabled:
-		print("here")
 		var input = Input.get_vector("left", "right", "forward", "back")
 		var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
 		
@@ -63,14 +58,8 @@ func _physics_process(_delta: float) -> void:
 	
 	if following:
 		follow_camera()
-	if rotation_lock and springArm.mouse_locked and clicked_node != null:
-		if !calculatingCamera:
-			springArmIntitialRotation = springArm.rotation
-		cameraRotationDifference = springArm.rotation -\
-						springArmIntitialRotation - clicked_node.rotation
-		calculatingCamera = true
-	else:
-		calculatingCamera = false
+	if rotation_lock and clicked_node != null:
+		pass
 	
 func _process(_delta: float) -> void:
 	springArm.position = position
@@ -89,6 +78,10 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("camera_reset"):
 		reset()
+	
+	if Input.is_action_just_pressed("test"):
+		if clicked_node is StaticBody3D:
+			clicked_node.get_parent().get_parent().can_orbit = false
 	
 	rotation_degrees.x = springArm.rotation_degrees.x
 	rotation_degrees.y = springArm.rotation_degrees.y
@@ -121,6 +114,7 @@ func _input(event):
 	
 	
 	# Making a right click function
+
 func shoot_ray_right():
 	# Get the position of the mouse on the screen (in 2D viewport coordinates)
 	var mouse_pos = get_viewport().get_mouse_position()
@@ -190,9 +184,6 @@ func shoot_ray_left():
 		else:
 			following = true
 			print("clicked " + str(raycast_result.collider))
-			springArmIntitialRotation = springArm.rotation
-			cameraRotationDifference = Vector3.ZERO
-			print(springArmIntitialRotation)
 		
 			
 			#print("ATTEMPTING SWITCH TO SYSTEM ", clicked_node.get_parent().get_parent().id)
@@ -200,9 +191,8 @@ func shoot_ray_left():
 func follow_camera():
 	position = clicked_node.global_position + locked_camera_offset
 	#print("pos: ", locked_camera_offset)
-	if !springArm.mouse_locked and !calculatingCamera and rotation_lock:
-		springArm.global_rotation = springArmIntitialRotation +\
-			 			cameraRotationDifference + clicked_node.global_rotation
+	if rotation_lock:
+		springArm.rotate(clicked_node.get_parent().get_parent().axis_of_rot, clicked_node.get_parent().get_parent().rotation_velocity)
 	
 func locked_camera_rotation(value : bool):
 	rotation_lock = value

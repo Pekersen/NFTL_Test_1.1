@@ -6,7 +6,6 @@ var num_moons : int
 var rings : bool
 var ring_size : float
 var tidally_locked : bool
-var rotation_speed : float
 
 var atmospheric_composition : Array[float]
 
@@ -18,8 +17,6 @@ var color_b : float
 var distance_variance : Array[float]
 var num_moons_variance : Array[float]
 var ring_size_variance : Array[float]
-var rotation_speed_variance : Array[float]
-var tilt_variance : Array[float]
 var atomospheric_composition_variance : Array[float]
 var orbit_speed_variance : Array[float]
 

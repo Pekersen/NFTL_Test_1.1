@@ -2,9 +2,15 @@ class_name CelestialObject extends Node3D
 
 @export var core : Node3D
 
+const ORIGINAL_AXIS_OF_ROTATION = Vector3.UP  # (0, 1, 0)
+
 var radius : float
 var mass : float
 var temperature : float # THIS IS THE AVERAGE TEMPERATURE, NOT THE CURRENT TEMP
+var axial_tilt : Vector3
+var axis_of_rot : Vector3
+var rotations_per_tick : float
+var rotation_velocity : float
 
 # for randomness
 var rng = RandomNumberGenerator.new()
@@ -13,6 +19,8 @@ var rng = RandomNumberGenerator.new()
 var radius_variance : Array[float]
 var mass_variance : Array[float]
 var temperature_variance : Array[float]
+var axial_tilt_variance : Array[float]
+var rotation_speed_variance : Array[float]
 
 const ORBIT_SPEED_CONST := 20
 var time_passed := 0.0
@@ -85,3 +93,12 @@ func init_orbit_mesh(orbitMesh: Node3D, initRotPos: float = 0):
 	
 	if is_flipped:
 		orbitMesh.position.x *= -1
+		
+func celestial_rotation(delta, obj):
+	calc_axis_of_rot()
+	rotation_velocity = -rotations_per_tick * delta * Global.ticks_per_second
+	obj.rotate(axis_of_rot, rotation_velocity)
+	
+func calc_axis_of_rot():
+	var basis = Basis(Vector3.RIGHT, axial_tilt.x) * Basis(Vector3.FORWARD, axial_tilt.z)
+	axis_of_rot = (basis * ORIGINAL_AXIS_OF_ROTATION).normalized()
