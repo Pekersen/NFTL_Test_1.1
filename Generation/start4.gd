@@ -24,7 +24,6 @@ func _ready():
 	pass
 
 func generate_universe():
-	SceneLoader.load_scene(self, "res://Map/base.tscn")
 	cluster_variables()
 	
 	if star_systems.is_empty():  # Prevent regenerating on reload
