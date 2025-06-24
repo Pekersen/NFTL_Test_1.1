@@ -23,6 +23,7 @@ Start4="*res://Generation/start4.gd"
 Starmap="*res://Map/starmap.gd"
 Resources="*res://Civilization Info/Resources/resources.gd"
 DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
+SceneLoader="*res://addons/scene_loader/autoloads/scene_loader.gd"
 
 [display]
 
@@ -31,7 +32,7 @@ window/vsync/vsync_mode=0
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg", "res://addons/discord-rpc-gd/plugin.cfg", "res://addons/godot_style/plugin.cfg", "res://addons/simply-console/plugin.cfg")
+enabled=PackedStringArray("res://addons/SimpleTODO/plugin.cfg", "res://addons/discord-rpc-gd/plugin.cfg", "res://addons/godot_style/plugin.cfg", "res://addons/scene_loader/plugin.cfg", "res://addons/simply-console/plugin.cfg")
 
 [filesystem]
 

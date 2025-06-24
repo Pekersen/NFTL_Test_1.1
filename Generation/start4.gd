@@ -24,6 +24,7 @@ func _ready():
 	pass
 
 func generate_universe():
+	SceneLoader.load_scene(self, "res://Map/base.tscn")
 	cluster_variables()
 	
 	if star_systems.is_empty():  # Prevent regenerating on reload
@@ -36,7 +37,7 @@ func generate_universe():
 		switch_to_star_system(current_system_id)
 		current_system_id -= 1
 	current_system_id = 0
-	
+	print(get_tree().current_scene.scene_file_path)
 	#Starmap.generate_galaxy_map()
 
 # 1️⃣ Generate all star systems ONCE and keep them in memory
