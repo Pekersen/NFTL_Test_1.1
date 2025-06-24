@@ -45,6 +45,7 @@ func _ready():
 	print("SYSTEM NAME: ", system_name)
 	Start4.system_names.append(system_name)
 	
+	
 	if !built:
 		_system_generate()
 		built = true
