@@ -7,8 +7,6 @@ extends Node3D
 var rng = RandomNumberGenerator.new()
 
 func _ready():
-	Start4.generate_universe()	
-	Starmap.startup()	
 	var disc_integration = DiscordIntegration.new()
 	disc_integration.run()
 	console.hid_console.connect(on_console_visibility_change)

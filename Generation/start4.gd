@@ -36,7 +36,7 @@ func generate_universe():
 		switch_to_star_system(current_system_id)
 		current_system_id -= 1
 	current_system_id = 0
-	print(get_tree().current_scene.scene_file_path)
+	
 	#Starmap.generate_galaxy_map()
 
 # 1️⃣ Generate all star systems ONCE and keep them in memory

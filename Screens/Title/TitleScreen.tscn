@@ -42,7 +42,6 @@ layout_mode = 2
 text = "Quit"
 
 [node name="TitleCenter" type="CenterContainer" parent="."]
-layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 365.0
 
