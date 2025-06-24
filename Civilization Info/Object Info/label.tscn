@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://bxsd15iwg7q6w"]
+
+[node name="Label" type="Node3D"]
+
+[node name="Label3D" type="Label3D" parent="."]

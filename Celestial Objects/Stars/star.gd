@@ -71,6 +71,7 @@ var color_variance_g : Array[float]
 var color_variance_b : Array[float]
 '''
 var all_colors : Array[float]
+var base_texture = false
 
 var major_axis : float
 var planets : Array
@@ -476,11 +477,11 @@ func _init_planet_vars(planetInstance, i, star_radius):
 	planetInstance.color_b = offset_value(color_variance_b)
 	
 	num_rings = offset_value(num_rings_variance)
-	#print("Number of rings: " + str(num_rings))
 	
-	#print("Generate System script radius: " + str(planetInstance.radius))
-	#print("Generate System script orbital_period: " + str(planetInstance.orbital_period))
-	#print("Moons: " + str(num_moons))
+	if base_texture:
+		planetInstance.is_gas = true
+	else:
+		pass
 	
 func _init_moon():
 	var moonInstance = moon.instantiate()
@@ -633,6 +634,7 @@ func _set_planet_type(i : int):
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
 		gas_added = true
+		base_texture = true
 	
 	if planet_type == "Hot_Giant":
 		planet_radius_variance = [0.4,0.7] 
@@ -655,6 +657,7 @@ func _set_planet_type(i : int):
 		atmosphere_present = true
 		atmosphere_thickness = 0.3
 		gas_added = true
+		base_texture = true
 		
 	elif planet_type == "Cthonian_Planet":
 		planet_radius_variance = [0.15,0.3]
@@ -753,6 +756,7 @@ func _set_planet_type(i : int):
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
 		gas_added = true
+		base_texture = true
 	
 	elif planet_type == "Transitional_Planet":
 		planet_radius_variance = [0.25,0.4]

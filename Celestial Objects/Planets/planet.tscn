@@ -1,6 +1,7 @@
-[gd_scene load_steps=9 format=3 uid="uid://cqtxuyes4fdju"]
+[gd_scene load_steps=13 format=3 uid="uid://cqtxuyes4fdju"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
+[ext_resource type="Shader" path="res://Experimental/Experimental Planet Mesh/planet_terrain.gdshader" id="2_57dcy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbg0y"]
 shading_mode = 0
@@ -13,9 +14,18 @@ outer_radius = 10.0
 rings = 128
 ring_segments = 64
 
+[sub_resource type="ViewportTexture" id="ViewportTexture_fimnn"]
+viewport_path = NodePath("RotationPoint/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_aboc8"]
+viewport_path = NodePath("RotationPoint/SubViewport")
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_st6bb"]
 resource_local_to_scene = true
-albedo_color = Color(1, 0.694118, 0.25098, 1)
+albedo_texture = SubResource("ViewportTexture_fimnn")
+metallic_specular = 1.0
+roughness_texture = SubResource("ViewportTexture_aboc8")
+roughness_texture_channel = 3
 
 [sub_resource type="SphereMesh" id="SphereMesh_65kqi"]
 resource_local_to_scene = true
@@ -32,6 +42,11 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_uncri")
 radial_segments = 128
 rings = 64
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ke4w"]
+shader = ExtResource("2_57dcy")
+shader_parameter/val = null
+shader_parameter/v = Vector2(0, 0)
 
 [node name="Planet" type="Node3D" node_paths=PackedStringArray("rotationPoint", "core")]
 script = ExtResource("1_21ytp")
@@ -65,3 +80,16 @@ billboard = 1
 fixed_size = true
 text = "Planet"
 outline_size = 0
+
+[node name="SubViewport" type="SubViewport" parent="RotationPoint"]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1024, 512)
+
+[node name="ColorRect" type="ColorRect" parent="RotationPoint/SubViewport"]
+material = SubResource("ShaderMaterial_8ke4w")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
