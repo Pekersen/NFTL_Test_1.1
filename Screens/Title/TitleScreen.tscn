@@ -1,0 +1,61 @@
+[gd_scene load_steps=4 format=3 uid="uid://c4pw3j7snhqoi"]
+
+[ext_resource type="Texture2D" uid="uid://bemkeddhprj7n" path="res://Assets/NFTL planet.png" id="1_wqorv"]
+[ext_resource type="Script" path="res://Screens/Title/ButtonControl.gd" id="2_bjhsx"]
+[ext_resource type="FontFile" uid="uid://o5e2yu7rbv8d" path="res://Assets/Fonts/SAIBA-45.ttf" id="2_rta2y"]
+
+[node name="TitleScreen" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+
+[node name="Splashscreen" type="TextureRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+texture = ExtResource("1_wqorv")
+expand_mode = 2
+
+[node name="ButtonCenter" type="CenterContainer" parent="."]
+layout_mode = 0
+offset_top = 192.0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ButtonContainer" type="VBoxContainer" parent="ButtonCenter"]
+layout_mode = 2
+theme_override_constants/separation = 15
+script = ExtResource("2_bjhsx")
+
+[node name="Start" type="Button" parent="ButtonCenter/ButtonContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Start"
+
+[node name="Settings" type="Button" parent="ButtonCenter/ButtonContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Settings"
+
+[node name="Quit" type="Button" parent="ButtonCenter/ButtonContainer"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+text = "Quit"
+
+[node name="TitleCenter" type="CenterContainer" parent="."]
+offset_right = 1152.0
+offset_bottom = 365.0
+
+[node name="TitleText" type="RichTextLabel" parent="TitleCenter"]
+custom_minimum_size = Vector2(0, 115)
+layout_mode = 2
+theme_override_colors/default_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 15
+theme_override_fonts/normal_font = ExtResource("2_rta2y")
+theme_override_font_sizes/normal_font_size = 140
+text = "NFTL"
+fit_content = true
+autowrap_mode = 0
+
+[connection signal="pressed" from="ButtonCenter/ButtonContainer/Start" to="ButtonCenter/ButtonContainer" method="_on_start_pressed"]
+[connection signal="pressed" from="ButtonCenter/ButtonContainer/Settings" to="ButtonCenter/ButtonContainer" method="_on_settings_pressed"]
+[connection signal="pressed" from="ButtonCenter/ButtonContainer/Quit" to="ButtonCenter/ButtonContainer" method="_on_quit_pressed"]

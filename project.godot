@@ -10,10 +10,10 @@ config_version=5
 
 [application]
 
-config/name="NFTL_Test_1.1"
-run/main_scene="res://Map/base.tscn"
+config/name="NFTL"
+run/main_scene="res://Screens/Title/TitleScreen.tscn"
 config/features=PackedStringArray("4.2", "Forward Plus")
-config/icon="res://icon.svg"
+config/icon="res://Assets/NFTL planet.png"
 
 [autoload]
 
@@ -26,6 +26,7 @@ DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
 
 [display]
 
+window/stretch/mode="canvas_items"
 window/vsync/vsync_mode=0
 
 [editor_plugins]

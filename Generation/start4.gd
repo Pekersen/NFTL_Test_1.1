@@ -20,6 +20,10 @@ var systems = SYSTEM_COUNT
 var scale = 10
 
 func _ready():
+	'generate_universe()'
+	pass
+
+func generate_universe():
 	cluster_variables()
 	
 	if star_systems.is_empty():  # Prevent regenerating on reload

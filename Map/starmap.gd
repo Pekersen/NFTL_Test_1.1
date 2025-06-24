@@ -18,7 +18,7 @@ var outer = (Start4.SYSTEM_COUNT * 2) / 5.0 * s
 
 var on_click = false
 
-func _ready():
+func startup():
 	Start4.switch_to_star_system(0)
 
 # Generate star representations in a sphere around the current system
@@ -94,7 +94,8 @@ func toggle_map():
 		else:
 			on_click = false
 		print("SHOWING")
-		get_tree().current_scene.add_child(map_instance)
+		if !get_tree().current_scene.get_children().has(map_instance):
+			get_tree().current_scene.add_child(map_instance)
 		map_instance.process_mode = 0
 		map_instance.show()
 	else:
