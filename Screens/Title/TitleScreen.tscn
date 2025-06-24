@@ -1,12 +1,15 @@
-[gd_scene load_steps=4 format=3 uid="uid://c4pw3j7snhqoi"]
+[gd_scene load_steps=6 format=3 uid="uid://c4pw3j7snhqoi"]
 
+[ext_resource type="Script" path="res://Screens/Title/TitleScreen.gd" id="1_1cvye"]
 [ext_resource type="Texture2D" uid="uid://bemkeddhprj7n" path="res://Assets/NFTL planet.png" id="1_wqorv"]
 [ext_resource type="Script" path="res://Screens/Title/ButtonControl.gd" id="2_bjhsx"]
 [ext_resource type="FontFile" uid="uid://o5e2yu7rbv8d" path="res://Assets/Fonts/SAIBA-45.ttf" id="2_rta2y"]
+[ext_resource type="PackedScene" uid="uid://cc0wlk6lkldx2" path="res://Screens/Settings/SettingsScreen.tscn" id="5_vaikf"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
+script = ExtResource("1_1cvye")
 
 [node name="Splashscreen" type="TextureRect" parent="."]
 layout_mode = 0
@@ -57,6 +60,13 @@ text = "NFTL"
 fit_content = true
 autowrap_mode = 0
 
+[node name="SettingsScreen" parent="." instance=ExtResource("5_vaikf")]
+visible = false
+
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Start" to="ButtonCenter/ButtonContainer" method="_on_start_pressed"]
+[connection signal="pressed" from="ButtonCenter/ButtonContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Settings" to="ButtonCenter/ButtonContainer" method="_on_settings_pressed"]
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Quit" to="ButtonCenter/ButtonContainer" method="_on_quit_pressed"]
+[connection signal="about_to_popup" from="SettingsScreen" to="SettingsScreen" method="_on_about_to_popup"]
+[connection signal="close_requested" from="SettingsScreen" to="SettingsScreen" method="_on_close_requested"]
+[connection signal="visibility_changed" from="SettingsScreen" to="SettingsScreen" method="_on_visibility_changed"]
