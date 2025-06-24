@@ -276,7 +276,7 @@ func _planet_mod():
 	for star in stars:
 		for i in range(star.planets.size()):
 			star.planets[i].change_name(star.object_name + l_letters[i])
-			print("New Name: ", star.object_name + l_letters[i])
+			#print("New Name: ", star.object_name + l_letters[i])
 			for j in range(star.planets[i].moons.size()):
 				star.planets[i].moons[j].change_name(star.object_name + l_letters[i] + str(j + 1))
 
@@ -295,7 +295,7 @@ func _assign_names():
 			stars[1].system_name = system_name
 		else:
 			stars[0].object_name = system_name + "B"
-			stars[1].object_name = system_name +"A"
+			stars[1].object_name = system_name + "A"
 			stars[0].system_name = system_name
 			stars[1].system_name = system_name
 	else:
