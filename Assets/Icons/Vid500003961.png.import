@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bemkeddhprj7n"
-path="res://.godot/imported/NFTL planet.png-7ee5e256e1200099b76b397d0bd2021a.ctex"
+uid="uid://bvqp2c3h8imug"
+path="res://.godot/imported/Vid500003961.png-59345687ee4a9aeb6e70eef5c8f092c7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/NFTL planet.png"
-dest_files=["res://.godot/imported/NFTL planet.png-7ee5e256e1200099b76b397d0bd2021a.ctex"]
+source_file="res://Assets/Icons/Vid500003961.png"
+dest_files=["res://.godot/imported/Vid500003961.png-59345687ee4a9aeb6e70eef5c8f092c7.ctex"]
 
 [params]
 

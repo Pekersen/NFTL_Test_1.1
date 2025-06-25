@@ -10,9 +10,6 @@ func _ready():
 	if Start4.current_system_id == -1:
 		Start4.generate_universe()
 		Starmap.startup()	
-	
-	var disc_integration = DiscordIntegration.new()
-	disc_integration.run()
 	console.hid_console.connect(on_console_visibility_change)
 
 func general_system_gen():

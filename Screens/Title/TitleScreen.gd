@@ -5,6 +5,9 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	var disc_integration = DiscordIntegration.new()
+	disc_integration.run()
+	
 	var rng = RandomNumberGenerator.new()
 	var random_float = rng.randf()
 	if random_float < 0.44:

@@ -102,3 +102,6 @@ func celestial_rotation(delta, obj):
 func calc_axis_of_rot():
 	var basis = Basis(Vector3.RIGHT, axial_tilt.x) * Basis(Vector3.FORWARD, axial_tilt.z)
 	axis_of_rot = (basis * ORIGINAL_AXIS_OF_ROTATION).normalized()
+	
+func object_is_clicked():
+	pass
