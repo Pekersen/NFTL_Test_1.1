@@ -6,6 +6,7 @@ extends Planet
 @onready var atmosphere = $"RotationPoint/Core/Atmospshere"
 @onready var label = $"RotationPoint/Core/Label3D"
 @onready var builder = $RotationPoint/Core/TileBuilder
+@onready var rotpoint = $RotationPoint
 
 #var base_material := preload("res://Experimental/Experimental Planet Mesh/planet_terrain_shader_material.tres")
 
@@ -24,11 +25,15 @@ var random : float
 
 func _init():
 	mass = 0.01
+	
+
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	_init_variance()
 	_init_vars()
+	
+	builder.build(radius)
 	
 	if !atmosphere_present:
 		atmosphere.mesh.material.set_transparency(0)
@@ -99,7 +104,7 @@ func _process(delta: float) -> void:
 		orbit(delta, core)
 		if is_flipped:
 			core.position *= -1
-	celestial_rotation(delta, planetMesh)
+	celestial_rotation(delta, core)
 	
 	#orbit(delta, core)
 	
@@ -121,4 +126,5 @@ func change_name(new_name : String):
 		object_name = "Home"
 		
 func object_is_clicked():
-	pass
+	builder.clicked()
+	print("CLICKED")

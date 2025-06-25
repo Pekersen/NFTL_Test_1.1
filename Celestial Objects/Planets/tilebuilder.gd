@@ -1,53 +1,27 @@
 extends Node3D
 
-
-
 var tiles : Array
 var design = [1, 3, 5, 7, 9, 7, 5, 3, 1]
 var temp : Array
 #var size = 48
 var rad
 
-var step = 12
-
+#var step = 12
 var number = 256
-
 var pts = []
-
 var radius
+var object_clicked = false
+var is_showing = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	visible = false
+	hide()
 	
-	
-	'
-	for i in range(360 / step):
-		for j in range(180 / step):
-			var polar = i * step
-			var azimuth = j * step
-			
-			var tile_instance = tile.instantiate()
-			tile_instance.position = _new_calc_position(polar, azimuth)
-			tile_instance.global_transform = _calc_rotation(tile_instance.position)
-			tiles.append(tile_instance)
-			add_child(tile_instance)
-	'
-	'
-	for i in range(size):
-		var φ = PI * float(i) / float(size)
-		var sin_phi = sin(φ)
-		var ring_count = int(size * sin_phi)
-		for j in range(ring_count):
-			var tile_instance = tile.instantiate()
-			tile_instance.position = _calc_position(range, ring_count, j, sin_phi, φ)
-			tile_instance.global_transform = _calc_rotation(tile_instance.position)
-			tiles.append(tile_instance)
-			add_child(tile_instance)
-	'
 
 func build(radius):
 	var tile = preload("res://Building UI/Planet Arrangement/single_tile.tscn")
-	number = radius * radius * number / 14
+	number = radius * radius * number / 12
 	
 	tiles.resize(number)
 	print("I AM BUILDING ", tiles.size()," TILES")
@@ -165,3 +139,15 @@ func _calc_rotation(tile_pos : Vector3):
 	transform.origin = tile_pos
 
 	return transform
+	
+func clicked():
+	if is_showing:
+		visible = false
+		hide()
+		is_showing = false
+		process_mode = 4
+	else:
+		visible = true
+		show()
+		is_showing = true
+		process_mode = 0

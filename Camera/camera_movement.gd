@@ -183,10 +183,10 @@ func shoot_ray_left():
 				
 		else:
 			following = true
-			print("clicked " + str(raycast_result.collider))
-			springArmIntitialRotation = springArm.rotation
-			cameraRotationDifference = Vector3.ZERO
-			print(springArmIntitialRotation)
+			print("clicked " + str(raycast_result.collider), " with parent ", clicked_node.get_parent(), " which has parent ", clicked_node.get_parent().get_parent())
+			#springArmIntitialRotation = springArm.rotation
+			#cameraRotationDifference = Vector3.ZERO
+			#print(springArmIntitialRotation)
 			clicked_node.get_parent().get_parent().object_is_clicked()
 		
 			
