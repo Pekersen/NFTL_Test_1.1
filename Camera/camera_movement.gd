@@ -81,7 +81,7 @@ func _process(_delta: float) -> void:
 	
 	if Input.is_action_just_pressed("test"):
 		if clicked_node is StaticBody3D:
-			clicked_node.get_parent().get_parent().can_orbit = false
+			clicked_node.get_parent().get_parent().can_orbit = !clicked_node.get_parent().get_parent().can_orbit
 	
 	rotation_degrees.x = springArm.rotation_degrees.x
 	rotation_degrees.y = springArm.rotation_degrees.y
