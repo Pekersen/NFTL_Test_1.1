@@ -28,7 +28,7 @@ func _on_star_star_rad_for_cam(radius):
 
 func _physics_process(_delta: float) -> void:	
 	if free_movement_enabled:
-		print("here")
+		#print("here")
 		var input = Input.get_vector("left", "right", "forward", "back")
 		var direction = (transform.basis * Vector3(input.x, 0, input.y)).normalized()
 		
@@ -193,6 +193,7 @@ func shoot_ray_left():
 			springArmIntitialRotation = springArm.rotation
 			cameraRotationDifference = Vector3.ZERO
 			print(springArmIntitialRotation)
+			clicked_node.get_parent().get_parent().object_is_clicked()
 		
 			
 			#print("ATTEMPTING SWITCH TO SYSTEM ", clicked_node.get_parent().get_parent().id)

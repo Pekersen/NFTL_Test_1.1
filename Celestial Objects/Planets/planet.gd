@@ -5,6 +5,7 @@ extends Planet
 @onready var orbitMesh = $Orbit
 @onready var atmosphere = $"RotationPoint/Core/Atmospshere"
 @onready var label = $"RotationPoint/Core/Label3D"
+@onready var builder = $RotationPoint/Core/TileBuilder
 
 #var base_material := preload("res://Experimental/Experimental Planet Mesh/planet_terrain_shader_material.tres")
 
@@ -26,7 +27,7 @@ func _init():
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	
+	builder.build(radius)
 	# Init orbit visuals
 	orbitMesh.mesh.outer_radius = semi_major_axis + 0.05
 	orbitMesh.mesh.inner_radius = semi_major_axis - 0.05
@@ -104,3 +105,6 @@ func change_name(new_name : String):
 	if is_home_world:
 		label.text = "Home"
 		object_name = "Home"
+		
+func object_is_clicked():
+	pass

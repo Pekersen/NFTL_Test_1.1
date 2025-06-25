@@ -1,10 +1,27 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4ass6yj6qnk7"]
+[gd_scene load_steps=5 format=3 uid="uid://c4ass6yj6qnk7"]
 
 [ext_resource type="Script" path="res://Building UI/Planet Arrangement/single_tile.gd" id="1_y0nlf"]
 [ext_resource type="PackedScene" uid="uid://2ua1xdradg6y" path="res://Building UI/Planet Arrangement/hexagon.glb" id="2_it58a"]
+[ext_resource type="PackedScene" uid="uid://yijkwpoc5fwx" path="res://Building UI/Planet Arrangement/circle.glb" id="3_akmjh"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_1afpt"]
+margin = 0.1
+height = 0.001
+radius = 1.0
 
 [node name="SingleTile" type="Node3D"]
 script = ExtResource("1_y0nlf")
 
 [node name="hexagon" parent="." instance=ExtResource("2_it58a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0305286, 0.0206351, -0.0243224)
+visible = false
+
+[node name="circle" parent="." instance=ExtResource("3_akmjh")]
+
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("CylinderShape3D_1afpt")
+
+[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
