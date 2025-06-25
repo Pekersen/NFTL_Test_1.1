@@ -1,0 +1,99 @@
+[gd_scene load_steps=14 format=3 uid="uid://cqtxuyes4fdju"]
+
+[ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
+[ext_resource type="Script" path="res://Celestial Objects/Planets/tilebuilder.gd" id="2_0wlpl"]
+[ext_resource type="Shader" path="res://Experimental/Experimental Planet Mesh/planet_terrain.gdshader" id="2_57dcy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbg0y"]
+shading_mode = 0
+
+[sub_resource type="TorusMesh" id="TorusMesh_3ugw0"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_nbg0y")
+inner_radius = 9.995
+outer_radius = 10.0
+rings = 128
+ring_segments = 64
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_fimnn"]
+viewport_path = NodePath("RotationPoint/SubViewport")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_aboc8"]
+viewport_path = NodePath("RotationPoint/SubViewport")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_st6bb"]
+resource_local_to_scene = true
+albedo_texture = SubResource("ViewportTexture_fimnn")
+metallic_specular = 1.0
+roughness_texture = SubResource("ViewportTexture_aboc8")
+roughness_texture_channel = 3
+
+[sub_resource type="SphereMesh" id="SphereMesh_65kqi"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_st6bb")
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gfk4t"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uncri"]
+resource_local_to_scene = true
+albedo_color = Color(1, 1, 1, 0)
+
+[sub_resource type="SphereMesh" id="SphereMesh_p47ae"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_uncri")
+radial_segments = 128
+rings = 64
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8ke4w"]
+shader = ExtResource("2_57dcy")
+shader_parameter/val = null
+shader_parameter/v = Vector2(0, 0)
+
+[node name="Planet" type="Node3D" node_paths=PackedStringArray("rotationPoint", "core")]
+script = ExtResource("1_21ytp")
+rotationPoint = NodePath("RotationPoint")
+core = NodePath("RotationPoint/Core")
+
+[node name="Orbit" type="MeshInstance3D" parent="."]
+cast_shadow = 0
+mesh = SubResource("TorusMesh_3ugw0")
+
+[node name="RotationPoint" type="Node3D" parent="."]
+
+[node name="Core" type="StaticBody3D" parent="RotationPoint"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.0506, 0, 0)
+
+[node name="TruePlanet" type="MeshInstance3D" parent="RotationPoint/Core"]
+mesh = SubResource("SphereMesh_65kqi")
+
+[node name="PlanetCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
+shape = SubResource("SphereShape3D_gfk4t")
+
+[node name="Atmospshere" type="MeshInstance3D" parent="RotationPoint/Core"]
+transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
+visible = false
+mesh = SubResource("SphereMesh_p47ae")
+
+[node name="Label3D" type="Label3D" parent="RotationPoint/Core"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.07828, 0)
+pixel_size = 0.001
+billboard = 1
+fixed_size = true
+text = "Planet"
+outline_size = 0
+
+[node name="TileBuilder" type="Node3D" parent="RotationPoint/Core"]
+script = ExtResource("2_0wlpl")
+
+[node name="SubViewport" type="SubViewport" parent="RotationPoint"]
+disable_3d = true
+transparent_bg = true
+size = Vector2i(1024, 512)
+
+[node name="ColorRect" type="ColorRect" parent="RotationPoint/SubViewport"]
+material = SubResource("ShaderMaterial_8ke4w")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

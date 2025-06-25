@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://c4pw3j7snhqoi"]
+[gd_scene load_steps=7 format=3 uid="uid://c4pw3j7snhqoi"]
 
 [ext_resource type="Script" path="res://Screens/Title/TitleScreen.gd" id="1_1cvye"]
 [ext_resource type="Texture2D" uid="uid://bemkeddhprj7n" path="res://Assets/NFTL planet.png" id="1_wqorv"]
@@ -6,12 +6,23 @@
 [ext_resource type="FontFile" uid="uid://o5e2yu7rbv8d" path="res://Assets/Fonts/SAIBA-45.ttf" id="2_rta2y"]
 [ext_resource type="PackedScene" uid="uid://cc0wlk6lkldx2" path="res://Screens/Settings/SettingsScreen.tscn" id="5_vaikf"]
 
+[sub_resource type="VideoStreamTheora" id="VideoStreamTheora_3fpx0"]
+
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_1cvye")
 
-[node name="Splashscreen" type="TextureRect" parent="."]
+[node name="SplashScreen" type="VideoStreamPlayer" parent="."]
+layout_mode = 0
+offset_right = 1156.0
+offset_bottom = 647.0
+stream = SubResource("VideoStreamTheora_3fpx0")
+expand = true
+loop = true
+
+[node name="Background" type="TextureRect" parent="."]
+visible = false
 layout_mode = 0
 offset_left = -479.0
 offset_right = 1152.0

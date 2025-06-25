@@ -160,9 +160,10 @@ func _process(delta):
 		orbit(delta, core)
 		if is_flipped:
 			core.position *= -1
+	celestial_rotation(delta, starMesh)
 
 func  _on_system_star_gen(s_type):
-	self.star_type = s_type
+	star_type = s_type
 	
 	if star_type == "O":
 		radius_variance = [13.2,20]
@@ -279,7 +280,7 @@ func  _on_system_star_gen(s_type):
 	mass = offset_value(mass_variance)
 	luminosity = offset_value(luminosity_variance)
 	temperature = offset_value(temperature_variance)
-	rotation_speed = offset_value(rotation_speed_variance)
+	rotations_per_tick = offset_value(rotation_speed_variance)
 	
 	color_r = offset_value(color_variance_r)
 	color_g = offset_value(color_variance_g)
@@ -311,7 +312,7 @@ func get_star_info() -> String:
 	return "Star type: " + str(star_type) + "\nRadius: " + str(radius) + "\nMass: " +\
 	 	str(mass) + "\nLuminosity: " + str(luminosity) + "\nTemperature: " +\
 		str(temperature) + "\nColor: R-" + str(color_r) + ", G-" + str(color_g) +\
-		", B-" + str(color_b) + "\nRotation Speed: " + str(rotation_speed)
+		", B-" + str(color_b) + "\nRotation Speed: " + str(rotations_per_tick)
 
 func set_star_type(newStarType : String):
 	if newStarType == "random":
@@ -419,9 +420,6 @@ func _init_planet_children():
 
 func _init_planet_vars(planetInstance, i, star_radius):
 	# TEMP VALUES
-	# Axial tilt
-	planetInstance.core.rotation.x = offset_value([-0.3,0.3])
-	planetInstance.core.rotation.z = offset_value([-0.3,0.3])
 	# Orbital tilt
 	planetInstance.rotation.x = offset_value([-0.01,0.01])
 	planetInstance.rotation.z = offset_value([-0.01,0.01])

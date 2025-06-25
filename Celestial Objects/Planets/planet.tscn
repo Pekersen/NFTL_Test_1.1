@@ -83,6 +83,7 @@ text = "Planet"
 outline_size = 0
 
 [node name="TileBuilder" type="Node3D" parent="RotationPoint/Core"]
+visible = false
 script = ExtResource("2_0wlpl")
 
 [node name="SubViewport" type="SubViewport" parent="RotationPoint"]
