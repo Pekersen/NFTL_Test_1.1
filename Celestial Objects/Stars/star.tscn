@@ -1,6 +1,7 @@
-[gd_scene load_steps=14 format=3 uid="uid://bequjodqr8tcj"]
+[gd_scene load_steps=15 format=3 uid="uid://bequjodqr8tcj"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Stars/star.gd" id="1_81nsq"]
+[ext_resource type="Script" path="res://Celestial Objects/Planets/tilebuilder.gd" id="2_ajkwg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k228r"]
 shading_mode = 0
@@ -181,6 +182,9 @@ shape = SubResource("SphereShape3D_4mdgf")
 cast_shadow = 0
 mesh = SubResource("SphereMesh_c8gkq")
 skeleton = NodePath("../../..")
+
+[node name="TileBuilder" type="Node3D" parent="RotationPoint/Core/StarMesh"]
+script = ExtResource("2_ajkwg")
 
 [node name="StarLight" type="OmniLight3D" parent="RotationPoint/Core"]
 light_color = Color(1, 0.852399, 0.825386, 1)

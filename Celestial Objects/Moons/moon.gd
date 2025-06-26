@@ -4,9 +4,13 @@ extends Moon
 @onready var moonCollision = $"RotationPoint/Core/MoonCollision"
 @onready var orbitMesh = $Orbit
 @onready var label = $"RotationPoint/Core/Label3D"
+@onready var builder = $RotationPoint/Core/TrueMoon/TileBuilder
+
 var initRotPos : float
 
 var orbit_path_visible = true
+
+var on_tile = false
 
 func _init():
 	
@@ -16,6 +20,9 @@ func _init():
 func _ready():
 	_init_variance()
 	_init_vars()
+	
+	builder.build(radius)
+	
 	semi_minor_axis = ((semi_major_axis**2)*(1-(eccentricity**2)))**0.5
 	var parent = get_parent()
 	global_position.x = parent.global_position.x
@@ -67,7 +74,21 @@ func _input(event):
 		orbitMesh.visible = true
 		orbit_path_visible = true
 		label.visible = true
+	if (event.is_action_pressed("forward") or event.is_action_pressed("back") or event.is_action_pressed("left") or event.is_action_pressed("right") or event.is_action_pressed("upward") or event.is_action_pressed("downward") or event.is_action_pressed("camera_confine")) and on_tile:
+		object_is_clicked()
 		
 func change_name(new_name : String):
 	label.text = new_name
 	object_name = new_name
+	
+func object_is_clicked():
+	builder.clicked()
+	print("CLICKED")
+	if !on_tile:
+		on_tile = true
+		moonCollision.shape.radius = 0.9 * radius
+		print("Planet Collision: ", moonCollision.shape.radius)
+	else:
+		on_tile = false
+		moonCollision.shape.radius = radius + click_forgiveness
+		print("Planet Collision: ", moonCollision.shape.radius)

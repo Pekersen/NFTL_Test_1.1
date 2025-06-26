@@ -5,6 +5,7 @@ extends Star
 @onready var starLight := $RotationPoint/Core/StarLight
 @onready var orbitMesh = $Orbit
 @onready var label = $"RotationPoint/Core/Label3D"
+@onready var builder = $RotationPoint/Core/StarMesh/TileBuilder
 
 @onready var innerZone = $InnerZone
 @onready var outerZone = $OuterZone
@@ -96,9 +97,13 @@ var s = Start4.scale
 
 var system_name : String
 
+var on_tile = false
+
 # ----- EXPERIMENTAL -----
 
 func _ready():		
+	
+	
 	
 	# TEMP Values
 	if star_count == 1:
@@ -119,6 +124,8 @@ func _ready():
 		print("I'M ALSO HOOOOOOOOOOOME!!!")
 	
 	_init_vars()
+	#builder.build(radius)
+	
 	if star_count == 1:
 		#_init_belt_children() 
 		pass
@@ -368,6 +375,20 @@ func _input(event):
 		orbitMesh.visible = true
 		orbit_path_visible = true
 		label.visible = true
+	if (event.is_action_pressed("forward") or event.is_action_pressed("back") or event.is_action_pressed("left") or event.is_action_pressed("right") or event.is_action_pressed("upward") or event.is_action_pressed("downward") or event.is_action_pressed("camera_confine")) and on_tile:
+		object_is_clicked()
+
+func object_is_clicked():
+	builder.clicked()
+	print("CLICKED")
+	if !on_tile:
+		on_tile = true
+		starCollision.shape.radius = 0.9 * radius
+		print("Planet Collision: ", starCollision.shape.radius)
+	else:
+		on_tile = false
+		starCollision.shape.radius = radius + click_forgiveness
+		print("Planet Collision: ", starCollision.shape.radius)
 
 #===================================================================================
 # E X P E R I M E N T A L  //  E X P E R I M E N T A L  //  E X P E R I M E N T A L

@@ -1,8 +1,8 @@
 extends Node3D
 
 var tiles : Array
-var design = [1, 3, 5, 7, 9, 7, 5, 3, 1]
-var temp : Array
+#var design = [1, 3, 5, 7, 9, 7, 5, 3, 1]
+#var temp : Array
 #var size = 48
 var rad
 
@@ -13,6 +13,8 @@ var radius
 var object_clicked = false
 var is_showing = false
 
+var tile_distances : Array
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	visible = false
@@ -22,8 +24,11 @@ func _ready():
 func build(radius):
 	var tile = preload("res://Building UI/Planet Arrangement/single_tile.tscn")
 	number = radius * radius * number / 12
+	if number < 2:
+		number = 2
 	
 	tiles.resize(number)
+	#tile_distances.resize(number)
 	print("I AM BUILDING ", tiles.size()," TILES")
 	
 	rad = radius
@@ -35,7 +40,7 @@ func build(radius):
 		tile_instance.position = pts[i]
 		tile_instance.global_transform = _calc_rotation(tile_instance.position)
 		tile_instance.element = i
-		tiles.append(tile_instance)
+		tiles[i] = tile_instance
 		add_child(tile_instance)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -52,40 +57,6 @@ func _calc_position(radius, ring_count, j, sin_phi, φ):
 
 	var pos = Vector3(x, y, z)
 	
-	'
-	print("DESIGN", design)
-	var angle1 = randf_range(0, TAU)  # Random azimuth angle
-	var angle2 = randf_range(0, TAU)  # Random polar angle
-	var radius = range  # Distance from center
-	
-	match design:
-		1:
-			angle1 = deg_to_rad(90)
-			angle2 = deg_to_rad(90)
-		3:
-			angle1 = deg_to_rad(60)
-			angle2 = deg_to_rad(90)
-		5:
-			pass
-		7:
-			pass
-		9:
-			pass
-		_:
-			angle1 = deg_to_rad(0)
-			angle2 = deg_to_rad(0)	
-	
-	if design == 1:
-		angle1 = deg_to_rad(0)
-		angle2 = deg_to_rad(0)
-	
-	
-	var pos = Vector3(
-		radius * sin(angle2) * cos(angle1),
-		radius * sin(angle2) * sin(angle1),
-		radius * cos(angle2)
-	)
-	'
 	return pos
 
 
@@ -139,7 +110,7 @@ func _calc_rotation(tile_pos : Vector3):
 	transform.origin = tile_pos
 
 	return transform
-	
+
 func clicked():
 	if is_showing:
 		visible = false
@@ -151,3 +122,4 @@ func clicked():
 		show()
 		is_showing = true
 		process_mode = 0
+	

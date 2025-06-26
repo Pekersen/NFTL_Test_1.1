@@ -5,7 +5,7 @@ extends Planet
 @onready var orbitMesh = $Orbit
 @onready var atmosphere = $"RotationPoint/Core/Atmospshere"
 @onready var label = $"RotationPoint/Core/Label3D"
-@onready var builder = $RotationPoint/Core/TileBuilder
+@onready var builder = $RotationPoint/Core/TruePlanet/TileBuilder
 @onready var rotpoint = $RotationPoint
 
 #var base_material := preload("res://Experimental/Experimental Planet Mesh/planet_terrain_shader_material.tres")
@@ -23,6 +23,8 @@ var moons : Array
 var is_gas = false
 var random : float
 
+var on_tile = false
+
 func _init():
 	mass = 0.01
 	
@@ -34,6 +36,7 @@ func _ready():
 	_init_vars()
 	
 	builder.build(radius)
+	builder.build(radius * 3.0)
 	
 	if !atmosphere_present:
 		atmosphere.mesh.material.set_transparency(0)
@@ -49,6 +52,8 @@ func _ready():
 	#print("R: " + str(color_r) + ", G: " + str(color_g) + ", B: " + str(color_b))
 	
 	planetMesh.mesh.material.albedo_color = Color(color_r, color_g, color_b)
+	
+
 	
 	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
 	
@@ -104,7 +109,7 @@ func _process(delta: float) -> void:
 		orbit(delta, core)
 		if is_flipped:
 			core.position *= -1
-	celestial_rotation(delta, core)
+	celestial_rotation(delta, planetMesh)
 	
 	#orbit(delta, core)
 	
@@ -117,6 +122,8 @@ func _input(event):
 		orbitMesh.visible = true
 		orbit_path_visible = true
 		label.visible = true
+	if (event.is_action_pressed("forward") or event.is_action_pressed("back") or event.is_action_pressed("left") or event.is_action_pressed("right") or event.is_action_pressed("upward") or event.is_action_pressed("downward") or event.is_action_pressed("camera_confine")) and on_tile:
+		object_is_clicked()
 		
 func change_name(new_name : String):
 	label.text = new_name
@@ -128,3 +135,11 @@ func change_name(new_name : String):
 func object_is_clicked():
 	builder.clicked()
 	print("CLICKED")
+	if !on_tile:
+		on_tile = true
+		planetCollision.shape.radius = 0.9 * radius
+		print("Planet Collision: ", planetCollision.shape.radius)
+	else:
+		on_tile = false
+		planetCollision.shape.radius = radius + click_forgiveness
+		print("Planet Collision: ", planetCollision.shape.radius)

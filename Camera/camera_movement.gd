@@ -14,6 +14,8 @@ var locked_movement_enabled := false
 
 var locked_camera_offset := Vector3.ZERO
 
+var on_planet = false
+
 signal cam_move_to_spring_arm(radius1)
 
 func _on_star_star_rad_for_cam(radius):
@@ -30,8 +32,12 @@ func _physics_process(_delta: float) -> void:
 		velocity.x = direction.x * SPEED * SPEED_INCREASE
 		velocity.z = direction.z * SPEED * SPEED_INCREASE
 		
+		if input and on_planet:
+			on_planet = false
+		
 		if abs(input) > Vector2(0,0):
 			following = false
+				
 		
 		if (Input.is_action_pressed("upward")):
 			velocity.y = SPEED * SPEED_INCREASE
@@ -85,6 +91,8 @@ func _process(_delta: float) -> void:
 	
 	rotation_degrees.x = springArm.rotation_degrees.x
 	rotation_degrees.y = springArm.rotation_degrees.y
+	
+
 
 	
 func _input(event):
@@ -111,7 +119,6 @@ func _input(event):
 		print("free, ", free_movement_enabled)
 		if !locked_camera_offset:
 			locked_camera_offset = Vector3.ZERO
-	
 	
 	# Making a right click function
 
@@ -172,6 +179,7 @@ func shoot_ray_left():
 	# HERE IS WHERE YOU CAN MAKE IT DO SOMETHING (LIKE OPEN A GUI MENU)
 	# TODO:
 	if !raycast_result.is_empty():
+		
 		clicked_node = raycast_result.collider
 		if Starmap.is_visible:
 			if clicked_node.get_parent().get_id() != -1:
@@ -182,13 +190,20 @@ func shoot_ray_left():
 				Start4.switch_to_star_system((Start4.SYSTEM_COUNT - clicked_node.get_parent().get_id()) - 1)
 				
 		else:
+			#if on_planet:
+			#	on_planet = false
+			
 			following = true
 			print("clicked " + str(raycast_result.collider), " with parent ", clicked_node.get_parent(), " which has parent ", clicked_node.get_parent().get_parent())
-			#springArmIntitialRotation = springArm.rotation
-			#cameraRotationDifference = Vector3.ZERO
-			#print(springArmIntitialRotation)
-			clicked_node.get_parent().get_parent().object_is_clicked()
-		
+			if !on_planet:
+				on_planet = true
+				#springArmIntitialRotation = springArm.rotation
+				#cameraRotationDifference = Vector3.ZERO
+				#print(springArmIntitialRotation)
+				springArm._spring_arm_target_length = clicked_node.get_parent().get_parent().radius * 3.0
+				clicked_node.get_parent().get_parent().object_is_clicked()
+				
+			
 			
 			#print("ATTEMPTING SWITCH TO SYSTEM ", clicked_node.get_parent().get_parent().id)
 		
