@@ -127,7 +127,7 @@ func _ready():
 	#builder.build(radius)
 	
 	if star_count == 1:
-		#_init_belt_children() 
+		_init_belt_children() 
 		pass
 	_init_planet_children()
 	
@@ -567,7 +567,7 @@ func _init_belt_children():
 		belt_orbit_sum += beltInstance.outer
 		
 func _init_belt_vars(beltInstance):
-	beltInstance.asteroid_num = randf_range(900, 1400)
+	beltInstance.asteroid_num = randf_range(100, 150)
 	beltInstance.inner = randf_range(belt_orbit_sum + 30, belt_orbit_sum + 60)
 	belt_radii.append(beltInstance.inner)
 	#print("INNER: ", beltInstance.inner)

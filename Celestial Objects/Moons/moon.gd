@@ -21,7 +21,7 @@ func _ready():
 	_init_variance()
 	_init_vars()
 	
-	builder.build(radius)
+	#builder.build(radius)
 	
 	semi_minor_axis = ((semi_major_axis**2)*(1-(eccentricity**2)))**0.5
 	var parent = get_parent()

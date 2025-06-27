@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://caax7arlkrj5c"]
+[gd_scene load_steps=4 format=3 uid="uid://caax7arlkrj5c"]
 
 [ext_resource type="PackedScene" uid="uid://damp53dc38lev" path="res://Assets/Models/Space Stations/tiny_space_station.glb" id="1_foagc"]
 [ext_resource type="PackedScene" uid="uid://b1jbgff77e0xn" path="res://Assets/Models/Space Stations/small_space_station.glb" id="2_ek3tk"]
+[ext_resource type="PackedScene" uid="uid://b1qck1bc680kb" path="res://Assets/Models/Space Stations/medium_space_station.glb" id="3_jx6sy"]
 
 [node name="SpaceStationLoad" type="Node3D"]
 
@@ -9,4 +10,7 @@
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.0177808, 0, 0)
 
 [node name="tiny_space_station" parent="." instance=ExtResource("1_foagc")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00665405, 0, -6.98864e-06)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.00665405, 0, -0.0247164)
+
+[node name="medium_space_station" parent="." instance=ExtResource("3_jx6sy")]
+transform = Transform3D(1, 0, 0, 0, -1, 8.74228e-08, 0, -8.74228e-08, -1, -0.04, 0, 0)

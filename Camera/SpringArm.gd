@@ -89,7 +89,7 @@ func _process(delta):
 		zoom_increase = 5.0
 		
 	elif Input.is_action_pressed("ctrl"):
-		zoom_increase = 1.0/3
+		zoom_increase = 0.1
 		
 	else:
 		zoom_increase = 1.0

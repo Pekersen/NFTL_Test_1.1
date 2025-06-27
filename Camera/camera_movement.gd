@@ -77,7 +77,7 @@ func _process(_delta: float) -> void:
 		SPEED_INCREASE = 5.0
 		
 	elif Input.is_action_pressed("ctrl"):
-		SPEED_INCREASE = 0.1
+		SPEED_INCREASE = 0.01
 		
 	else:
 		SPEED_INCREASE = 1.0

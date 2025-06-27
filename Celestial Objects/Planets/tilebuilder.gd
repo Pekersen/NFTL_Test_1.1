@@ -29,7 +29,7 @@ func build(radius):
 	
 	tiles.resize(number)
 	#tile_distances.resize(number)
-	print("I AM BUILDING ", tiles.size()," TILES")
+	#print("I AM BUILDING ", tiles.size()," TILES")
 	
 	rad = radius
 	

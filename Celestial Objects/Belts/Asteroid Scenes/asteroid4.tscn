@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://wmvn4e356ds8"]
+
+[ext_resource type="PackedScene" uid="uid://dkv0srk883niw" path="res://Assets/Models/Asteroids/asteroid4.glb" id="1_lrs5w"]
+
+[node name="Asteroid4" type="Node3D"]
+
+[node name="asteroid4" parent="." instance=ExtResource("1_lrs5w")]

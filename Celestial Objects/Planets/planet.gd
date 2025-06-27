@@ -35,8 +35,8 @@ func _ready():
 	_init_variance()
 	_init_vars()
 	
-	builder.build(radius)
-	builder.build(radius * 3.0)
+	#builder.build(radius)
+	#builder.build(radius * 3.0)
 	
 	if !atmosphere_present:
 		atmosphere.mesh.material.set_transparency(0)
