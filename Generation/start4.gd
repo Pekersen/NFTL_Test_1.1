@@ -1,6 +1,6 @@
 extends Node  # Since this is an Autoload, it should NOT extend Node3D
 
-const SYSTEM_COUNT = 50
+const SYSTEM_COUNT = 3
 #const SYSTEM_SCENE := preload("res://Main/main.tscn")
 
 var star_systems : Dictionary = {}  # Store persistent star systems
@@ -105,6 +105,7 @@ func switch_to_star_system(id: int):
 	print("✅ Switched to system:", current_system_instance.name)
 	
 	'''
+	await get_tree().process_frame	
 	
 	# Get the new system
 	var new_system = star_systems[id]

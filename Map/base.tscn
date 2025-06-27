@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://7rmy8cmq7ttw" path="res://Camera/player_camera.tscn" id="1_rusgq"]
 [ext_resource type="Script" path="res://Main/main.gd" id="1_y4vps"]
 [ext_resource type="PackedScene" uid="uid://cmrfdlp25wcby" path="res://addons/simply-console/scenes/console-window/console_window.tscn" id="2_2n5oo"]
-[ext_resource type="PackedScene" uid="uid://d2sfk2lwhos4t" path="res://Main GUI/gui.tscn" id="4_y6jso"]
+[ext_resource type="PackedScene" uid="uid://d2sfk2lwhos4t" path="res://UI/Main GUI/gui.tscn" id="4_y6jso"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_y4vps")

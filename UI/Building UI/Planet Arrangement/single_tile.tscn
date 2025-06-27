@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://c4ass6yj6qnk7"]
 
-[ext_resource type="Script" path="res://Building UI/Planet Arrangement/single_tile.gd" id="1_y0nlf"]
+[ext_resource type="Script" path="res://UI/Building UI/Planet Arrangement/single_tile.gd" id="1_y0nlf"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ag2mk"]
 resource_local_to_scene = true

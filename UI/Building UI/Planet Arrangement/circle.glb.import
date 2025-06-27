@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://yijkwpoc5fwx"
-path="res://.godot/imported/circle.glb-de057a7325ba79e5723db17fd73d413b.scn"
+path="res://.godot/imported/circle.glb-9bebadaa95bf17d8c55c2bc63f35599a.scn"
 
 [deps]
 
-source_file="res://Building UI/Planet Arrangement/circle.glb"
-dest_files=["res://.godot/imported/circle.glb-de057a7325ba79e5723db17fd73d413b.scn"]
+source_file="res://UI/Building UI/Planet Arrangement/circle.glb"
+dest_files=["res://.godot/imported/circle.glb-9bebadaa95bf17d8c55c2bc63f35599a.scn"]
 
 [params]
 

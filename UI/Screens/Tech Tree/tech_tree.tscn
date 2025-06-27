@@ -1,0 +1,89 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfkxxpxvvj5yo"]
+
+[ext_resource type="Script" path="res://UI/Screens/Tech Tree/tech_tree.gd" id="1_p20lv"]
+[ext_resource type="PackedScene" uid="uid://be1oasvquuidx" path="res://UI/Screens/Tech Tree/tech_tree_element.tscn" id="2_7g7yu"]
+[ext_resource type="Texture2D" uid="uid://u6i86ciiicw3" path="res://icon.svg" id="3_03h4s"]
+
+[node name="TechTree" type="GraphEdit"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+snapping_distance = 50
+minimap_enabled = false
+show_grid_buttons = false
+show_minimap_button = false
+show_arrange_button = false
+script = ExtResource("1_p20lv")
+
+[node name="TechTreeElement" parent="." node_paths=PackedStringArray("dependents") instance=ExtResource("2_7g7yu")]
+layout_mode = 1
+offset_left = -1113.0
+offset_top = 265.0
+offset_right = -898.0
+offset_bottom = 448.0
+mouse_filter = 1
+position_offset = Vector2(-1113, 265)
+title = "item1"
+texture = ExtResource("3_03h4s")
+dependents = [NodePath("../TechTreeElement2"), NodePath("../TechTreeElement3")]
+
+[node name="TechTreeElement3" parent="." node_paths=PackedStringArray("prerequisites", "dependents") instance=ExtResource("2_7g7yu")]
+layout_mode = 0
+offset_left = -829.0
+offset_top = 119.0
+offset_right = -489.0
+offset_bottom = 302.0
+mouse_filter = 1
+position_offset = Vector2(-829, 119)
+title = "item2"
+texture = ExtResource("3_03h4s")
+prerequisites = [NodePath("../TechTreeElement")]
+dependents = [NodePath("../TechTreeElement4"), NodePath("../TechTreeElement5"), NodePath("../TechTreeElement6")]
+
+[node name="TechTreeElement2" parent="." node_paths=PackedStringArray("prerequisites", "dependents") instance=ExtResource("2_7g7yu")]
+layout_mode = 0
+offset_left = -824.0
+offset_top = 432.0
+offset_right = -478.0
+offset_bottom = 615.0
+mouse_filter = 1
+position_offset = Vector2(-824, 432)
+title = "item3"
+texture = ExtResource("3_03h4s")
+description_string = "Test TEst Test Test t est test "
+prerequisites = [NodePath("../TechTreeElement")]
+dependents = [NodePath("../TechTreeElement4"), NodePath("../TechTreeElement5"), NodePath("../TechTreeElement6")]
+
+[node name="TechTreeElement4" parent="." node_paths=PackedStringArray("prerequisites") instance=ExtResource("2_7g7yu")]
+layout_mode = 0
+offset_left = -341.0
+offset_top = 275.0
+offset_right = 62.0
+offset_bottom = 458.0
+mouse_filter = 1
+position_offset = Vector2(-341, 275)
+prerequisites = [NodePath("../TechTreeElement3"), NodePath("../TechTreeElement2")]
+
+[node name="TechTreeElement5" parent="." node_paths=PackedStringArray("prerequisites") instance=ExtResource("2_7g7yu")]
+layout_mode = 0
+offset_left = -336.0
+offset_top = 554.0
+offset_right = 67.0
+offset_bottom = 737.0
+mouse_filter = 1
+position_offset = Vector2(-336, 554)
+prerequisites = [NodePath("../TechTreeElement2")]
+
+[node name="TechTreeElement6" parent="." node_paths=PackedStringArray("prerequisites") instance=ExtResource("2_7g7yu")]
+layout_mode = 0
+offset_left = -335.0
+offset_top = -24.0
+offset_right = 68.0
+offset_bottom = 159.0
+mouse_filter = 1
+position_offset = Vector2(-335, -24)
+prerequisites = [NodePath("../TechTreeElement3"), NodePath("../TechTreeElement2")]
+
+[connection signal="connection_request" from="." to="." method="_on_connection_request"]

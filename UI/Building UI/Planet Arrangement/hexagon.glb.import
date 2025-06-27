@@ -4,12 +4,12 @@ importer="scene"
 importer_version=1
 type="PackedScene"
 uid="uid://2ua1xdradg6y"
-path="res://.godot/imported/hexagon.glb-c7fa1c0b73db841446d36c44df88cb3c.scn"
+path="res://.godot/imported/hexagon.glb-21c992ac20f6dd6160d31e7a42567c52.scn"
 
 [deps]
 
-source_file="res://Building UI/Planet Arrangement/hexagon.glb"
-dest_files=["res://.godot/imported/hexagon.glb-c7fa1c0b73db841446d36c44df88cb3c.scn"]
+source_file="res://UI/Building UI/Planet Arrangement/hexagon.glb"
+dest_files=["res://.godot/imported/hexagon.glb-21c992ac20f6dd6160d31e7a42567c52.scn"]
 
 [params]
 
