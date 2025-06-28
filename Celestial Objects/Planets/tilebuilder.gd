@@ -22,7 +22,7 @@ func _ready():
 	
 
 func build(radius):
-	var tile = preload("res://Building UI/Planet Arrangement/single_tile.tscn")
+	var tile = preload("res://UI/Building UI/Planet Arrangement/single_tile.tscn")
 	number = radius * radius * number / 12
 	if number < 2:
 		number = 2

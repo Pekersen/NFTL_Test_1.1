@@ -1,10 +1,10 @@
 [gd_scene load_steps=7 format=3 uid="uid://c4pw3j7snhqoi"]
 
-[ext_resource type="Script" path="res://Screens/Title/TitleScreen.gd" id="1_1cvye"]
+[ext_resource type="Script" path="res://UI/Screens/Title/TitleScreen.gd" id="1_1cvye"]
 [ext_resource type="Texture2D" uid="uid://bemkeddhprj7n" path="res://Assets/Icons/NFTL planet.png" id="1_wqorv"]
-[ext_resource type="Script" path="res://Screens/Title/ButtonControl.gd" id="2_bjhsx"]
+[ext_resource type="Script" path="res://UI/Screens/Title/ButtonControl.gd" id="2_bjhsx"]
 [ext_resource type="FontFile" uid="uid://o5e2yu7rbv8d" path="res://Assets/Fonts/SAIBA-45.ttf" id="2_rta2y"]
-[ext_resource type="PackedScene" uid="uid://cc0wlk6lkldx2" path="res://Screens/Settings/SettingsScreen.tscn" id="5_vaikf"]
+[ext_resource type="PackedScene" uid="uid://cc0wlk6lkldx2" path="res://UI/Screens/Settings/SettingsScreen.tscn" id="5_vaikf"]
 
 [sub_resource type="VideoStreamTheora" id="VideoStreamTheora_3fpx0"]
 

@@ -11,10 +11,10 @@ func _ready():
 	var rng = RandomNumberGenerator.new()
 	var random_float = rng.randf()
 	if random_float < 0.44:
-		splash_screen.stream.file = "res://Screens/Title/NFTL-Splash-v3.ogv"
+		splash_screen.stream.file = "res://UI/Screens/Title/Assets/NFTL-Splash-v3.ogv"
 		splash_screen.play()
 	elif random_float < 0.88:
-		splash_screen.stream.file = "res://Screens/Title/NFTL-Splash-v4.ogv"
+		splash_screen.stream.file = "res://UI/Screens/Title/Assets/NFTL-Splash-v4.ogv"
 		splash_screen.play()
 	else:
 		splash_screen.visible = false
