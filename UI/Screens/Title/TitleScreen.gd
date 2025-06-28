@@ -1,5 +1,5 @@
 extends Control
-@onready var settings_screen := $SettingsScreen
+@onready var settings := $Settings
 @onready var splash_screen := $SplashScreen
 @onready var bg = $Background
 @onready var title_music := $TitleMusic
@@ -32,4 +32,4 @@ func _ready():
 	tween.tween_property(title_music, "volume_db", -20, 3)
 
 func _on_settings_pressed():
-	settings_screen.show()
+	settings.visible = true

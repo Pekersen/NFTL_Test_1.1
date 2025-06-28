@@ -4,13 +4,17 @@
 [ext_resource type="Texture2D" uid="uid://bemkeddhprj7n" path="res://Assets/Icons/NFTL planet.png" id="1_wqorv"]
 [ext_resource type="Script" path="res://UI/Screens/Title/ButtonControl.gd" id="2_bjhsx"]
 [ext_resource type="FontFile" uid="uid://o5e2yu7rbv8d" path="res://Assets/Fonts/SAIBA-45.ttf" id="2_rta2y"]
-[ext_resource type="PackedScene" uid="uid://cc0wlk6lkldx2" path="res://UI/Screens/Settings/SettingsScreen.tscn" id="5_vaikf"]
+[ext_resource type="PackedScene" uid="uid://px6a2dg8cawb" path="res://addons/modular-settings-menu/scenes/settings.tscn" id="5_vy6nv"]
 
 [sub_resource type="VideoStreamTheora" id="VideoStreamTheora_3fpx0"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
-anchors_preset = 0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_1cvye")
 
 [node name="SplashScreen" type="VideoStreamPlayer" parent="."]
@@ -73,17 +77,17 @@ text = "NFTL"
 fit_content = true
 autowrap_mode = 0
 
-[node name="SettingsScreen" parent="." instance=ExtResource("5_vaikf")]
-visible = false
-
 [node name="TitleMusic" type="AudioStreamPlayer" parent="."]
 volume_db = -40.0
 autoplay = true
+
+[node name="Settings" parent="." node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("5_vy6nv")]
+visible = false
+layout_mode = 1
+IS_IN_GAME_MENU = false
+MenuPanelRef = NodePath("..")
 
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Start" to="ButtonCenter/ButtonContainer" method="_on_start_pressed"]
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Settings" to="ButtonCenter/ButtonContainer" method="_on_settings_pressed"]
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Quit" to="ButtonCenter/ButtonContainer" method="_on_quit_pressed"]
-[connection signal="about_to_popup" from="SettingsScreen" to="SettingsScreen" method="_on_about_to_popup"]
-[connection signal="close_requested" from="SettingsScreen" to="SettingsScreen" method="_on_close_requested"]
-[connection signal="visibility_changed" from="SettingsScreen" to="SettingsScreen" method="_on_visibility_changed"]

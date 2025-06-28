@@ -1,35 +1,24 @@
 extends Star
 
-@onready var starMesh := $RotationPoint/Core/StarMesh
-@onready var starCollision := $RotationPoint/Core/StarCollision
-@onready var starLight := $RotationPoint/Core/StarLight
-@onready var orbitMesh = $Orbit
-@onready var label = $"RotationPoint/Core/Label3D"
-@onready var builder = $RotationPoint/Core/StarMesh/TileBuilder
+signal star_rad_for_cam(radius)
 
-@onready var innerZone = $InnerZone
-@onready var outerZone = $OuterZone
+const _LABEL_OFFSET_FROM_SURFACE = Vector3(0, 10, 0)
+const _LABEL_FONT_SIZE = 48
+
+@export var star_name : String
+@export var age : int
 
 var star_type : String
 var star_names = ["Centauri", "Sol", "Bernard's Star", "Vega", "Proxima", "Polaris", "Betelgeuse", "Deneb", "Sirius"]
-@export var star_name : String
-@export var age : int
 
 var small_star_probability : float
 var big_star_probability : float
 
 var star_count : int
 
-signal star_rad_for_cam(radius)
-
 var orbit_path_visible = true
 
-# ----- EXPERIMENTAL -----
 var num_planets_variance = [0, 10] # so size = 2
-@onready var planet = preload("res://Celestial Objects/Planets/planet.tscn")
-@onready var moon = preload("res://Celestial Objects/Moons/moon.tscn")
-@onready var ring = preload("res://Celestial Objects/Rings/ring.tscn")
-@onready var belt = preload("res://Celestial Objects/Belts/belt.tscn")
 
 var num_planets : int
 var num_belts : int
@@ -99,13 +88,22 @@ var system_name : String
 
 var on_tile = false
 
-# ----- EXPERIMENTAL -----
+@onready var starMesh := $RotationPoint/Core/StarMesh
+@onready var starCollision := $RotationPoint/Core/StarCollision
+@onready var starLight := $RotationPoint/Core/StarLight
+@onready var orbitMesh = $Orbit
+@onready var label = $"RotationPoint/Core/Label3D"
+@onready var builder = $RotationPoint/Core/StarMesh/TileBuilder
 
-func _ready():		
-	
-	
-	
-	# TEMP Values
+@onready var innerZone = $InnerZone
+@onready var outerZone = $OuterZone
+
+@onready var planet = preload("res://Celestial Objects/Planets/planet.tscn")
+@onready var moon = preload("res://Celestial Objects/Moons/moon.tscn")
+@onready var ring = preload("res://Celestial Objects/Rings/ring.tscn")
+@onready var belt = preload("res://Celestial Objects/Belts/belt.tscn")
+
+func _ready():
 	if star_count == 1:
 		small_star_probability = 0.0
 		big_star_probability = 1.0
@@ -119,25 +117,19 @@ func _ready():
 		big_star_probability = 0.0
 		planet_count_reduction = 3
 	
-	if is_home:
-		#Resources.controlled_systems += 1
-		print("I'M ALSO HOOOOOOOOOOOME!!!")
-	
 	_init_vars()
-	#builder.build(radius)
 	
 	if star_count == 1:
 		_init_belt_children() 
 		pass
 	_init_planet_children()
 	
-	label.position = Vector3(0, star_rad * 2.0 + 5.0, 0)
-	label.font_size = 48
+	label.position = Vector3(0,star_rad,0) + _LABEL_OFFSET_FROM_SURFACE
+	label.font_size = _LABEL_FONT_SIZE
 	
 	
 func _init_vars():
 	star_type = _pick_star_type()
-	print("Star Type1: " + star_type)
 	_on_system_star_gen(star_type)
 	num_planets = offset_value(num_planets_variance) / planet_count_reduction
 	var rand = randf()

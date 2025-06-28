@@ -14,6 +14,7 @@ offset_right = -1152.0
 offset_bottom = -648.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 script = ExtResource("1_6ijcx")
 
 [node name="TimeSlider" type="HSlider" parent="."]
@@ -78,8 +79,9 @@ tab_3/title = "Rare Metals"
 [node name="Info" type="HBoxContainer" parent="."]
 layout_mode = 0
 offset_left = -1.0
-offset_right = 966.0
-offset_bottom = 57.0
+offset_right = 1081.0
+offset_bottom = 157.0
+mouse_filter = 2
 
 [node name="InfoContainer" type="PanelContainer" parent="Info"]
 layout_mode = 2
@@ -151,11 +153,9 @@ text = " Computational
  Power: 0 "
 label_settings = SubResource("LabelSettings_djoa6")
 
-[node name="PanelContainer" type="PanelContainer" parent="Info/InfoContainer/OtherInfo"]
-layout_mode = 2
-
 [node name="ResourcesContainer" type="VBoxContainer" parent="Info"]
 layout_mode = 2
+mouse_filter = 2
 
 [node name="ResourcePanel" type="PanelContainer" parent="Info/ResourcesContainer"]
 layout_mode = 2
