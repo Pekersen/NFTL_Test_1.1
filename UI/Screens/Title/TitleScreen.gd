@@ -27,7 +27,7 @@ func _ready():
 		title_music.stream = load("res://UI/Screens/Title/Assets/Heartbeat of a Star.mp3")
 	else:
 		title_music.stream = load("res://UI/Screens/Title/Assets/Arriving Fleet.mp3")
-	title_music.play()	
+	title_music.play()
 	var tween = get_tree().create_tween()
 	tween.tween_property(title_music, "volume_db", -20, 3)
 

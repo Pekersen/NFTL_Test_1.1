@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://bequjodqr8tcj"]
 
-[ext_resource type="Script" path="res://Celestial Objects/Stars/star.gd" id="1_81nsq"]
-[ext_resource type="Script" path="res://Celestial Objects/Planets/tilebuilder.gd" id="2_ajkwg"]
+[ext_resource type="Script" path="res://Entities/Celestial Objects/Stars/star.gd" id="1_81nsq"]
+[ext_resource type="Script" path="res://Entities/Celestial Objects/Planets/tilebuilder.gd" id="2_ajkwg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k228r"]
 shading_mode = 0

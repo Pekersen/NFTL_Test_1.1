@@ -1,6 +1,6 @@
 class_name SystemGeneration extends GenerateCluster
 
-@onready var star_obj = preload("res://Celestial Objects/Stars/star.tscn")
+@onready var star_obj = preload("res://Entities/Celestial Objects/Stars/star.tscn")
 #var star
 @export var system_id: int  # Assigned by UniverseManager
 
@@ -281,7 +281,7 @@ func _planet_mod():
 				star.planets[i].moons[j].change_name(star.object_name + l_letters[i] + str(j + 1))
 
 func _setup_nodes() -> void:
-	star_obj = preload("res://Celestial Objects/Stars/star.tscn")
+	star_obj = preload("res://Entities/Celestial Objects/Stars/star.tscn")
 	
 func _assign_names():
 	if stars.size() == 1:

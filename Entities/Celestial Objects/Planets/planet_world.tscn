@@ -1,6 +1,6 @@
 [gd_scene load_steps=7 format=3 uid="uid://bn0g38ov542cu"]
 
-[ext_resource type="Script" path="res://Celestial Objects/Planets/Planet World.gd" id="1_rc4po"]
+[ext_resource type="Script" path="res://Entities/Celestial Objects/Planets/Planet World.gd" id="1_rc4po"]
 [ext_resource type="PackedScene" uid="uid://dbvjkta0whfrt" path="res://Entities/Player/restricted_camera.tscn" id="2_avaew"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_714ev"]

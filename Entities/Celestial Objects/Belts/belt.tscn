@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dceomq48kpycj"]
 
-[ext_resource type="Script" path="res://Celestial Objects/Belts/belts.gd" id="1_rumu5"]
+[ext_resource type="Script" path="res://Entities/Celestial Objects/Belts/belts.gd" id="1_rumu5"]
 
 [node name="Belt" type="Node3D"]
 script = ExtResource("1_rumu5")

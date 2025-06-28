@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://cqtxuyes4fdju"]
 
-[ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
-[ext_resource type="Script" path="res://Celestial Objects/Planets/tilebuilder.gd" id="2_0wlpl"]
+[ext_resource type="Script" path="res://Entities/Celestial Objects/Planets/planet.gd" id="1_21ytp"]
+[ext_resource type="Script" path="res://Entities/Celestial Objects/Planets/tilebuilder.gd" id="2_0wlpl"]
 [ext_resource type="Shader" path="res://Experimental/Experimental Planet Mesh/planet_terrain.gdshader" id="2_57dcy"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_nbg0y"]

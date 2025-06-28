@@ -98,10 +98,10 @@ var on_tile = false
 @onready var innerZone = $InnerZone
 @onready var outerZone = $OuterZone
 
-@onready var planet = preload("res://Celestial Objects/Planets/planet.tscn")
-@onready var moon = preload("res://Celestial Objects/Moons/moon.tscn")
-@onready var ring = preload("res://Celestial Objects/Rings/ring.tscn")
-@onready var belt = preload("res://Celestial Objects/Belts/belt.tscn")
+@onready var planet = preload("res://Entities/Celestial Objects/Planets/planet.tscn")
+@onready var moon = preload("res://Entities/Celestial Objects/Moons/moon.tscn")
+@onready var ring = preload("res://Entities/Celestial Objects/Rings/ring.tscn")
+@onready var belt = preload("res://Entities/Celestial Objects/Belts/belt.tscn")
 
 func _ready():
 	if star_count == 1:

@@ -1,11 +1,11 @@
 extends Belts
 
-@onready var asteroid = preload("res://Celestial Objects/Belts/Asteroid Scenes/asteroid.tscn")
-@onready var asteroid1 = preload("res://Celestial Objects/Belts/Asteroid Scenes/asteroid1.tscn")
-@onready var asteroid2 = preload("res://Celestial Objects/Belts/Asteroid Scenes/asteroid2.tscn")
-@onready var asteroid3 = preload("res://Celestial Objects/Belts/Asteroid Scenes/asteroid3.tscn")
-@onready var asteroid4 = preload("res://Celestial Objects/Belts/Asteroid Scenes/asteroid4.tscn")
-@onready var asteroid5 = preload("res://Celestial Objects/Belts/Asteroid Scenes/asteroid5.tscn")
+@onready var asteroid = preload("res://Entities/Celestial Objects/Belts/Asteroid Scenes/asteroid.tscn")
+@onready var asteroid1 = preload("res://Entities/Celestial Objects/Belts/Asteroid Scenes/asteroid1.tscn")
+@onready var asteroid2 = preload("res://Entities/Celestial Objects/Belts/Asteroid Scenes/asteroid2.tscn")
+@onready var asteroid3 = preload("res://Entities/Celestial Objects/Belts/Asteroid Scenes/asteroid3.tscn")
+@onready var asteroid4 = preload("res://Entities/Celestial Objects/Belts/Asteroid Scenes/asteroid4.tscn")
+@onready var asteroid5 = preload("res://Entities/Celestial Objects/Belts/Asteroid Scenes/asteroid5.tscn")
 
 var asteroid_num : float
 var inner : float
