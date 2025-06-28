@@ -19,7 +19,6 @@ func _ready():
 	for i in range(asteroid_num):
 		var rand = randi_range(0, 4)
 		var asteroidInstance
-		print("Rand: ", rand)
 		match rand:
 			0:
 				asteroidInstance = asteroid1.instantiate()

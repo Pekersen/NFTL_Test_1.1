@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4ass6yj6qnk7"]
+[gd_scene load_steps=6 format=3 uid="uid://c4ass6yj6qnk7"]
 
 [ext_resource type="Script" path="res://Building UI/Planet Arrangement/single_tile.gd" id="1_y0nlf"]
 
@@ -28,26 +28,14 @@ outer_radius = 0.5
 rings = 32
 ring_segments = 16
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_r7bgy"]
-margin = 1.0
-radius = 0.25
-
 [node name="SingleTile" type="Node3D"]
 script = ExtResource("1_y0nlf")
 
 [node name="circle" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_ljtru")
-skeleton = NodePath("../Area3D")
+skeleton = NodePath("")
 
 [node name="secondCircle" type="MeshInstance3D" parent="."]
 visible = false
 mesh = SubResource("TorusMesh_3cwe8")
-skeleton = NodePath("../Area3D")
-
-[node name="Area3D" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
-shape = SubResource("SphereShape3D_r7bgy")
-
-[connection signal="mouse_entered" from="Area3D" to="." method="_on_area_3d_mouse_entered"]
-[connection signal="mouse_exited" from="Area3D" to="." method="_on_area_3d_mouse_exited"]
+skeleton = NodePath("")

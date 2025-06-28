@@ -7,6 +7,7 @@ extends Planet
 @onready var label = $"RotationPoint/Core/Label3D"
 @onready var builder = $RotationPoint/Core/TruePlanet/TileBuilder
 @onready var rotpoint = $RotationPoint
+@onready var collision = $RotationPoint/Core/TruePlanet/TileBuilder/Area3D/CollisionShape3D
 
 #var base_material := preload("res://Experimental/Experimental Planet Mesh/planet_terrain_shader_material.tres")
 
@@ -35,7 +36,7 @@ func _ready():
 	_init_variance()
 	_init_vars()
 	
-	#builder.build(radius)
+	builder.build(radius)
 	#builder.build(radius * 3.0)
 	
 	if !atmosphere_present:
@@ -102,6 +103,7 @@ func _init_vars():
 	planetMesh.mesh.height = radius * 2
 	# Init click area
 	planetCollision.shape.radius = radius + click_forgiveness
+	collision.shape.radius = radius
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -137,9 +139,11 @@ func object_is_clicked():
 	print("CLICKED")
 	if !on_tile:
 		on_tile = true
-		planetCollision.shape.radius = 0.9 * radius
+		planetCollision.disabled = true
+		collision.disabled = false
 		print("Planet Collision: ", planetCollision.shape.radius)
 	else:
 		on_tile = false
-		planetCollision.shape.radius = radius + click_forgiveness
+		planetCollision.disabled = false
+		collision.disabled = true
 		print("Planet Collision: ", planetCollision.shape.radius)

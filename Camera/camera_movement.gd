@@ -227,3 +227,33 @@ func reset():
 	rotation.y = 0
 	rotation.z = 0
 	following = false
+	
+func get_mouse_hit_point_on_sphere(camera: Camera3D, mouse_pos: Vector2, sphere_center: Vector3, sphere_radius: float) -> Vector3:
+	#print("----------------------")
+	#print("SPHERE CENTER: ", sphere_center)
+	var ray_origin = camera.project_ray_origin(mouse_pos)
+	#print("ORIGIN: ", ray_origin)
+	var ray_direction = camera.project_ray_normal(mouse_pos)
+	#print("DIRECTION", ray_direction)
+
+	# Solve for ray-sphere intersection using the quadratic formula
+	var oc = ray_origin - sphere_center
+	var a = ray_direction.dot(ray_direction)
+	var b = 2.0 * oc.dot(ray_direction)
+	var c = oc.dot(oc) - sphere_radius * sphere_radius
+
+	var discriminant = b * b - 4 * a * c
+	#print("DISCRIMINANT: ", discriminant)
+	if discriminant < 0:
+		return Vector3(0, 0, 0) # No intersection
+
+	var t = (-b - sqrt(discriminant)) / (2 * a)  # closer intersection
+	if t < 0:
+		t = (-b + sqrt(discriminant)) / (2 * a)
+	if t < 0:
+		return Vector3(0, 0, 0)  # Intersection is behind camera
+	
+	#print("POSITION: ", ray_origin + ray_direction * t)
+	#print("----------------------")
+	return ray_origin + ray_direction * t  # Point on sphere surface
+

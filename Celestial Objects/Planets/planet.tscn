@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://cqtxuyes4fdju"]
+[gd_scene load_steps=15 format=3 uid="uid://cqtxuyes4fdju"]
 
 [ext_resource type="Script" path="res://Celestial Objects/Planets/planet.gd" id="1_21ytp"]
 [ext_resource type="Script" path="res://Celestial Objects/Planets/tilebuilder.gd" id="2_0wlpl"]
@@ -32,9 +32,8 @@ roughness_texture_channel = 3
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_st6bb")
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_gfk4t"]
+[sub_resource type="SphereShape3D" id="SphereShape3D_swwsc"]
 resource_local_to_scene = true
-margin = 0.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_uncri"]
 resource_local_to_scene = true
@@ -45,6 +44,10 @@ resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_uncri")
 radial_segments = 128
 rings = 64
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_gfk4t"]
+resource_local_to_scene = true
+margin = 0.0
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8ke4w"]
 shader = ExtResource("2_57dcy")
@@ -71,8 +74,10 @@ mesh = SubResource("SphereMesh_65kqi")
 [node name="TileBuilder" type="Node3D" parent="RotationPoint/Core/TruePlanet"]
 script = ExtResource("2_0wlpl")
 
-[node name="PlanetCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
-shape = SubResource("SphereShape3D_gfk4t")
+[node name="Area3D" type="Area3D" parent="RotationPoint/Core/TruePlanet/TileBuilder"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RotationPoint/Core/TruePlanet/TileBuilder/Area3D"]
+shape = SubResource("SphereShape3D_swwsc")
 
 [node name="Atmospshere" type="MeshInstance3D" parent="RotationPoint/Core"]
 transform = Transform3D(1.1, 0, 0, 0, 1.1, 0, 0, 0, 1.1, 0, 0, 0)
@@ -87,6 +92,9 @@ fixed_size = true
 text = "Planet"
 outline_size = 0
 
+[node name="PlanetCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
+shape = SubResource("SphereShape3D_gfk4t")
+
 [node name="SubViewport" type="SubViewport" parent="RotationPoint"]
 disable_3d = true
 transparent_bg = true
@@ -99,3 +107,6 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[connection signal="mouse_entered" from="RotationPoint/Core/TruePlanet/TileBuilder/Area3D" to="RotationPoint/Core/TruePlanet/TileBuilder" method="_on_area_3d_mouse_entered"]
+[connection signal="mouse_exited" from="RotationPoint/Core/TruePlanet/TileBuilder/Area3D" to="RotationPoint/Core/TruePlanet/TileBuilder" method="_on_area_3d_mouse_exited"]
