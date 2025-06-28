@@ -1,16 +1,16 @@
 [gd_scene load_steps=3 format=3 uid="uid://7rmy8cmq7ttw"]
 
-[ext_resource type="Script" path="res://Camera/camera_movement.gd" id="1_47gtb"]
-[ext_resource type="Script" path="res://Camera/SpringArm.gd" id="2_ohl0f"]
+[ext_resource type="Script" path="res://Entities/Player/camera_movement.gd" id="1_4f8dt"]
+[ext_resource type="Script" path="res://Entities/Player/SpringArm.gd" id="2_82q5v"]
 
 [node name="BasePoint" type="CharacterBody3D"]
-script = ExtResource("1_47gtb")
+script = ExtResource("1_4f8dt")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="."]
 collision_mask = 0
 spring_length = 2.0
 margin = 0.001
-script = ExtResource("2_ohl0f")
+script = ExtResource("2_82q5v")
 
 [node name="Camera3D" type="Camera3D" parent="SpringArm3D"]
 

@@ -76,6 +76,10 @@ autowrap_mode = 0
 [node name="SettingsScreen" parent="." instance=ExtResource("5_vaikf")]
 visible = false
 
+[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
+volume_db = -40.0
+autoplay = true
+
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Start" to="ButtonCenter/ButtonContainer" method="_on_start_pressed"]
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Settings" to="." method="_on_settings_pressed"]
 [connection signal="pressed" from="ButtonCenter/ButtonContainer/Settings" to="ButtonCenter/ButtonContainer" method="_on_settings_pressed"]

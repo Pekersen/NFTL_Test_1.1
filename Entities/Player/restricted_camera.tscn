@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://dbvjkta0whfrt"]
 
-[ext_resource type="Script" path="res://Camera/restricted_camera.gd" id="1_07kmh"]
+[ext_resource type="Script" path="res://Entities/Player/restricted_camera.gd" id="1_07kmh"]
 
 [node name="RotationPoint" type="Node3D"]
 
