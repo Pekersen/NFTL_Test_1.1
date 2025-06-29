@@ -1,7 +1,7 @@
 class_name ModifiableFloat
 extends Resource
 
-var base_value: float
+@export var base_value: float
 var flat_modifiers: Array[float] = []
 var percent_modifiers: Array[float] = []
 

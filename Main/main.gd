@@ -26,5 +26,5 @@ func on_console_visibility_change():
 func set_ticks_per_second(value: float):
 	if value < 0:
 		value = 0
-	Global.ticks_per_second = value as int
-	return "Ticks per second were set to " + str(Global.ticks_per_second)
+	GlobalVariables.ticks_per_second = value as int
+	return "Ticks per second were set to " + str(GlobalVariables.ticks_per_second)

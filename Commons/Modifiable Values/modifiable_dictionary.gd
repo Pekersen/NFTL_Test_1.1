@@ -1,7 +1,7 @@
 class_name ModifiableDictionary
 extends Resource
 
-var base_values: Dictionary
+@export var base_values: Dictionary
 var flat_modifiers_per: Dictionary # Dict of arrays of floats
 var flat_modifiers_all: Array[float] = []
 var percent_modifiers_per: Dictionary # Dict of arrays of floats

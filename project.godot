@@ -18,13 +18,12 @@ config/icon="res://Assets/Icons/NFTL Logo.png"
 [autoload]
 
 ConsoleDataManager="*res://addons/simply-console/singletons/console_data_manager.gd"
-Global="*res://Globals/global.gd"
 Start4="*res://Generation/start4.gd"
 Starmap="*res://Map/starmap.gd"
-Resources="*res://Civilization Info/Resources/resources.gd"
+Resources="*res://Data/Civilization Info/Resources/resources.gd"
 DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
-SceneLoader="*res://addons/scene_loader/autoloads/scene_loader.gd"
 SettingsDataManager="*res://addons/modular-settings-menu/singletons/settings_data_manager.gd"
+GlobalVariables="*res://Data/Globals/global_variables.gd"
 
 [display]
 

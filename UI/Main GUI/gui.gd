@@ -29,8 +29,8 @@ func _process(_delta):
 	energy.set_text(" Energy: %d " % Resources.energy)
 
 func _on_time_slider_drag_ended(_value_changed):
-	Global.ticks_per_second = time_slider.value
-	print("ticks per sec: " + str(Global.ticks_per_second))
+	GlobalVariables.ticks_per_second = time_slider.value
+	print("ticks per sec: " + str(GlobalVariables.ticks_per_second))
 	
 # TODO: Fuking makin bettern o shod
 var previous_time_value = 8
@@ -41,7 +41,7 @@ func _input(event):
 		else:
 			previous_time_value = time_slider.value
 			time_slider.value = 0
-		Global.ticks_per_second = time_slider.value
+		GlobalVariables.ticks_per_second = time_slider.value
 		
 	if event.is_action_pressed("lines") and gui_visible == true:
 		self.visible = false

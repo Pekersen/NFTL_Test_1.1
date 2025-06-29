@@ -45,7 +45,7 @@ func offset_value(offset : Array[float]):
 # moves 'core' in an orbit
 func orbit(delta, core_obj):
 	if can_orbit:
-		time_passed += delta * Global.ticks_per_second / ORBIT_SPEED_CONST
+		time_passed += delta * GlobalVariables.ticks_per_second / ORBIT_SPEED_CONST
 		
 		# Calculate the current position in the elliptical orbit
 		core_obj.position = calculate_orbit_position(time_passed)
@@ -96,7 +96,7 @@ func init_orbit_mesh(orbitMesh: Node3D, initRotPos: float = 0):
 		
 func celestial_rotation(delta, obj):
 	calc_axis_of_rot()
-	rotation_velocity = -rotations_per_tick * delta * Global.ticks_per_second
+	rotation_velocity = -rotations_per_tick * delta * GlobalVariables.ticks_per_second
 	obj.rotate(axis_of_rot, rotation_velocity)
 	
 func calc_axis_of_rot():
