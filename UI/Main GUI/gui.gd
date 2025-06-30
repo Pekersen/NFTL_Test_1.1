@@ -6,6 +6,7 @@ extends Control
 
 @onready var resource_panel = $Info/ResourcesContainer/ResourcePanel
 @onready var total_resource_bar = $Info/ResourcesContainer/ResourcePanel/TotalResourceBar
+@onready var local_resource_bar = $Info/ResourcesContainer/LocalResourcePanel
 
 @onready var energy = $Info/ResourcesContainer/ResourcePanel/TotalResourceBar/PanelContainer1/Energy
 
@@ -15,7 +16,6 @@ var gui_visible = true
 func _ready():
 	pass
 
-
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta):
 	fps_counter.set_text("FPS %d" % Engine.get_frames_per_second())
@@ -23,8 +23,11 @@ func _process(_delta):
 		system_name.set_text("System: %s" % Start4.system_names[Start4.SYSTEM_COUNT - Start4.current_system_id - 1])
 		if Start4.current_system_id == 0:
 			system_name.set_text("Home System")
+		if !local_resource_bar.is_visible():
+			local_resource_bar.show()
 	else:
 		system_name.set_text("Star Map")
+		local_resource_bar.hide()
 	
 	energy.set_text(" Energy: %d " % Resources.energy)
 

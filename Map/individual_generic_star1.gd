@@ -29,9 +29,11 @@ func _ready():
 	
 	firstStarMesh.mesh.material.set_shader_parameter("Sun_Color", color)
 	
-	label1.position = Vector3(0, size * 0.5, 0)
+	label1.position = Vector3(0, size * 0.2 + 0.5, 0)
 	label1.font_size = 16
 	label1.text = object_name
+	if get_id() == Start4.SYSTEM_COUNT - 1:
+		label1.text = "Home System"
 	#firstStarMesh.mesh.resource_path = "res://Map/generic_star.tscn::SphereMesh_c8gkq"
 	
 	

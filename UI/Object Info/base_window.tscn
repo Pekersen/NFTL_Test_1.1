@@ -1,0 +1,31 @@
+[gd_scene load_steps=2 format=3 uid="uid://d2yut0bm3vc5a"]
+
+[ext_resource type="Script" path="res://UI/Object Info/base_window.gd" id="1_eb42h"]
+
+[node name="BaseWindow" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_eb42h")
+
+[node name="SubViewport" type="SubViewport" parent="."]
+
+[node name="Window" type="Window" parent="SubViewport"]
+title = "Name"
+content_scale_aspect = 4
+
+[node name="HBoxContainer" type="HBoxContainer" parent="SubViewport/Window"]
+offset_right = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="SubViewport/Window/HBoxContainer"]
+layout_mode = 2
+
+[node name="Name" type="Label" parent="SubViewport/Window/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "System Name: "
+
+[node name="HSeparator" type="HSeparator" parent="SubViewport/Window/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Status" type="Label" parent="SubViewport/Window/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Status: "

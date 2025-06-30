@@ -3,6 +3,8 @@ extends CharacterBody3D
 @onready var springArm = $SpringArm3D
 @onready var camera = $SpringArm3D/Camera3D
 @onready var settings = $Settings
+@onready var window = preload("res://UI/Object Info/base_window.tscn")
+
 var SPEED = 150
 var SPEED_INCREASE = 1.0
 
@@ -16,6 +18,7 @@ var locked_movement_enabled := false
 var locked_camera_offset := Vector3.ZERO
 
 var on_planet = false
+var previous_node : Node3D
 
 signal cam_move_to_spring_arm(radius1)
 
@@ -109,9 +112,13 @@ func _input(event):
 			free_movement_enabled = false
 			locked_movement_enabled = false
 			reset()
+			position = Starmap.stars[Start4.SYSTEM_COUNT - Start4.current_system_id - 1].position
 		else:
 			free_movement_enabled = true
 			locked_movement_enabled = false
+			reset()
+			
+			
 	if event.is_action_released("click"):
 		shoot_ray_left()
 	if event.is_action_pressed("right click"):
@@ -152,7 +159,18 @@ func shoot_ray_right():
 	var raycast_result_right = space.intersect_ray(ray_query)
 	
 	if !raycast_result_right.is_empty():
-		get_tree().change_scene_to_file("res://Celestial Objects/Planets/planet_world.tscn")
+		clicked_node = raycast_result_right.collider
+		if Starmap.is_visible:
+			if clicked_node.get_parent().get_id() != -1:
+				print("ATTEMPTING SWITCH TO SYSTEM ", (Start4.SYSTEM_COUNT - clicked_node.get_parent().get_id()) - 1)
+				springArm._spring_arm_target_length = 1.0
+				Starmap.on_click = true
+				Starmap.toggle_map()
+				Start4.switch_to_star_system((Start4.SYSTEM_COUNT - clicked_node.get_parent().get_id()) - 1)
+				free_movement_enabled = true
+				locked_movement_enabled = false
+				reset()
+		#get_tree().change_scene_to_file("res://Celestial Objects/Planets/planet_world.tscn")
 		
 	
 func shoot_ray_left():
@@ -187,16 +205,15 @@ func shoot_ray_left():
 		clicked_node = raycast_result.collider
 		if Starmap.is_visible:
 			if clicked_node.get_parent().get_id() != -1:
-				print("ATTEMPTING SWITCH TO SYSTEM ", (Start4.SYSTEM_COUNT - clicked_node.get_parent().get_id()) - 1)
-				springArm._spring_arm_target_length = 1.0
-				Starmap.on_click = true
-				Starmap.toggle_map()
-				Start4.switch_to_star_system((Start4.SYSTEM_COUNT - clicked_node.get_parent().get_id()) - 1)
+				following = true
+				#var temp_window = window.instantiate()
+				#clicked_node.get_parent().add_sibling(temp_window)
+			elif clicked_node.get_parent().get_id() == -1:
+				following = false
 				
-		else:
+		elif !Starmap.is_visible:
 			#if on_planet:
 			#	on_planet = false
-			
 			following = true
 			print("clicked " + str(raycast_result.collider), " with parent ", clicked_node.get_parent(), " which has parent ", clicked_node.get_parent().get_parent())
 			if !on_planet:
@@ -207,6 +224,7 @@ func shoot_ray_left():
 				springArm._spring_arm_target_length = clicked_node.get_parent().get_parent().radius * 3.0
 				clicked_node.get_parent().get_parent().object_is_clicked()
 				
+		previous_node = clicked_node
 			
 			
 			#print("ATTEMPTING SWITCH TO SYSTEM ", clicked_node.get_parent().get_parent().id)

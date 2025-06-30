@@ -98,6 +98,7 @@ func toggle_map():
 			get_tree().current_scene.add_child(map_instance)
 		map_instance.process_mode = 0
 		map_instance.show()
+		
 	else:
 		if !on_click:
 			Start4.star_systems[Start4.current_system_id].process_mode = 0
