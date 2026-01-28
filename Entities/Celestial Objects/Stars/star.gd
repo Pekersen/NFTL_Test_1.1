@@ -1,14 +1,14 @@
-extends Star
+class_name Star extends CelestialObject
 
 signal star_rad_for_cam(radius)
 
 const _LABEL_OFFSET_FROM_SURFACE = Vector3(0, 10, 0)
 const _LABEL_FONT_SIZE = 48
 
+@export var star_type : StarType
 @export var star_name : String
 @export var age : int
 
-var star_type : String
 var star_names = ["Centauri", "Sol", "Bernard's Star", "Vega", "Proxima", "Polaris", "Betelgeuse", "Deneb", "Sirius"]
 
 var small_star_probability : float
@@ -25,6 +25,11 @@ var num_belts : int
 var num_moons : int
 var num_rings : int
 var planet_type : String
+
+var luminosity : float
+var color_r : float
+var color_g : float
+var color_b : float
 
 var planet_radius_variance : Array[float]
 
@@ -52,14 +57,6 @@ var star_rad : float
 
 var planet_count_reduction = 1
 
-'''
-var color_r : float
-var color_g : float
-var color_b : float
-var color_variance_r : Array[float]
-var color_variance_g : Array[float]
-var color_variance_b : Array[float]
-'''
 var all_colors : Array[float]
 var base_texture = false
 
@@ -103,20 +100,16 @@ var on_tile = false
 @onready var ring = preload("res://Entities/Celestial Objects/Rings/ring.tscn")
 @onready var belt = preload("res://Entities/Celestial Objects/Belts/belt.tscn")
 
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	#star_rotate(delta)
+	if can_orbit:
+		orbit(delta, core)
+		if is_flipped:
+			core.position *= -1
+	celestial_rotation(delta, starMesh)
+
 func _ready():
-	if star_count == 1:
-		small_star_probability = 0.0
-		big_star_probability = 1.0
-		planet_count_reduction = 1
-	elif star_count == 2:
-		small_star_probability = 0.3
-		big_star_probability = 0.01
-		planet_count_reduction = 2
-	elif star_count == 3:
-		small_star_probability = 0.4
-		big_star_probability = 0.0
-		planet_count_reduction = 3
-	
 	_init_vars()
 	
 	if star_count == 1:
@@ -129,8 +122,7 @@ func _ready():
 	
 	
 func _init_vars():
-	star_type = _pick_star_type()
-	_on_system_star_gen(star_type)
+	_init_type()
 	num_planets = offset_value(num_planets_variance) / planet_count_reduction
 	var rand = randf()
 	if rand < 0.7:
@@ -150,121 +142,25 @@ func _init_vars():
 		num_belts = 2
 		num_planets = randi_range(7, 9)
 		
-	
-	
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	#star_rotate(delta)
-	if can_orbit:
-		orbit(delta, core)
-		if is_flipped:
-			core.position *= -1
-	celestial_rotation(delta, starMesh)
 
-func  _on_system_star_gen(s_type):
-	star_type = s_type
-	
-	if star_type == "O":
-		radius_variance = [13.2,20]
-		mass_variance = [16,20]
-		luminosity_variance = [50,70]
-		temperature_variance = [33000, 50000]
-		
-		color_variance_r = [0.60,0.685]
-		color_variance_g = [1,1]
-		color_variance_b = [1,1]
-		
-	elif star_type == "B":
-		radius_variance = [3.6,13.2]
-		mass_variance = [2.1,16]
-		luminosity_variance = [40,50]
-		temperature_variance = [10000, 33000]
-		
-		color_variance_r = [0.685,0.875]
-		color_variance_g = [1,1]
-		color_variance_b = [1,1]
-		
-	elif star_type == "A":
-		radius_variance = [2.8,3.6]
-		mass_variance = [1.4,2.1]
-		luminosity_variance = [20,30]
-		temperature_variance = [7300, 10000]
-		
-		color_variance_r = [0.875,1]
-		color_variance_g = [1,1]
-		color_variance_b = [1,1]
-		
-	elif star_type == "F":
-		radius_variance = [2.2,2.8]
-		mass_variance = [1.04,1.4]
-		luminosity_variance = [10,20]
-		temperature_variance = [6000, 7300]
-		
-		color_variance_r = [1,1]
-		color_variance_g = [1,1]
-		color_variance_b = [0.8,1]
-		
-	elif star_type == "G":
-		radius_variance = [1.8,2.2]
-		mass_variance = [0.8,1.04]
-		luminosity_variance = [5,10]
-		temperature_variance = [5300, 6000]
-		
-		color_variance_r = [1,1]
-		color_variance_g = [1,1]
-		color_variance_b = [0.6,0.8]
-		
-	elif star_type == "K":
-		radius_variance = [1.4,1.8]
-		mass_variance = [0.45,0.8]
-		luminosity_variance = [1,5]
-		temperature_variance = [3900, 5300]
-		
-		color_variance_r = [1,1]
-		color_variance_g = [0.7,0.8]
-		color_variance_b = [0.4,0.6]
-		
-	elif star_type == "M":
-		radius_variance = [1.2,1.4]
-		mass_variance = [0.2,0.45]
-		luminosity_variance = [0.6,1]
-		temperature_variance = [2300, 3900]
-		
-		color_variance_r = [1,1]
-		color_variance_g = [0.25,0.35]
-		color_variance_b = [0.2,0.3]
-		
-	elif star_type == "L":
-		radius_variance = [1.0,1.2]
-		mass_variance = [0.1,0.2]
-		luminosity_variance = [0.4,0.6]
-		temperature_variance = [1300, 2000]
-		
-		color_variance_r = [0.6,0.7]
-		color_variance_g = [0.2,0.25]
-		color_variance_b = [0.1,0.2]
-	
-	elif star_type == "T":
-		radius_variance = [0.8,1.0]
-		mass_variance = [0.08,0.1]
-		luminosity_variance = [0.2,0.4]
-		temperature_variance = [700, 1300]
-		
-		color_variance_r = [0.5,0.6]
-		color_variance_g = [0.2,0.25]
-		color_variance_b = [0.2,0.3]
-		
-	elif star_type == "Y":
-		radius_variance = [0.6,0.8]
-		mass_variance = [0.05,0.08]
-		luminosity_variance = [0.0,0.2]
-		temperature_variance = [100, 700]
-		
-		color_variance_r = [0.3,0.5]
-		color_variance_g = [0.25,0.3]
-		color_variance_b = [0.3,0.4]
-		
-	
+func _init_type():
+	if star_count == 1:
+		small_star_probability = 0.0
+		big_star_probability = 1.0
+		planet_count_reduction = 1
+	elif star_count == 2:
+		small_star_probability = 0.3
+		big_star_probability = 0.01
+		planet_count_reduction = 2
+	elif star_count == 3:
+		small_star_probability = 0.4
+		big_star_probability = 0.0
+		planet_count_reduction = 3
+	_set_star_type(_pick_star_type())
+	_on_system_star_gen()
+
+func  _on_system_star_gen():
+	# TODO: put rot_speed_var in star type
 	rotation_speed_variance = [0,0]
 	
 	var random_float = randf()
@@ -275,15 +171,15 @@ func  _on_system_star_gen(s_type):
 	else:
 		rotation_speed_variance = [0.01,1.25]
 		
-	radius = offset_value(radius_variance) * s
-	mass = offset_value(mass_variance)
-	luminosity = offset_value(luminosity_variance)
-	temperature = offset_value(temperature_variance)
+	radius = offset_value(star_type.radius_variance) * s
+	mass = offset_value(star_type.mass_variance)
+	luminosity = offset_value(star_type.luminosity_variance)
+	temperature = offset_value(star_type.temperature_variance)
 	rotations_per_tick = offset_value(rotation_speed_variance)
 	
-	color_r = offset_value(color_variance_r)
-	color_g = offset_value(color_variance_g)
-	color_b = offset_value(color_variance_b)
+	color_r = offset_value(star_type.color_r_variance)
+	color_g = offset_value(star_type.color_g_variance)
+	color_b = offset_value(star_type.color_b_variance)
 	
 	#TEMP
 	#print("Color R: " + str(color_r) + ", Color G: " + str(color_g) + ", Color B: " + str(color_b))
@@ -308,18 +204,14 @@ func  _on_system_star_gen(s_type):
 ### Console Commands ###
 func get_star_info() -> String:
 	# Command currently based on Star node being in Main. Will have to change eventually.
-	return "Star type: " + str(star_type) + "\nRadius: " + str(radius) + "\nMass: " +\
+	return "Star type: " + str(star_type.star_type_name) + "\nRadius: " + str(radius) + "\nMass: " +\
 	 	str(mass) + "\nLuminosity: " + str(luminosity) + "\nTemperature: " +\
 		str(temperature) + "\nColor: R-" + str(color_r) + ", G-" + str(color_g) +\
 		", B-" + str(color_b) + "\nRotation Speed: " + str(rotations_per_tick)
 
 func set_star_type(newStarType : String):
-	if newStarType == "random":
-		newStarType = _pick_star_type()
-		_on_system_star_gen(newStarType)
-	else:
-		_on_system_star_gen(newStarType)
-	return "Set star type to " + (str(newStarType))
+	_set_star_type(newStarType)
+	return "Set star type to " + (star_type.star_type_name)
 
 ### End Console Commands ###
 
@@ -354,7 +246,33 @@ func _pick_star_type():
 		return "Y"
 	else:
 		return "M"
-		
+
+func _set_star_type(type : String) -> void:
+	match type:
+		"random":
+			_set_star_type(_pick_star_type())
+		"O":
+			star_type = StarTypes.type_o
+		"B":
+			star_type = StarTypes.type_b
+		"A":
+			star_type = StarTypes.type_a
+		"F":
+			star_type = StarTypes.type_f
+		"G":
+			star_type = StarTypes.type_g
+		"K":
+			star_type = StarTypes.type_k
+		"M":
+			star_type = StarTypes.type_m
+		"L":
+			star_type = StarTypes.type_l
+		"T":
+			star_type = StarTypes.type_t
+		"Y":
+			star_type = StarTypes.type_y
+		_:
+			push_error("Star Type Error: \"" + type + "\" not declared in the current scope.")
 func change_name():
 	label.text = object_name
 		
@@ -387,6 +305,9 @@ func object_is_clicked():
 #===================================================================================
 
 func offset_value(offset : Array):
+	if offset == null:
+		push_error("Tried to offset a null array")
+		return
 	if typeof(offset[0]) == TYPE_FLOAT:
 		return rng.randf_range(offset[0], offset[1])
 	elif typeof(offset[0]) == TYPE_INT:
@@ -482,11 +403,11 @@ func _init_planet_vars(planetInstance, i, star_radius):
 		planetInstance.atmosphere_present = true
 		planetInstance.atmosphere_size = atmosphere_size
 		planetInstance.atmosphere_thickness = atmosphere_thickness
-	
-	planetInstance.color_r = offset_value(color_variance_r)
-	planetInstance.color_g = offset_value(color_variance_g)
-	planetInstance.color_b = offset_value(color_variance_b)
-	
+	'''
+	planetInstance.color_r = offset_value(color_r_variance)
+	planetInstance.color_g = offset_value(color_g_variance)
+	planetInstance.color_b = offset_value(color_b_variance)
+	'''
 	num_rings = offset_value(num_rings_variance)
 	
 	if base_texture:
@@ -524,13 +445,13 @@ func _init_ring_vars(ringInstance):
 	ringInstance.semi_major_axis = ring_size + radius
 	
 	var colors = offset_value([0.0,1.0])
-	color_variance_r = [colors,colors]
-	color_variance_g = [colors,colors]
-	color_variance_b = [colors,colors]
+	star_type.color_r_variance = [colors,colors]
+	star_type.color_g_variance = [colors,colors]
+	star_type.color_b_variance = [colors,colors]
 	
-	ringInstance.color_r = offset_value(color_variance_r)
-	ringInstance.color_g = offset_value(color_variance_g)
-	ringInstance.color_b = offset_value(color_variance_b)
+	ringInstance.color_r = offset_value(star_type.color_r_variance)
+	ringInstance.color_g = offset_value(star_type.color_g_variance)
+	ringInstance.color_b = offset_value(star_type.color_b_variance)
 	
 func get_semimajoraxis(i : int):
 	return planets_semi[i]
@@ -634,13 +555,13 @@ func _set_planet_type(i : int):
 			
 		random_float = randf()
 		if random_float < 0.9:
-			color_variance_r = [1,1]
-			color_variance_g = [1,1]
-			color_variance_b = [0.6,1]
+			star_type.color_r_variance = [1,1]
+			star_type.color_g_variance = [1,1]
+			star_type.color_b_variance = [0.6,1]
 		else:
-			color_variance_r = [0.5,0.6]
-			color_variance_g = [0.2,0.25]
-			color_variance_b = [0.2,0.3]
+			star_type.color_r_variance = [0.5,0.6]
+			star_type.color_g_variance = [0.2,0.25]
+			star_type.color_b_variance = [0.2,0.3]
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
@@ -661,9 +582,9 @@ func _set_planet_type(i : int):
 			num_rings_variance = [10,30]
 			ring_max = 1.2
 			
-		color_variance_r = [1,1]
-		color_variance_g = [0.25,0.35]
-		color_variance_b = [0.2,0.3]
+		star_type.color_r_variance = [1,1]
+		star_type.color_g_variance = [0.25,0.35]
+		star_type.color_b_variance = [0.2,0.3]
 	
 		atmosphere_present = true
 		atmosphere_thickness = 0.3
@@ -682,13 +603,13 @@ func _set_planet_type(i : int):
 		random_float = randf()
 		if random_float < 0.5:
 			var colors = offset_value([0.1,0.5])
-			color_variance_r = [colors, colors]
-			color_variance_g = [colors, colors]
-			color_variance_b = [colors, colors]
+			star_type.color_r_variance = [colors, colors]
+			star_type.color_g_variance = [colors, colors]
+			star_type.color_b_variance = [colors, colors]
 		else:
-			color_variance_r = [0.6,0.9]
-			color_variance_g = [0.2,0.5]
-			color_variance_b = [0.1,0.4]
+			star_type.color_r_variance = [0.6,0.9]
+			star_type.color_g_variance = [0.2,0.5]
+			star_type.color_b_variance = [0.1,0.4]
 			
 		atmosphere_present = false
 	
@@ -709,13 +630,13 @@ func _set_planet_type(i : int):
 		random_float = randf()
 		if random_float < 0.5:
 			var colors = offset_value([0.2,0.8])
-			color_variance_r = [colors, colors]
-			color_variance_g = [colors, colors]
-			color_variance_b = [colors, colors]
+			star_type.color_r_variance = [colors, colors]
+			star_type.color_g_variance = [colors, colors]
+			star_type.color_b_variance = [colors, colors]
 		else:
-			color_variance_r = [1,1]
-			color_variance_g = [0.5,0.8]
-			color_variance_b = [0.3,0.5]
+			star_type.color_r_variance = [1,1]
+			star_type.color_g_variance = [0.5,0.8]
+			star_type.color_b_variance = [0.3,0.5]
 		
 		random_float = randf()
 		if random_float < 0.5:
@@ -739,9 +660,9 @@ func _set_planet_type(i : int):
 			ring_max = 0.2
 		
 		random_float = randf()
-		color_variance_r = [0,0]
-		color_variance_g = [0.2,0.8]
-		color_variance_b = [0.7,0.9]
+		star_type.color_r_variance = [0,0]
+		star_type.color_g_variance = [0.2,0.8]
+		star_type.color_b_variance = [0.7,0.9]
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
@@ -760,9 +681,9 @@ func _set_planet_type(i : int):
 			ring_size_variance = [0.2,0.8]
 			ring_max = 0.8
 		
-		color_variance_r = [0.6,0.9]
-		color_variance_g = [1,1]
-		color_variance_b = [1,1]
+		star_type.color_r_variance = [0.6,0.9]
+		star_type.color_g_variance = [1,1]
+		star_type.color_b_variance = [1,1]
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
@@ -788,13 +709,13 @@ func _set_planet_type(i : int):
 		random_float = randf()
 		if random_float < 0.5:
 			var colors = offset_value([0.2,0.8])
-			color_variance_r = [colors, colors]
-			color_variance_g = [colors, colors]
-			color_variance_b = [colors, colors]
+			star_type.color_r_variance = [colors, colors]
+			star_type.color_g_variance = [colors, colors]
+			star_type.color_b_variance = [colors, colors]
 		else:
-			color_variance_r = [1,1]
-			color_variance_g = [0.5,0.7]
-			color_variance_b = [0.3,0.5]
+			star_type.color_r_variance = [1,1]
+			star_type.color_g_variance = [0.5,0.7]
+			star_type.color_b_variance = [0.3,0.5]
 			
 		random_float = randf()
 		if random_float < 0.5:
@@ -818,9 +739,9 @@ func _set_planet_type(i : int):
 			ring_max = 0.6
 		
 		random_float = randf()
-		color_variance_r = [0.1,0.1]
-		color_variance_g = [0.1,0.9]
-		color_variance_b = [0.6,0.9]
+		star_type.color_r_variance = [0.1,0.1]
+		star_type.color_g_variance = [0.1,0.9]
+		star_type.color_b_variance = [0.6,0.9]
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5

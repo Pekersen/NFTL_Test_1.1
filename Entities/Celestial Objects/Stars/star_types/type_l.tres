@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StarType" load_steps=2 format=3 uid="uid://dsbrn4o40wdkb"]
+
+[ext_resource type="Script" uid="uid://cla4rierijhd4" path="res://Entities/Celestial Objects/Stars/star_types/star_type.gd" id="1_is8qt"]
+
+[resource]
+script = ExtResource("1_is8qt")
+star_type_name = "L"
+radius_variance = Array[float]([1.0, 1.2])
+mass_variance = Array[float]([0.1, 0.2])
+luminosity_variance = Array[float]([0.4, 0.6])
+temperature_variance = Array[float]([1300.0, 2000.0])
+color_r_variance = Array[float]([0.6, 0.7])
+color_g_variance = Array[float]([0.2, 0.25])
+color_b_variance = Array[float]([0.1, 0.2])
+metadata/_custom_type_script = "uid://cla4rierijhd4"

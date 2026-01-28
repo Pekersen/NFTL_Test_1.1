@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StarType" load_steps=2 format=3 uid="uid://cqwwn7agw6nxw"]
+
+[ext_resource type="Script" uid="uid://cla4rierijhd4" path="res://Entities/Celestial Objects/Stars/star_types/star_type.gd" id="1_kt46j"]
+
+[resource]
+script = ExtResource("1_kt46j")
+star_type_name = "F"
+radius_variance = Array[float]([2.8, 3.6])
+mass_variance = Array[float]([1.04, 1.4])
+luminosity_variance = Array[float]([10.0, 20.0])
+temperature_variance = Array[float]([6000.0, 7300.0])
+color_r_variance = Array[float]([1.0, 1.0])
+color_g_variance = Array[float]([1.0, 1.0])
+color_b_variance = Array[float]([0.8, 1.0])
+metadata/_custom_type_script = "uid://cla4rierijhd4"

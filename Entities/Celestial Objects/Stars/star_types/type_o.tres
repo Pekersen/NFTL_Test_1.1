@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="StarType" load_steps=2 format=3 uid="uid://vm1nrsvjhu7p"]
+
+[ext_resource type="Script" uid="uid://cla4rierijhd4" path="res://Entities/Celestial Objects/Stars/star_types/star_type.gd" id="1_g2dn2"]
+
+[resource]
+script = ExtResource("1_g2dn2")
+star_type_name = "O"
+radius_variance = Array[float]([13.2, 20.0])
+mass_variance = Array[float]([16.0, 20.0])
+luminosity_variance = Array[float]([50.0, 70.0])
+temperature_variance = Array[float]([33000.0, 50000.0])
+color_r_variance = Array[float]([0.6, 0.685])
+color_g_variance = Array[float]([1.0, 1.0])
+color_b_variance = Array[float]([1.0, 1.0])
+metadata/_custom_type_script = "uid://cla4rierijhd4"

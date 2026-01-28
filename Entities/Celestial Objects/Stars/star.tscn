@@ -1,7 +1,7 @@
 [gd_scene load_steps=15 format=3 uid="uid://bequjodqr8tcj"]
 
-[ext_resource type="Script" path="res://Entities/Celestial Objects/Stars/star.gd" id="1_81nsq"]
-[ext_resource type="Script" path="res://Entities/Celestial Objects/Planets/tilebuilder.gd" id="2_ajkwg"]
+[ext_resource type="Script" uid="uid://bk3wyfppngy6r" path="res://Entities/Celestial Objects/Stars/star.gd" id="1_81nsq"]
+[ext_resource type="Script" uid="uid://bdkxv7faeabiv" path="res://Entities/Celestial Objects/Planets/tilebuilder.gd" id="2_ajkwg"]
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_k228r"]
 shading_mode = 0
@@ -115,12 +115,12 @@ domain_warp_fractal_octaves = 8
 domain_warp_fractal_gain = 1.2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ndpt"]
-seamless = true
-seamless_blend_skirt = 1.0
-as_normal_map = true
-bump_strength = 25.1
-color_ramp = SubResource("Gradient_b16wq")
 noise = SubResource("FastNoiseLite_h3vb1")
+color_ramp = SubResource("Gradient_b16wq")
+seamless = true
+as_normal_map = true
+seamless_blend_skirt = 1.0
+bump_strength = 25.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dj6he"]
 resource_local_to_scene = true
@@ -129,7 +129,7 @@ shader = SubResource("Shader_5nekp")
 shader_parameter/albedo = Color(0, 0, 0, 1)
 shader_parameter/point_size = 0.0
 shader_parameter/roughness = 0.0
-shader_parameter/metallic_texture_channel = null
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
 shader_parameter/specular = 0.0
 shader_parameter/metallic = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
@@ -139,11 +139,11 @@ shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/Glow_Power = 0.879
 shader_parameter/Lightness_Difference = 0.925
 shader_parameter/Sun_Color = Color(1, 1, 1, 1)
+shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
 shader_parameter/waveSpeed = 0.047
 shader_parameter/fresnel = 1.013
 shader_parameter/scale = 0.25
 shader_parameter/blendSharpness = 0.156
-shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
 
 [sub_resource type="SphereMesh" id="SphereMesh_c8gkq"]
 resource_local_to_scene = true
@@ -162,9 +162,8 @@ outer_radius = 25.0
 
 [sub_resource type="TorusMesh" id="TorusMesh_5tw6a"]
 
-[node name="Star" type="Node3D" node_paths=PackedStringArray("core")]
+[node name="Star" type="Node3D"]
 script = ExtResource("1_81nsq")
-core = NodePath("RotationPoint/Core")
 
 [node name="Orbit" type="MeshInstance3D" parent="."]
 visible = false
