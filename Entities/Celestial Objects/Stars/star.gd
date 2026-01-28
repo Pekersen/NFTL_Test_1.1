@@ -316,18 +316,21 @@ func _init_planet_children():
 	orbit_sum = offset_value([0.0, 2.0 * star_rad])
 	
 	for i in range(num_planets):
+		# init a planet
 		var planet_instance = planet.instantiate()
 		_init_planet_vars(planet_instance, i, star_rad)
 		
 		orbit_sum = planet_instance_distance
 		
+		# make star recognize it
 		get_node("RotationPoint/Core").add_child(planet_instance)
 		planets.append(planet_instance)
 		
+		# add children to planet
 		for j in range(num_moons):
 			var moonInstance = _init_moon()
 			planet_instance.get_node("RotationPoint/Core").add_child(moonInstance)
-			moonInstance.init_orbit_mesh(moonInstance.orbitMesh, moonInstance.initial_rotation)	
+			moonInstance.init_orbit_mesh(moonInstance.orbitMesh, moonInstance.initial_rotation)
 			planet_instance.moons.append(moonInstance)
 		
 		for k in range(num_rings):
@@ -516,11 +519,6 @@ func _set_planet_type(i : int):
 		home_world_added = true
 		home_world_num = i
 		print("Home World Added")
-		
-	
-	#print("-----------------------------")
-	#print(planet_type, ": ", orbit_sum, ". Habitable zone: ", star_rad * 10, " - ", star_rad * 15)
-	#print("-----------------------------")
 	
 	if planet_type == "Gas_Giant":
 		planet_radius_variance = [0.5,0.8] 

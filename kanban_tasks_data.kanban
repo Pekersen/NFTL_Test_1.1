@@ -1,0 +1,69 @@
+{
+	"categories": [
+		{
+			"uuid": "60c36029-2b00-4a44-b544-761915e0627f",
+			"title": "Task",
+			"color": "569eff"
+		},
+		{
+			"uuid": "8adf734d-f081-4f22-8fd6-ef58dd616ed8",
+			"title": "Questions",
+			"color": "3ddf10"
+		}
+	],
+	"stages": [
+		{
+			"uuid": "0a79ccc7-be73-4948-ae03-a2331c642141",
+			"title": "Todo",
+			"tasks": [
+				"29509758-b262-4343-84fe-64c8b3300449",
+				"1c2db0f0-3a3b-418c-8297-898a93dc0fe0"
+			]
+		},
+		{
+			"uuid": "5fbf3c85-3b35-42a6-9814-823c95cf47c8",
+			"title": "Wqsk Doing",
+			"tasks": []
+		},
+		{
+			"uuid": "461f46cc-df23-4ced-9aa7-eb0517e59d9b",
+			"title": "Done",
+			"tasks": []
+		},
+		{
+			"uuid": "290794ef-81ae-4bdf-9e21-51cc43b26b33",
+			"title": "Pekersen Doing",
+			"tasks": []
+		}
+	],
+	"tasks": [
+		{
+			"uuid": "29509758-b262-4343-84fe-64c8b3300449",
+			"title": "Color Variance",
+			"description": "Why are there color variances for the star in the planet init sections?\nCheck at line 543 stars.gd",
+			"category": "8adf734d-f081-4f22-8fd6-ef58dd616ed8",
+			"steps": []
+		},
+		{
+			"uuid": "1c2db0f0-3a3b-418c-8297-898a93dc0fe0",
+			"title": "Ring max",
+			"description": "What does ring_max mean in star.gd? Line 539",
+			"category": "8adf734d-f081-4f22-8fd6-ef58dd616ed8",
+			"steps": []
+		}
+	],
+	"layout": {
+		"columns": [
+			[
+				"0a79ccc7-be73-4948-ae03-a2331c642141"
+			],
+			[
+				"5fbf3c85-3b35-42a6-9814-823c95cf47c8",
+				"290794ef-81ae-4bdf-9e21-51cc43b26b33"
+			],
+			[
+				"461f46cc-df23-4ced-9aa7-eb0517e59d9b"
+			]
+		]
+	}
+}
