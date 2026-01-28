@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://c4pw3j7snhqoi"]
+[gd_scene format=3 uid="uid://c4pw3j7snhqoi"]
 
 [ext_resource type="Script" uid="uid://dgaammcft36bu" path="res://UI/Screens/Title/TitleScreen.gd" id="1_1cvye"]
 [ext_resource type="Texture2D" uid="uid://bemkeddhprj7n" path="res://Assets/Icons/NFTL planet.png" id="1_wqorv"]
@@ -8,7 +8,7 @@
 
 [sub_resource type="VideoStreamTheora" id="VideoStreamTheora_3fpx0"]
 
-[node name="TitleScreen" type="Control"]
+[node name="TitleScreen" type="Control" unique_id=1263210241]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,7 +17,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_1cvye")
 
-[node name="SplashScreen" type="VideoStreamPlayer" parent="."]
+[node name="SplashScreen" type="VideoStreamPlayer" parent="." unique_id=124448015]
 layout_mode = 0
 offset_right = 1156.0
 offset_bottom = 647.0
@@ -25,7 +25,7 @@ stream = SubResource("VideoStreamTheora_3fpx0")
 expand = true
 loop = true
 
-[node name="Background" type="TextureRect" parent="."]
+[node name="Background" type="TextureRect" parent="." unique_id=667966501]
 visible = false
 layout_mode = 0
 offset_left = -479.0
@@ -35,38 +35,38 @@ texture = ExtResource("1_wqorv")
 expand_mode = 1
 stretch_mode = 1
 
-[node name="ButtonCenter" type="CenterContainer" parent="."]
+[node name="ButtonCenter" type="CenterContainer" parent="." unique_id=883888895]
 layout_mode = 0
 offset_top = 192.0
 offset_right = 1152.0
 offset_bottom = 648.0
 
-[node name="ButtonContainer" type="VBoxContainer" parent="ButtonCenter"]
+[node name="ButtonContainer" type="VBoxContainer" parent="ButtonCenter" unique_id=106402706]
 layout_mode = 2
 theme_override_constants/separation = 15
 script = ExtResource("2_bjhsx")
 
-[node name="Start" type="Button" parent="ButtonCenter/ButtonContainer"]
+[node name="Start" type="Button" parent="ButtonCenter/ButtonContainer" unique_id=1575677746]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Start"
 
-[node name="Settings" type="Button" parent="ButtonCenter/ButtonContainer"]
+[node name="Settings" type="Button" parent="ButtonCenter/ButtonContainer" unique_id=2002966881]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Settings"
 
-[node name="Quit" type="Button" parent="ButtonCenter/ButtonContainer"]
+[node name="Quit" type="Button" parent="ButtonCenter/ButtonContainer" unique_id=54685203]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 text = "Quit"
 
-[node name="TitleCenter" type="CenterContainer" parent="."]
+[node name="TitleCenter" type="CenterContainer" parent="." unique_id=365903530]
 layout_mode = 0
 offset_right = 1152.0
 offset_bottom = 365.0
 
-[node name="TitleText" type="RichTextLabel" parent="TitleCenter"]
+[node name="TitleText" type="RichTextLabel" parent="TitleCenter" unique_id=1209801827]
 custom_minimum_size = Vector2(0, 115)
 layout_mode = 2
 theme_override_colors/default_color = Color(0, 0, 0, 1)
@@ -77,11 +77,11 @@ text = "NFTL"
 fit_content = true
 autowrap_mode = 0
 
-[node name="TitleMusic" type="AudioStreamPlayer" parent="."]
+[node name="TitleMusic" type="AudioStreamPlayer" parent="." unique_id=187212200]
 volume_db = -40.0
 autoplay = true
 
-[node name="Settings" parent="." node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("5_vy6nv")]
+[node name="Settings" parent="." unique_id=1633162217 node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("5_vy6nv")]
 visible = false
 layout_mode = 1
 IS_IN_GAME_MENU = false

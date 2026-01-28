@@ -1,4 +1,6 @@
 extends Node
+## Autoload to store the star types for generation.
+
 
 var type_o = preload("res://Entities/Celestial Objects/Stars/star_types/type_o.tres")
 var type_b = preload("res://Entities/Celestial Objects/Stars/star_types/type_b.tres")

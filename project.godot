@@ -8,21 +8,25 @@
 
 config_version=5
 
+[animation]
+
+compatibility/default_parent_skeleton_in_mesh_instance_3d=true
+
 [application]
 
 config/name="NFTL"
 run/main_scene="res://UI/Screens/Title/TitleScreen.tscn"
-config/features=PackedStringArray("4.5", "Forward Plus")
+config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://Assets/Icons/NFTL Logo.png"
 
 [autoload]
 
-ConsoleDataManager="*res://addons/simply-console/singletons/console_data_manager.gd"
+ConsoleDataManager="*uid://cvy4ylktoktw"
 Start4="*res://Generation/start4.gd"
 Starmap="*res://Map/starmap.gd"
 Resources="*res://Data/Civilization Info/Resources/resources.gd"
 DiscordRPCLoader="*res://addons/discord-rpc-gd/nodes/discord_autoload.gd"
-SettingsDataManager="*res://addons/modular-settings-menu/singletons/settings_data_manager.gd"
+SettingsDataManager="*uid://j58fqk26ujry"
 GlobalVariables="*res://Data/Globals/global_variables.gd"
 StarTypes="*res://Entities/Celestial Objects/Stars/star_types/star_types.gd"
 
