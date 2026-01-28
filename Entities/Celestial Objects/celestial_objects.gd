@@ -39,8 +39,14 @@ var object_name : String
 # though user is clicking on nothing visually
 var click_forgiveness : float = 1.0
 
-func offset_value(offset : Array[float]):
-	return rng.randf_range(offset[0], offset[1])
+func offset_value(offset : Array):
+	if offset == null:
+		push_error("Tried to offset a null array")
+		return
+	if typeof(offset[0]) == TYPE_FLOAT:
+		return rng.randf_range(offset[0], offset[1])
+	elif typeof(offset[0]) == TYPE_INT:
+		return rng.randi_range(offset[0], offset[1])
 
 # moves 'core' in an orbit
 func orbit(delta, core_obj):

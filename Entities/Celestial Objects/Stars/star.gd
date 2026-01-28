@@ -121,9 +121,12 @@ func _ready():
 	label.font_size = _LABEL_FONT_SIZE
 	
 	
-func _init_vars():
+func _init_vars() -> void:
 	_init_type()
-	num_planets = offset_value(num_planets_variance) / planet_count_reduction
+	_init_planets()
+	_init_belts()
+
+func _init_belts() -> void:
 	var rand = randf()
 	if rand < 0.7:
 		num_belts = 0
@@ -141,9 +144,11 @@ func _init_vars():
 	if is_home:
 		num_belts = 2
 		num_planets = randi_range(7, 9)
-		
 
-func _init_type():
+func _init_planets() -> void:
+	num_planets = offset_value(num_planets_variance) / planet_count_reduction
+
+func _init_type() -> void:
 	if star_count == 1:
 		small_star_probability = 0.0
 		big_star_probability = 1.0
@@ -159,7 +164,7 @@ func _init_type():
 	_set_star_type(_pick_star_type())
 	_on_system_star_gen()
 
-func  _on_system_star_gen():
+func  _on_system_star_gen() -> void:
 	# TODO: put rot_speed_var in star type
 	rotation_speed_variance = [0,0]
 	
@@ -202,6 +207,7 @@ func  _on_system_star_gen():
 	star_rad_for_cam.emit(radius)
 
 ### Console Commands ###
+
 func get_star_info() -> String:
 	# Command currently based on Star node being in Main. Will have to change eventually.
 	return "Star type: " + str(star_type.star_type_name) + "\nRadius: " + str(radius) + "\nMass: " +\
@@ -273,9 +279,10 @@ func _set_star_type(type : String) -> void:
 			star_type = StarTypes.type_y
 		_:
 			push_error("Star Type Error: \"" + type + "\" not declared in the current scope.")
+
 func change_name():
 	label.text = object_name
-		
+
 func _input(event):
 	if event.is_action_pressed("lines") and orbit_path_visible == true:
 		orbitMesh.visible = false
@@ -304,28 +311,15 @@ func object_is_clicked():
 # E X P E R I M E N T A L  //  E X P E R I M E N T A L  //  E X P E R I M E N T A L
 #===================================================================================
 
-func offset_value(offset : Array):
-	if offset == null:
-		push_error("Tried to offset a null array")
-		return
-	if typeof(offset[0]) == TYPE_FLOAT:
-		return rng.randf_range(offset[0], offset[1])
-	elif typeof(offset[0]) == TYPE_INT:
-		return rng.randi_range(offset[0], offset[1])
-
 func _init_planet_children():
 	print(num_planets)
 	orbit_sum = offset_value([0.0, 2.0 * star_rad])
 	
 	for i in range(num_planets):
-		#print("making planet...")
 		var planetInstance = planet.instantiate()
 		_init_planet_vars(planetInstance, i, star_rad)
 		
 		orbit_sum = planetInstance_distance
-		
-		#var temp_path = planetInstance.get_scene_file_path()
-		#planets_nodepaths.append(temp_path)
 		
 		get_node("RotationPoint/Core").add_child(planetInstance)
 		planets.append(planetInstance)
@@ -344,13 +338,6 @@ func _init_planet_children():
 		planetInstance.init_orbit_mesh(planetInstance.orbitMesh, planetInstance.initRotPos)
 		if home_world_added:
 			planets[home_world_num].is_home_world = true
-		
-	'''
-	if is_home and !home_world_added:
-		var planetInstance = planet.instantiate()
-		orbit_sum = 
-		_init_planet_vars(planetInstance, i , star_rad)
-	'''
 
 func _init_planet_vars(planetInstance, i, star_radius):
 	# TEMP VALUES
