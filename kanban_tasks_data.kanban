@@ -16,8 +16,7 @@
 			"uuid": "0a79ccc7-be73-4948-ae03-a2331c642141",
 			"title": "Todo",
 			"tasks": [
-				"29509758-b262-4343-84fe-64c8b3300449",
-				"1c2db0f0-3a3b-418c-8297-898a93dc0fe0"
+				"29509758-b262-4343-84fe-64c8b3300449"
 			]
 		},
 		{
@@ -28,7 +27,9 @@
 		{
 			"uuid": "461f46cc-df23-4ced-9aa7-eb0517e59d9b",
 			"title": "Done",
-			"tasks": []
+			"tasks": [
+				"1c2db0f0-3a3b-418c-8297-898a93dc0fe0"
+			]
 		},
 		{
 			"uuid": "290794ef-81ae-4bdf-9e21-51cc43b26b33",
@@ -47,7 +48,7 @@
 		{
 			"uuid": "1c2db0f0-3a3b-418c-8297-898a93dc0fe0",
 			"title": "Ring max",
-			"description": "What does ring_max mean in star.gd? Line 539",
+			"description": "What does ring_max mean in star.gd? Line 539\n\nIts just the max of the ring variance\n",
 			"category": "8adf734d-f081-4f22-8fd6-ef58dd616ed8",
 			"steps": []
 		}

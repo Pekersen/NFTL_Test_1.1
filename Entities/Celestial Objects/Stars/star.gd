@@ -393,11 +393,7 @@ func _init_planet_vars(planet_instance, i, star_radius):
 		planet_instance.atmosphere_present = true
 		planet_instance.atmosphere_size = atmosphere_size
 		planet_instance.atmosphere_thickness = atmosphere_thickness
-	'''
-	planet_instance.color_r = offset_value(color_r_variance)
-	planet_instance.color_g = offset_value(color_g_variance)
-	planet_instance.color_b = offset_value(color_b_variance)
-	'''
+
 	num_rings = offset_value(num_rings_variance)
 	
 	if base_texture:
@@ -430,18 +426,22 @@ func _init_ring():
 	_init_ring_vars(ringInstance)
 	return ringInstance
 	
+var color_r_variance
+var color_g_variance
+var color_b_variance
+
 func _init_ring_vars(ringInstance):
 	ring_size = offset_value(ring_size_variance) * s
 	ringInstance.semi_major_axis = ring_size + radius
 	
 	var colors = offset_value([0.0,1.0])
-	star_type.color_r_variance = [colors,colors]
-	star_type.color_g_variance = [colors,colors]
-	star_type.color_b_variance = [colors,colors]
+	color_r_variance = [colors,colors]
+	color_g_variance = [colors,colors]
+	color_b_variance = [colors,colors]
 	
-	ringInstance.color_r = offset_value(star_type.color_r_variance)
-	ringInstance.color_g = offset_value(star_type.color_g_variance)
-	ringInstance.color_b = offset_value(star_type.color_b_variance)
+	ringInstance.color_r = offset_value(color_r_variance)
+	ringInstance.color_g = offset_value(color_g_variance)
+	ringInstance.color_b = offset_value(color_b_variance)
 	
 func get_semimajoraxis(i : int):
 	return planets_semi[i]
@@ -540,13 +540,13 @@ func _set_planet_type(i : int):
 			
 		random_float = randf()
 		if random_float < 0.9:
-			star_type.color_r_variance = [1,1]
-			star_type.color_g_variance = [1,1]
-			star_type.color_b_variance = [0.6,1]
+			color_r_variance = [1,1]
+			color_g_variance = [1,1]
+			color_b_variance = [0.6,1]
 		else:
-			star_type.color_r_variance = [0.5,0.6]
-			star_type.color_g_variance = [0.2,0.25]
-			star_type.color_b_variance = [0.2,0.3]
+			color_r_variance = [0.5,0.6]
+			color_g_variance = [0.2,0.25]
+			color_b_variance = [0.2,0.3]
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
@@ -567,9 +567,9 @@ func _set_planet_type(i : int):
 			num_rings_variance = [10,30]
 			ring_max = 1.2
 			
-		star_type.color_r_variance = [1,1]
-		star_type.color_g_variance = [0.25,0.35]
-		star_type.color_b_variance = [0.2,0.3]
+		color_r_variance = [1,1]
+		color_g_variance = [0.25,0.35]
+		color_b_variance = [0.2,0.3]
 	
 		atmosphere_present = true
 		atmosphere_thickness = 0.3
@@ -588,13 +588,13 @@ func _set_planet_type(i : int):
 		random_float = randf()
 		if random_float < 0.5:
 			var colors = offset_value([0.1,0.5])
-			star_type.color_r_variance = [colors, colors]
-			star_type.color_g_variance = [colors, colors]
-			star_type.color_b_variance = [colors, colors]
+			color_r_variance = [colors, colors]
+			color_g_variance = [colors, colors]
+			color_b_variance = [colors, colors]
 		else:
-			star_type.color_r_variance = [0.6,0.9]
-			star_type.color_g_variance = [0.2,0.5]
-			star_type.color_b_variance = [0.1,0.4]
+			color_r_variance = [0.6,0.9]
+			color_g_variance = [0.2,0.5]
+			color_b_variance = [0.1,0.4]
 			
 		atmosphere_present = false
 	
@@ -615,13 +615,13 @@ func _set_planet_type(i : int):
 		random_float = randf()
 		if random_float < 0.5:
 			var colors = offset_value([0.2,0.8])
-			star_type.color_r_variance = [colors, colors]
-			star_type.color_g_variance = [colors, colors]
-			star_type.color_b_variance = [colors, colors]
+			color_r_variance = [colors, colors]
+			color_g_variance = [colors, colors]
+			color_b_variance = [colors, colors]
 		else:
-			star_type.color_r_variance = [1,1]
-			star_type.color_g_variance = [0.5,0.8]
-			star_type.color_b_variance = [0.3,0.5]
+			color_r_variance = [1,1]
+			color_g_variance = [0.5,0.8]
+			color_b_variance = [0.3,0.5]
 		
 		random_float = randf()
 		if random_float < 0.5:
@@ -645,9 +645,9 @@ func _set_planet_type(i : int):
 			ring_max = 0.2
 		
 		random_float = randf()
-		star_type.color_r_variance = [0,0]
-		star_type.color_g_variance = [0.2,0.8]
-		star_type.color_b_variance = [0.7,0.9]
+		color_r_variance = [0,0]
+		color_g_variance = [0.2,0.8]
+		color_b_variance = [0.7,0.9]
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
@@ -666,9 +666,9 @@ func _set_planet_type(i : int):
 			ring_size_variance = [0.2,0.8]
 			ring_max = 0.8
 		
-		star_type.color_r_variance = [0.6,0.9]
-		star_type.color_g_variance = [1,1]
-		star_type.color_b_variance = [1,1]
+		color_r_variance = [0.6,0.9]
+		color_g_variance = [1,1]
+		color_b_variance = [1,1]
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
@@ -694,13 +694,13 @@ func _set_planet_type(i : int):
 		random_float = randf()
 		if random_float < 0.5:
 			var colors = offset_value([0.2,0.8])
-			star_type.color_r_variance = [colors, colors]
-			star_type.color_g_variance = [colors, colors]
-			star_type.color_b_variance = [colors, colors]
+			color_r_variance = [colors, colors]
+			color_g_variance = [colors, colors]
+			color_b_variance = [colors, colors]
 		else:
-			star_type.color_r_variance = [1,1]
-			star_type.color_g_variance = [0.5,0.7]
-			star_type.color_b_variance = [0.3,0.5]
+			color_r_variance = [1,1]
+			color_g_variance = [0.5,0.7]
+			color_b_variance = [0.3,0.5]
 			
 		random_float = randf()
 		if random_float < 0.5:
@@ -724,9 +724,9 @@ func _set_planet_type(i : int):
 			ring_max = 0.6
 		
 		random_float = randf()
-		star_type.color_r_variance = [0.1,0.1]
-		star_type.color_g_variance = [0.1,0.9]
-		star_type.color_b_variance = [0.6,0.9]
+		color_r_variance = [0.1,0.1]
+		color_g_variance = [0.1,0.9]
+		color_b_variance = [0.6,0.9]
 		
 		atmosphere_present = true
 		atmosphere_thickness = 0.5
