@@ -39,12 +39,12 @@ var ring_size_variance : Array[float]
 var num_belts_variance = [1, 3]
 
 var orbit_sum := 0.0
-var planetInstance_distance
-var planetInstance_individual_distance
+var planet_instance_distance
+var planet_instance_individual_distance
 var moonInstance_distance
 var planet_post_distance = 0.0
 
-var planetInstance_distance_variance : Array[float]
+var planet_instance_distance_variance : Array[float]
 
 var moon_sum := 0.0
 
@@ -316,36 +316,36 @@ func _init_planet_children():
 	orbit_sum = offset_value([0.0, 2.0 * star_rad])
 	
 	for i in range(num_planets):
-		var planetInstance = planet.instantiate()
-		_init_planet_vars(planetInstance, i, star_rad)
+		var planet_instance = planet.instantiate()
+		_init_planet_vars(planet_instance, i, star_rad)
 		
-		orbit_sum = planetInstance_distance
+		orbit_sum = planet_instance_distance
 		
-		get_node("RotationPoint/Core").add_child(planetInstance)
-		planets.append(planetInstance)
+		get_node("RotationPoint/Core").add_child(planet_instance)
+		planets.append(planet_instance)
 		
 		for j in range(num_moons):
 			var moonInstance = _init_moon()
-			planetInstance.get_node("RotationPoint/Core").add_child(moonInstance)
-			moonInstance.init_orbit_mesh(moonInstance.orbitMesh, moonInstance.initRotPos)	
-			planetInstance.moons.append(moonInstance)
+			planet_instance.get_node("RotationPoint/Core").add_child(moonInstance)
+			moonInstance.init_orbit_mesh(moonInstance.orbitMesh, moonInstance.initial_rotation)	
+			planet_instance.moons.append(moonInstance)
 		
 		for k in range(num_rings):
 			var ringInstance = _init_ring()
-			planetInstance.get_node("RotationPoint/Core").add_child(ringInstance)
+			planet_instance.get_node("RotationPoint/Core").add_child(ringInstance)
 			#print("Ring Size 2: " + str(ring_size))
 		
-		planetInstance.init_orbit_mesh(planetInstance.orbitMesh, planetInstance.initRotPos)
+		planet_instance.init_orbit_mesh(planet_instance.orbitMesh, planet_instance.initial_rotation)
 		if home_world_added:
 			planets[home_world_num].is_home_world = true
 
-func _init_planet_vars(planetInstance, i, star_radius):
+func _init_planet_vars(planet_instance, i, star_radius):
 	# TEMP VALUES
 	# Orbital tilt
-	planetInstance.rotation.x = offset_value([-0.01,0.01])
-	planetInstance.rotation.z = offset_value([-0.01,0.01])
+	planet_instance.rotation.x = offset_value([-0.01,0.01])
+	planet_instance.rotation.z = offset_value([-0.01,0.01])
 	
-	planetInstance.can_orbit = true
+	planet_instance.can_orbit = true
 	
 	#NOTE: Split Transitional into Super-Earth and Mini Neptune
 	#ADD: Additional red color to Gas_Giant for hot jupiters when close to star
@@ -354,51 +354,51 @@ func _init_planet_vars(planetInstance, i, star_radius):
 	
 	_set_planet_type(i)
 	
-	planetInstance_individual_distance = offset_value(planetInstance_distance_variance) * s
-	planetInstance_distance = planetInstance_individual_distance + orbit_sum + planet_post_distance#LOOK AT LATER
+	planet_instance_individual_distance = offset_value(planet_instance_distance_variance) * s
+	planet_instance_distance = planet_instance_individual_distance + orbit_sum + planet_post_distance#LOOK AT LATER
 	var x = 10
 	
-	#print("PLANETINSTANCEDISTANCE: ", planetInstance_distance, ", ", planetInstance_distance + star_radius)
+	#print("planet_instanceDISTANCE: ", planet_instance_distance, ", ", planet_instance_distance + star_radius)
 	
 	if belt_radii.size() > 0:
-		if planetInstance_distance + star_radius > belt_radii[0] - x and planetInstance_distance < belt_radii[1] + x:
-			planetInstance_distance = belt_radii[1] + (belt_radii[1] - belt_radii[0])
+		if planet_instance_distance + star_radius > belt_radii[0] - x and planet_instance_distance < belt_radii[1] + x:
+			planet_instance_distance = belt_radii[1] + (belt_radii[1] - belt_radii[0])
 			#print("ADDING ", belt_radii[1] - belt_radii[0])
 	if belt_radii.size() > 2:
-		if planetInstance_distance + star_radius > belt_radii[2] - x and planetInstance_distance < belt_radii[3] + x:
-			planetInstance_distance = belt_radii[3] + (belt_radii[3] - belt_radii[2])
+		if planet_instance_distance + star_radius > belt_radii[2] - x and planet_instance_distance < belt_radii[3] + x:
+			planet_instance_distance = belt_radii[3] + (belt_radii[3] - belt_radii[2])
 			#print("ADDING ", belt_radii[3] - belt_radii[2])
 	if belt_radii.size() > 4:
-		if planetInstance_distance + star_radius > belt_radii[4] - x and planetInstance_distance < belt_radii[5] + x:
-			planetInstance_distance = belt_radii[5] + (belt_radii[5] - belt_radii[4])
+		if planet_instance_distance + star_radius > belt_radii[4] - x and planet_instance_distance < belt_radii[5] + x:
+			planet_instance_distance = belt_radii[5] + (belt_radii[5] - belt_radii[4])
 			#print("ADDING ", belt_radii[5] - belt_radii[4])
 		
-	planetInstance.semi_major_axis = planetInstance_distance + star_radius
-	planetInstance.eccentricity = rng.randf_range(0.0, 0.05) #TODO: Make accurate eccentricity values	
-	planetInstance.semi_minor_axis = planetInstance.semi_major_axis *\
-									sqrt(1 - pow(planetInstance.eccentricity,2))
-	planet_post_distance = planetInstance_individual_distance
-	planetInstance.orbital_period = planetInstance.semi_major_axis **(3.0/2)
+	planet_instance.semi_major_axis = planet_instance_distance + star_radius
+	planet_instance.eccentricity = rng.randf_range(0.0, 0.05) #TODO: Make accurate eccentricity values	
+	planet_instance.semi_minor_axis = planet_instance.semi_major_axis *\
+									sqrt(1 - pow(planet_instance.eccentricity,2))
+	planet_post_distance = planet_instance_individual_distance
+	planet_instance.orbital_period = planet_instance.semi_major_axis **(3.0/2)
 	
-	planets_semi.append(planetInstance_distance)
+	planets_semi.append(planet_instance_distance)
 	
 	radius = offset_value(planet_radius_variance) * s
-	planetInstance.radius = radius
+	planet_instance.radius = radius
 	num_moons = offset_value(num_moons_variance)
 	
 	if atmosphere_present:
-		planetInstance.atmosphere_present = true
-		planetInstance.atmosphere_size = atmosphere_size
-		planetInstance.atmosphere_thickness = atmosphere_thickness
+		planet_instance.atmosphere_present = true
+		planet_instance.atmosphere_size = atmosphere_size
+		planet_instance.atmosphere_thickness = atmosphere_thickness
 	'''
-	planetInstance.color_r = offset_value(color_r_variance)
-	planetInstance.color_g = offset_value(color_g_variance)
-	planetInstance.color_b = offset_value(color_b_variance)
+	planet_instance.color_r = offset_value(color_r_variance)
+	planet_instance.color_g = offset_value(color_g_variance)
+	planet_instance.color_b = offset_value(color_b_variance)
 	'''
 	num_rings = offset_value(num_rings_variance)
 	
 	if base_texture:
-		planetInstance.is_gas = true
+		planet_instance.is_gas = true
 	else:
 		pass
 	
@@ -525,7 +525,7 @@ func _set_planet_type(i : int):
 	if planet_type == "Gas_Giant":
 		planet_radius_variance = [0.5,0.8] 
 		num_moons_variance = [4,10]
-		planetInstance_distance_variance = [25.0,50.0]
+		planet_instance_distance_variance = [25.0,50.0]
 		random_float = randf()
 		if random_float < 0.03:
 			num_rings_variance = [50,100]
@@ -558,7 +558,7 @@ func _set_planet_type(i : int):
 	if planet_type == "Hot_Giant":
 		planet_radius_variance = [0.4,0.7] 
 		num_moons_variance = [0,8]
-		planetInstance_distance_variance = [25.0,50.0]
+		planet_instance_distance_variance = [25.0,50.0]
 		random_float = randf()
 		if random_float < 0.7:
 			num_rings_variance = [0,10]
@@ -581,7 +581,7 @@ func _set_planet_type(i : int):
 	elif planet_type == "Cthonian_Planet":
 		planet_radius_variance = [0.15,0.3]
 		num_moons_variance = [0,0]
-		planetInstance_distance_variance = [5.0,10.0]
+		planet_instance_distance_variance = [5.0,10.0]
 		random_float = randf()
 		num_rings_variance = [0,0]
 		ring_size_variance = [0,0]
@@ -603,7 +603,7 @@ func _set_planet_type(i : int):
 	elif planet_type == "Terrestrial_Planet":
 		planet_radius_variance = [0.15,0.3]
 		num_moons_variance = [0,2]
-		planetInstance_distance_variance = [5.0,11.0]
+		planet_instance_distance_variance = [5.0,11.0]
 		random_float = randf()
 		if random_float < 0.95:
 			num_rings_variance = [0,0]
@@ -635,7 +635,7 @@ func _set_planet_type(i : int):
 	elif planet_type == "Water_World":
 		planet_radius_variance = [0.15,0.3]
 		num_moons_variance = [0,2]
-		planetInstance_distance_variance = [5.0,11.0]
+		planet_instance_distance_variance = [5.0,11.0]
 		random_float = randf()
 		if random_float < 0.95:
 			num_rings_variance = [0,0]
@@ -657,7 +657,7 @@ func _set_planet_type(i : int):
 	elif planet_type == "Ice_Giant":
 		planet_radius_variance = [0.35,0.5]
 		num_moons_variance = [2,4]
-		planetInstance_distance_variance = [30.0,60.0]
+		planet_instance_distance_variance = [30.0,60.0]
 		random_float = randf()
 		if random_float < 0.8:
 			num_rings_variance = [1,10]
@@ -680,9 +680,9 @@ func _set_planet_type(i : int):
 	elif planet_type == "Transitional_Planet":
 		planet_radius_variance = [0.25,0.4]
 		num_moons_variance = [0,3]
-		planetInstance_distance_variance = [7.0,20.0]
+		planet_instance_distance_variance = [7.0,20.0]
 		if is_home:
-			planetInstance_distance_variance = [7.0, 15.0]
+			planet_instance_distance_variance = [7.0, 15.0]
 		random_float = randf()
 		if random_float < 0.8:
 			num_rings_variance = [0,4]
@@ -714,7 +714,7 @@ func _set_planet_type(i : int):
 	elif planet_type == "Hycean_Planet":
 		planet_radius_variance = [0.25,0.4]
 		num_moons_variance = [0,3]
-		planetInstance_distance_variance = [7.0,15.0]
+		planet_instance_distance_variance = [7.0,15.0]
 		random_float = randf()
 		if random_float < 0.8:
 			num_rings_variance = [0,4]

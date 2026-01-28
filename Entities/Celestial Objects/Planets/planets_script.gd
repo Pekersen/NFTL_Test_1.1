@@ -23,4 +23,3 @@ var orbit_speed_variance : Array[float]
 
 func _ready():
 	can_orbit = true
-

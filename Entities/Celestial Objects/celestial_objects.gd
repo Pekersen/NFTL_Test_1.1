@@ -90,8 +90,8 @@ func get_true_anomaly(E: float, ecc: float) -> float:
 func get_radius(true_anomaly: float, semi_major: float, ecc: float) -> float:
 	return (semi_major * (1 - ecc * ecc)) / (1 + ecc * cos(true_anomaly))
 	
-func init_orbit_mesh(orbitMesh: Node3D, initRotPos: float = 0):
-	orbitMesh.rotation.y = initRotPos
+func init_orbit_mesh(orbitMesh: Node3D, initial_rotation: float = 0):
+	orbitMesh.rotation.y = initial_rotation
 	orbitMesh.scale.z = semi_minor_axis/semi_major_axis
 	var total_distance = -sqrt(pow(semi_major_axis,2) - pow(semi_minor_axis,2))
 	#orbitMesh.position.x = total_distance

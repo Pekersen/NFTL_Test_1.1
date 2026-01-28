@@ -6,7 +6,7 @@ extends Moon
 @onready var label = $"RotationPoint/Core/Label3D"
 @onready var builder = $RotationPoint/Core/TrueMoon/TileBuilder
 
-var initRotPos : float
+var initial_rotation : float
 
 var orbit_path_visible = true
 
@@ -32,8 +32,8 @@ func _ready():
 	
 	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
 
-	initRotPos = offset_value([0, (2 * PI)])
-	rotationPoint.rotate_y(initRotPos)
+	initial_rotation = offset_value([0, (2 * PI)])
+	rotationPoint.rotate_y(initial_rotation)
 	
 	label.position = Vector3(0, radius * 2.0, 0)
 	label.font_size = 12

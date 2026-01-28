@@ -11,7 +11,7 @@ extends Planet
 
 #var base_material := preload("res://Experimental/Experimental Planet Mesh/planet_terrain_shader_material.tres")
 
-var initRotPos : float
+var initial_rotation : float
 var orbit_path_visible = true
 
 var atmosphere_present : bool
@@ -28,7 +28,6 @@ var on_tile = false
 
 func _init():
 	mass = 0.01
-	
 
 
 # Called when the node enters the scene tree for the first time.
@@ -58,8 +57,8 @@ func _ready():
 	
 	#orbitMesh.material.render_mode = Enums.RENDER_MODE_DISABLED
 	
-	initRotPos = offset_value([0, (2 * PI)])
-	rotationPoint.rotate_y(initRotPos)
+	initial_rotation = offset_value([0, (2 * PI)])
+	rotationPoint.rotate_y(initial_rotation)
 	
 	label.position = Vector3(0, radius * 2.0 + 20.0, 0)
 	label.font_size = 32
