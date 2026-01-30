@@ -3,7 +3,7 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://cai4hl1cgjfos"
+uid="uid://cqe04fb6ou30k"
 path="res://.godot/imported/asteroid1.glb-deff4f073baaa250446ac20a6a30c0c7.scn"
 
 [deps]
@@ -13,7 +13,7 @@ dest_files=["res://.godot/imported/asteroid1.glb-deff4f073baaa250446ac20a6a30c0c
 
 [params]
 
-nodes/root_type="MeshInstance3D"
+nodes/root_type=""
 nodes/root_name=""
 nodes/root_script=null
 nodes/apply_root_scale=true
@@ -37,49 +37,6 @@ import_script/path=""
 materials/extract=0
 materials/extract_format=0
 materials/extract_path=""
-_subresources={
-"materials": {
-"@MATERIAL:0": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-},
-"@MATERIAL:1": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-},
-"@MATERIAL:2": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-},
-"@MATERIAL:3": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-},
-"@MATERIAL:4": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-},
-"@MATERIAL:5": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-},
-"@MATERIAL:6": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-},
-"@MATERIAL:7": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-},
-"@MATERIAL:8": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-},
-"@MATERIAL:9": {
-"use_external/enabled": true,
-"use_external/path": "res://Shaders/asteroid.tres"
-}
-}
-}
-gltf/naming_version=1
+_subresources={}
+gltf/naming_version=2
 gltf/embedded_image_handling=1

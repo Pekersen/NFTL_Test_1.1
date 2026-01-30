@@ -137,7 +137,7 @@ func shoot_ray_right():
 	# Get the position of the mouse on the screen (in 2D viewport coordinates)
 	var mouse_pos = get_viewport().get_mouse_position()
 	# Define the length of the ray to be cast (1000 units in 3D space)
-	var ray_length = 2000
+	var ray_length = 20000
 	# Calculate the origin point of the ray in 3D space using the camera's 
 	# position and the mouse position
 	var from = camera.project_ray_origin(mouse_pos)
@@ -278,4 +278,3 @@ func get_mouse_hit_point_on_sphere(camera: Camera3D, mouse_pos: Vector2, sphere_
 	#print("POSITION: ", ray_origin + ray_direction * t)
 	#print("----------------------")
 	return ray_origin + ray_direction * t  # Point on sphere surface
-
