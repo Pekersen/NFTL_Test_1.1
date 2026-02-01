@@ -1,6 +1,7 @@
 extends Node3D
 
 @onready var secondStarMesh := $Core2/StarMesh2
+@onready var secondStarCollision := $Core2/StarCollision2
 #@onready var label2 := $RotationPoint2/Core2/Label3D
 
 var size : float
@@ -18,6 +19,8 @@ func _ready():
 		secondStarMesh.mesh.radius = size * 0.1
 		secondStarMesh.mesh.height = size * 0.1 * 2
 		#print("SECOND STAR - Size: ", size, ", Color: ", color)
+		#secondStarCollision.shape.radius = size * 0.11
+		
 		if size > 2:
 			#print("HERE!")
 			pass

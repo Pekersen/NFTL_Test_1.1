@@ -21,7 +21,7 @@ func _ready():
 	firstStarMesh.mesh.radius = size * 0.1
 	firstStarMesh.mesh.height = size * 0.1 * 2
 	#print("FIRST STAR - Size: ", size, ", Color: ", color)
-	firstStarCollision.shape.radius = size * 1.1
+	firstStarCollision.shape.radius = size * 0.11
 	
 	if size > 2:
 		#print("HERE!")

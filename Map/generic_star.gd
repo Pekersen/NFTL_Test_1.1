@@ -36,6 +36,8 @@ func _ready():
 	if second_star:
 		secondStarRotPoint.show()
 		secondStarRotPoint.position = second_position
+	else:
+		secondStarRotPoint.position = firstStarRotPoint.position
 		
 		#print("SECOND SIZE: ", second_size, ", SECOND COLOR: ", second_color)
 		#secondStarRotPoint.size = second_size

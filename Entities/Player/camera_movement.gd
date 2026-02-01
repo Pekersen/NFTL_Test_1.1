@@ -134,10 +134,11 @@ func _input(event):
 	# Making a right click function
 
 func shoot_ray_right():
+	print("Clicked right")
 	# Get the position of the mouse on the screen (in 2D viewport coordinates)
 	var mouse_pos = get_viewport().get_mouse_position()
 	# Define the length of the ray to be cast (1000 units in 3D space)
-	var ray_length = 20000
+	var ray_length = 2000
 	# Calculate the origin point of the ray in 3D space using the camera's 
 	# position and the mouse position
 	var from = camera.project_ray_origin(mouse_pos)
@@ -159,6 +160,7 @@ func shoot_ray_right():
 	var raycast_result_right = space.intersect_ray(ray_query)
 	
 	if !raycast_result_right.is_empty():
+		print("Hit something")
 		clicked_node = raycast_result_right.collider
 		if Starmap.is_visible:
 			if clicked_node.get_parent().get_id() != -1:
@@ -171,9 +173,11 @@ func shoot_ray_right():
 				locked_movement_enabled = false
 				reset()
 		#get_tree().change_scene_to_file("res://Celestial Objects/Planets/planet_world.tscn")
-		
+	else:
+		print("Empty")
 	
 func shoot_ray_left():
+	print("Clicked left")
 	# Get the position of the mouse on the screen (in 2D viewport coordinates)
 	var mouse_pos = get_viewport().get_mouse_position()
 	# Define the length of the ray to be cast (1000 units in 3D space)
@@ -201,7 +205,7 @@ func shoot_ray_left():
 	# HERE IS WHERE YOU CAN MAKE IT DO SOMETHING (LIKE OPEN A GUI MENU)
 	# TODO:
 	if !raycast_result.is_empty():
-		
+		print("Hit something")
 		clicked_node = raycast_result.collider
 		if Starmap.is_visible:
 			if clicked_node.get_parent().get_id() != -1:
@@ -226,7 +230,8 @@ func shoot_ray_left():
 				
 		previous_node = clicked_node
 			
-			
+	else:
+		print("Empty")
 			#print("ATTEMPTING SWITCH TO SYSTEM ", clicked_node.get_parent().get_parent().id)
 		
 func follow_camera():

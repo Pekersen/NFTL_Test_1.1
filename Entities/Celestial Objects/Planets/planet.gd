@@ -102,6 +102,7 @@ func _init_vars():
 	planetMesh.mesh.height = radius * 2
 	# Init click area
 	planetCollision.shape.radius = radius + click_forgiveness
+	print("My collision radius is ", radius)
 	collision.shape.radius = radius
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

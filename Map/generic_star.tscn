@@ -1,8 +1,8 @@
-[gd_scene load_steps=14 format=3 uid="uid://cux88x3x7umaw"]
+[gd_scene format=3 uid="uid://cux88x3x7umaw"]
 
-[ext_resource type="Script" path="res://Map/generic_star.gd" id="1_nsism"]
-[ext_resource type="Script" path="res://Map/individual_generic_star1.gd" id="2_hxnx7"]
-[ext_resource type="Script" path="res://Map/individual_generic_star2.gd" id="3_7hx7f"]
+[ext_resource type="Script" uid="uid://n84oeonmoa8w" path="res://Map/generic_star.gd" id="1_nsism"]
+[ext_resource type="Script" uid="uid://b3w6pdgltavmf" path="res://Map/individual_generic_star1.gd" id="2_hxnx7"]
+[ext_resource type="Script" uid="uid://d0d2fpmv0u2ft" path="res://Map/individual_generic_star2.gd" id="3_7hx7f"]
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_4mdgf"]
 
@@ -106,12 +106,12 @@ domain_warp_fractal_octaves = 8
 domain_warp_fractal_gain = 1.2
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0ndpt"]
-seamless = true
-seamless_blend_skirt = 1.0
-as_normal_map = true
-bump_strength = 25.1
-color_ramp = SubResource("Gradient_b16wq")
 noise = SubResource("FastNoiseLite_h3vb1")
+color_ramp = SubResource("Gradient_b16wq")
+seamless = true
+as_normal_map = true
+seamless_blend_skirt = 1.0
+bump_strength = 25.1
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dj6he"]
 resource_local_to_scene = true
@@ -120,7 +120,7 @@ shader = SubResource("Shader_5nekp")
 shader_parameter/albedo = Color(0, 0, 0, 1)
 shader_parameter/point_size = 0.0
 shader_parameter/roughness = 0.0
-shader_parameter/metallic_texture_channel = null
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
 shader_parameter/specular = 0.0
 shader_parameter/metallic = 0.0
 shader_parameter/uv1_scale = Vector3(1, 1, 1)
@@ -130,11 +130,11 @@ shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/Glow_Power = 0.879
 shader_parameter/Lightness_Difference = 0.925
 shader_parameter/Sun_Color = Color(1, 1, 1, 1)
+shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
 shader_parameter/waveSpeed = 0.047
 shader_parameter/fresnel = 1.013
 shader_parameter/scale = 0.25
 shader_parameter/blendSharpness = 0.156
-shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
 
 [sub_resource type="SphereMesh" id="SphereMesh_c8gkq"]
 resource_local_to_scene = true
@@ -228,76 +228,76 @@ void fragment() {
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_88h70")
-shader_parameter/albedo = null
-shader_parameter/point_size = null
-shader_parameter/roughness = null
-shader_parameter/metallic_texture_channel = null
-shader_parameter/specular = null
-shader_parameter/metallic = null
-shader_parameter/uv1_scale = null
-shader_parameter/uv1_offset = null
-shader_parameter/uv2_scale = null
-shader_parameter/uv2_offset = null
+shader_parameter/albedo = Color(0, 0, 0, 1)
+shader_parameter/point_size = 0.0
+shader_parameter/roughness = 0.0
+shader_parameter/metallic_texture_channel = Vector4(0, 0, 0, 0)
+shader_parameter/specular = 0.0
+shader_parameter/metallic = 0.0
+shader_parameter/uv1_scale = Vector3(0, 0, 0)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+shader_parameter/uv2_scale = Vector3(0, 0, 0)
+shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/Glow_Power = 0.879
 shader_parameter/Lightness_Difference = 0.925
 shader_parameter/Sun_Color = Color(1, 1, 1, 1)
+shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
 shader_parameter/waveSpeed = 0.047
 shader_parameter/fresnel = 1.013
 shader_parameter/scale = 0.25
 shader_parameter/blendSharpness = 0.156
-shader_parameter/voronoi_noise = SubResource("NoiseTexture2D_0ndpt")
 
 [sub_resource type="SphereMesh" id="SphereMesh_culm1"]
 resource_local_to_scene = true
 material = SubResource("ShaderMaterial_2kbsu")
 
-[node name="Star" type="Node3D"]
+[node name="Star" type="Node3D" unique_id=1255865537]
 script = ExtResource("1_nsism")
 
-[node name="RotationPoint" type="Node3D" parent="."]
+[node name="RotationPoint" type="Node3D" parent="." unique_id=352203132]
 script = ExtResource("2_hxnx7")
 
-[node name="Core" type="StaticBody3D" parent="RotationPoint"]
+[node name="Core" type="StaticBody3D" parent="RotationPoint" unique_id=272306855]
 
-[node name="StarCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
+[node name="StarCollision" type="CollisionShape3D" parent="RotationPoint/Core" unique_id=1011330256]
 shape = SubResource("SphereShape3D_4mdgf")
 
-[node name="StarMesh" type="MeshInstance3D" parent="RotationPoint/Core"]
+[node name="StarMesh" type="MeshInstance3D" parent="RotationPoint/Core" unique_id=402676464]
 cast_shadow = 0
 mesh = SubResource("SphereMesh_c8gkq")
 skeleton = NodePath("../../..")
 
-[node name="StarLight" type="OmniLight3D" parent="RotationPoint/Core"]
+[node name="StarLight" type="OmniLight3D" parent="RotationPoint/Core" unique_id=281992760]
 light_color = Color(1, 0.852399, 0.825386, 1)
 shadow_enabled = true
 omni_range = 1000.0
 
-[node name="Label3D" type="Label3D" parent="RotationPoint/Core"]
+[node name="Label3D" type="Label3D" parent="RotationPoint/Core" unique_id=12675128]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.07828, 0)
 pixel_size = 0.001
 billboard = 1
 fixed_size = true
 outline_size = 0
 
-[node name="RotationPoint2" type="Node3D" parent="."]
+[node name="RotationPoint2" type="Node3D" parent="." unique_id=370284058]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.33078)
 visible = false
 script = ExtResource("3_7hx7f")
 
-[node name="Core2" type="StaticBody3D" parent="RotationPoint2"]
+[node name="Core2" type="StaticBody3D" parent="RotationPoint2" unique_id=665574125]
 
-[node name="StarCollision2" type="CollisionShape3D" parent="RotationPoint2/Core2"]
+[node name="StarCollision2" type="CollisionShape3D" parent="RotationPoint2/Core2" unique_id=419842328]
 shape = SubResource("SphereShape3D_4mdgf")
 
-[node name="StarLight2" type="OmniLight3D" parent="RotationPoint2/Core2"]
+[node name="StarLight2" type="OmniLight3D" parent="RotationPoint2/Core2" unique_id=1059014175]
 light_color = Color(1, 0.852399, 0.825386, 1)
 shadow_enabled = true
 omni_range = 1000.0
 
-[node name="StarMesh2" type="MeshInstance3D" parent="RotationPoint2/Core2"]
+[node name="StarMesh2" type="MeshInstance3D" parent="RotationPoint2/Core2" unique_id=1920350261]
 mesh = SubResource("SphereMesh_culm1")
 
-[node name="Label3D" type="Label3D" parent="RotationPoint2/Core2"]
+[node name="Label3D" type="Label3D" parent="RotationPoint2/Core2" unique_id=2101083441]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.07828, 0)
 pixel_size = 0.001
 billboard = 1

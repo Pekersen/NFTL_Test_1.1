@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="StarType" load_steps=2 format=3 uid="uid://cm3ax4mhent71"]
+[gd_resource type="Resource" script_class="StarType" format=3 uid="uid://cm3ax4mhent71"]
 
 [ext_resource type="Script" uid="uid://cla4rierijhd4" path="res://Entities/Celestial Objects/Stars/star_types/star_type.gd" id="1_jkd7j"]
 
