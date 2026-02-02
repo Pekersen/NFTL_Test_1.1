@@ -304,11 +304,11 @@ func object_is_clicked():
 	print("CLICKED")
 	if !on_tile:
 		on_tile = true
-		starCollision.shape.radius = 0.9 * radius
+		starCollision.shape.radius = 0.9 * star_rad
 		print("Planet Collision: ", starCollision.shape.radius)
 	else:
 		on_tile = false
-		starCollision.shape.radius = radius + click_forgiveness
+		starCollision.shape.radius = star_rad + click_forgiveness
 		print("Planet Collision: ", starCollision.shape.radius)
 
 #===================================================================================
