@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://bequjodqr8tcj"]
+[gd_scene format=3 uid="uid://bequjodqr8tcj"]
 
 [ext_resource type="Script" uid="uid://bk3wyfppngy6r" path="res://Entities/Celestial Objects/Stars/star.gd" id="1_81nsq"]
 [ext_resource type="Script" uid="uid://bdkxv7faeabiv" path="res://Entities/Celestial Objects/Planets/tilebuilder.gd" id="2_ajkwg"]
@@ -162,35 +162,35 @@ outer_radius = 25.0
 
 [sub_resource type="TorusMesh" id="TorusMesh_5tw6a"]
 
-[node name="Star" type="Node3D"]
+[node name="Star" type="Node3D" unique_id=946236427]
 script = ExtResource("1_81nsq")
 
-[node name="Orbit" type="MeshInstance3D" parent="."]
+[node name="Orbit" type="MeshInstance3D" parent="." unique_id=1464077671]
 visible = false
 cast_shadow = 0
 mesh = SubResource("TorusMesh_t85fv")
 
-[node name="RotationPoint" type="Node3D" parent="."]
+[node name="RotationPoint" type="Node3D" parent="." unique_id=120175388]
 
-[node name="Core" type="StaticBody3D" parent="RotationPoint"]
+[node name="Core" type="StaticBody3D" parent="RotationPoint" unique_id=1223886557]
 
-[node name="StarCollision" type="CollisionShape3D" parent="RotationPoint/Core"]
+[node name="StarCollision" type="CollisionShape3D" parent="RotationPoint/Core" unique_id=1995195290]
 shape = SubResource("SphereShape3D_4mdgf")
 
-[node name="StarMesh" type="MeshInstance3D" parent="RotationPoint/Core"]
+[node name="StarMesh" type="MeshInstance3D" parent="RotationPoint/Core" unique_id=829395161]
 cast_shadow = 0
 mesh = SubResource("SphereMesh_c8gkq")
 skeleton = NodePath("../../..")
 
-[node name="TileBuilder" type="Node3D" parent="RotationPoint/Core/StarMesh"]
+[node name="TileBuilder" type="Node3D" parent="RotationPoint/Core/StarMesh" unique_id=1400836105]
 script = ExtResource("2_ajkwg")
 
-[node name="StarLight" type="OmniLight3D" parent="RotationPoint/Core"]
+[node name="StarLight" type="OmniLight3D" parent="RotationPoint/Core" unique_id=1657028872]
 light_color = Color(1, 0.852399, 0.825386, 1)
 shadow_enabled = true
 omni_range = 5000.0
 
-[node name="Label3D" type="Label3D" parent="RotationPoint/Core"]
+[node name="Label3D" type="Label3D" parent="RotationPoint/Core" unique_id=1427628185]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 9.07828, 0)
 pixel_size = 0.001
 billboard = 1
@@ -198,10 +198,10 @@ fixed_size = true
 text = "Star"
 outline_size = 0
 
-[node name="InnerZone" type="MeshInstance3D" parent="."]
+[node name="InnerZone" type="MeshInstance3D" parent="." unique_id=1585043689]
 visible = false
 mesh = SubResource("TorusMesh_5q03m")
 
-[node name="OuterZone" type="MeshInstance3D" parent="."]
+[node name="OuterZone" type="MeshInstance3D" parent="." unique_id=1136971966]
 visible = false
 mesh = SubResource("TorusMesh_5tw6a")

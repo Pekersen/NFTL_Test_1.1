@@ -91,6 +91,7 @@ var on_tile = false
 @onready var orbitMesh = $Orbit
 @onready var label = $"RotationPoint/Core/Label3D"
 @onready var builder = $RotationPoint/Core/StarMesh/TileBuilder
+@onready var point = $"RotationPoint"
 
 @onready var innerZone = $InnerZone
 @onready var outerZone = $OuterZone
@@ -103,10 +104,13 @@ var on_tile = false
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	#star_rotate(delta)
+
 	if can_orbit:
-		orbit(delta, core)
+
+		orbit(delta, point)
 		if is_flipped:
-			core.position *= -1
+			point.position *= -1
+	
 	celestial_rotation(delta, starMesh)
 
 func _ready():
